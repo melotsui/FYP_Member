@@ -71,8 +71,24 @@ class NavigationBarPageState extends State<NavigationBarPage> {
                   SizedBox(height: 10,),
                   Row(
                     children: <Widget>[
-                      login > 0 ? Text('Balance: \$$accountBalance ', style: TextStyle(color: Colors.black54)) : Text(""),
-                      login > 0 ? Icon(Icons.remove_red_eye) : Text(""),
+                      login > 0 ? Text(
+                        displayBalance%2 ==1 ? 'Balance: \$$accountBalance ' : 'Balance: ****** ',
+                          style: TextStyle(color: Colors.black54),
+                      ) : Text(""),
+                      GestureDetector(
+                        child: login > 0 ? Icon(
+                        Icons.remove_red_eye,
+                        color: displayBalance%2 ==1 ?
+                        Colors.black38 : Colors.black,
+                        ) : Text(""),
+                        onTap: () {
+                          setState(() {
+
+                          });
+                          displayBalance = displayBalance + 1;
+                        },
+                      ),
+
                     ],
                   ),
                 ],

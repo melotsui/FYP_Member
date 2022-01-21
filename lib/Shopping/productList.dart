@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../main.dart';
 import '../Navigation/navigationBar.dart';
+import '../Var/var.dart';
 
 class ProductListPage extends StatefulWidget {
   @override
@@ -26,7 +27,7 @@ class ProductListPageState extends State<ProductListPage> {
   ];
 
   var price = ['\$48', '\$33', '\$6', '\$129', '\$5.5'];
-
+  var fav = varFav;
   @override
   void initState() {
     // TODO: implement initState
@@ -48,6 +49,7 @@ class ProductListPageState extends State<ProductListPage> {
         backgroundColor: Colors.deepPurpleAccent,
       ),
       body: ListView.builder(
+
         itemCount: 5,
         itemBuilder: (context, idx){
           print("$idx");
@@ -72,9 +74,24 @@ class ProductListPageState extends State<ProductListPage> {
                   child: Text(itemName[idx], textAlign: TextAlign.center),
                 ),
                 Expanded(
-                  child: Text(price[idx], textAlign: TextAlign.center),
-                ),
+                  // child: Text(price[idx], textAlign: TextAlign.center),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        child: fav[idx] % 2 ==1 ? Icon(Icons.favorite_border) : Icon(Icons.favorite, color: Colors.redAccent),
+                        onTap: () {
+                          fav[idx] = fav[idx] + 1;
+                          setState(() {
 
+                          });
+
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      Text(price[idx], textAlign: TextAlign.center),
+                    ],
+                  ),
+                ),
               ],
             ),
           );
