@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'Var/var.dart';
 import 'Login/login.dart';
-import 'Account/account.dart';
-import 'Shopping/productList.dart';
+import 'Account/profile.dart';
+import 'Product/productList.dart';
 import 'Navigation/navigationBar.dart';
 import 'Login/register.dart';
 import 'Invoice/invoiceList.dart';
@@ -19,6 +19,7 @@ void main() {
       '/login': (context) => LoginPage(),
       '/register': (context) => RegisterPage(),
       '/invoiceList': (context) => InvoiceListPage(),
+      '/myProfile': (context) => AccountPage(),
       // When navigating to the "/second" route, build the SecondScreen widget.
       // '/second': (context) => const SecondScreen(),
     },

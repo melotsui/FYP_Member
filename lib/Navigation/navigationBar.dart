@@ -89,7 +89,7 @@ class NavigationBarPageState extends State<NavigationBarPage> {
             leading: Icon(Icons.shopping_cart),
             title: Text('Products'),
             onTap: () {
-              appBarTitle = "Products";
+              appBarTitle = "Product List";
 
               Navigator.pushNamed(context, '/productList');
             },
@@ -117,14 +117,14 @@ class NavigationBarPageState extends State<NavigationBarPage> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.account_circle),
+            leading: Icon(Icons.account_circle,),
             title: Text('Profile'),
             onTap: () {
-              appBarTitle = "Profile";
+              appBarTitle = "My Profile";
               // Update the state of the app
               // ...
               // Then close the drawer
-              Navigator.pop(context);
+              Navigator.pushNamed(context, '/myProfile');
             },
           ),
         ],
