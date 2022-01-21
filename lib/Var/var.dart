@@ -9,3 +9,4 @@ double accountBalance = 80.2;
 var varFav = [1, 1, 1, 1, 1];
 var displayBalance = 2;
 // int fav = 1;
+//Push
