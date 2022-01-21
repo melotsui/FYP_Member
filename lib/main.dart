@@ -6,6 +6,7 @@ import 'Account/account.dart';
 import 'Shopping/productList.dart';
 import 'Navigation/navigationBar.dart';
 import 'Login/register.dart';
+import 'Invoice/invoiceList.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;
@@ -17,6 +18,7 @@ void main() {
       '/productList': (context) => ProductListPage(),
       '/login': (context) => LoginPage(),
       '/register': (context) => RegisterPage(),
+      '/invoiceList': (context) => InvoiceListPage(),
       // When navigating to the "/second" route, build the SecondScreen widget.
       // '/second': (context) => const SecondScreen(),
     },
@@ -44,6 +46,6 @@ class HomePageState extends State<HomePage> {
   ];
 
   Widget build(BuildContext context) {
-    return NavigationBarPage();
+    return ProductListPage();
   }
 }

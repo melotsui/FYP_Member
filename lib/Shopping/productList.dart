@@ -37,18 +37,23 @@ class ProductListPageState extends State<ProductListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        title: Text("Product List"),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back),
-        ),
-
-        centerTitle: true,
         backgroundColor: Colors.deepPurpleAccent,
+        title: Text("$appBarTitle"),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.add_alert_sharp),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.share),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.search),
+          ),
+        ],
       ),
-      
       body: ListView.builder(
 
         itemCount: 5,
@@ -79,7 +84,7 @@ class ProductListPageState extends State<ProductListPage> {
                   child: Column(
                     children: [
                       GestureDetector(
-                        child: fav[idx] % 2 ==1 ? Icon(Icons.favorite_border) : Icon(Icons.favorite, color: Colors.redAccent),
+                        child: fav[idx] % 2 == 0 && login > 0 ? Icon(Icons.favorite, color: Colors.redAccent) : Icon(Icons.favorite_border),
                         onTap: () {
                           fav[idx] = fav[idx] + 1;
                           setState(() {
@@ -98,6 +103,8 @@ class ProductListPageState extends State<ProductListPage> {
           );
         },
       ),
+
+      drawer: NavigationBarPageState().navBar(context),
       // body:
       // ElevatedButton(onPressed: (){
       //   Navigator.push(context, MaterialPageRoute(builder: (context) => new HomePage()));

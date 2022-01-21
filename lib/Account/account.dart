@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../main.dart';
 import '../Navigation/navigationBar.dart';
+import '../Var/var.dart';
 
 class AccountPage extends StatefulWidget {
   @override
@@ -20,9 +21,24 @@ class AccountPageState extends State<AccountPage> {
 
     return Scaffold(
       appBar: new AppBar(
-        title: Text("Account"),
-        centerTitle: true,
+        backgroundColor: Colors.deepPurpleAccent,
+        title: Text("$appBarTitle"),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.add_alert_sharp),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.share),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.search),
+          ),
+        ],
       ),
+      drawer: NavigationBarPageState().navBar(context),
 
       // body:
       // ElevatedButton(onPressed: (){
