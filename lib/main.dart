@@ -5,6 +5,7 @@ import 'Login/login.dart';
 import 'Account/account.dart';
 import 'Shopping/productList.dart';
 import 'Navigation/navigationBar.dart';
+import 'Login/register.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;
@@ -15,6 +16,7 @@ void main() {
       // When navigating to the "/" route, build the FirstScreen widget.
       '/productList': (context) => ProductListPage(),
       '/login': (context) => LoginPage(),
+      '/register': (context) => RegisterPage(),
       // When navigating to the "/second" route, build the SecondScreen widget.
       // '/second': (context) => const SecondScreen(),
     },
