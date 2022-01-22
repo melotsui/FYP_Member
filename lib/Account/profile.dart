@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:member/Var/natigate.dart';
 
 import '../main.dart';
 import '../Navigation/navigationBar.dart';
 import '../Var/var.dart';
 
-class AccountPage extends StatefulWidget {
+class MyProfilePage extends StatefulWidget {
+
   @override
-  AccountPageState createState() => AccountPageState();
+  MyProfilePageState createState() => MyProfilePageState();
 }
 
-class AccountPageState extends State<AccountPage> {
+
+
+class MyProfilePageState extends State<MyProfilePage> {
   @override
   void initState() {
     // TODO: implement initState
@@ -111,7 +115,7 @@ class AccountPageState extends State<AccountPage> {
                   ),
                   Container(
                     child: Text(
-                      "$userEmail",
+                      "$accountEmail",
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.black54),
                     ),
@@ -261,7 +265,7 @@ class AccountPageState extends State<AccountPage> {
                         // ...
                         // Then close the drawer
                         login = 0;
-                        Navigator.pushNamed(context, '/productList');
+                        navigateToProductListPage(context);
                       },
                     ),
                   ],

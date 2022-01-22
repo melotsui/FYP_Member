@@ -8,7 +8,7 @@ String unknownIcon = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/
 String userName = "Melo Tsui";
 String role = "VIP Member";
 String userTel = "51581556";
-String userEmail = "melotsui@gmail.com";
+String accountEmail = "melotsui@gmail.com";
 String unknownName = "Login";
 double accountBalance = 80.2;
 var varFav = [1, 1, 1, 1, 1];
@@ -20,6 +20,38 @@ var displayBalance = 1;
 //           },
 //           icon: Icon(Icons.arrow_back),
 //         ),
+
+class Account {
+  String accountID;
+  String accountName;
+  String accountRole;
+  int accountPhone;
+  String accountEmail;
+  double accountBalance;
+  int loginStatus;
+
+  Account({
+    required this.accountID,
+    required this.accountName,
+    required this.accountRole,
+    required this.accountPhone,
+    required this.accountEmail,
+    required this.accountBalance,
+    required this.loginStatus,
+  });
+}
+
+List<Account> account = [
+  Account(
+    accountID: '1',
+    accountName: 'Melo Tsui',
+    accountRole: 'https://image-resizer.cwg.tw/resize/uri/https%3A%2F%2Fcw1.tw%2FCC%2Fimages%2Farticle%2F201710%2Farticle-59d1f2b06a7a2.jpg/?w=810&h=543&fit=fill',
+    accountPhone: 51581556,
+    accountEmail: 'melotsui@gmail.com',
+    accountBalance: 80.2,
+    loginStatus: 1,
+  ),
+];
 
 class Product {
   String productID;

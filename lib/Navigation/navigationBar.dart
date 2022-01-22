@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:member/Var/natigate.dart';
 
 import '../main.dart';
 import '../Var/var.dart';
@@ -40,7 +41,7 @@ class NavigationBarPageState extends State<NavigationBarPage> {
                     backgroundImage: login > 0 ? NetworkImage(userIcon) : NetworkImage(unknownIcon),
                   ),
                   onTap: () {
-                    login > 0 ? null : Navigator.pushNamed(context, '/login');
+                    login > 0 ? navigateToMyProfilePage(context) : navigateToLoginPage(context);
                   },
                 ),
                 Divider(),
@@ -90,8 +91,7 @@ class NavigationBarPageState extends State<NavigationBarPage> {
             title: Text('Products'),
             onTap: () {
               appBarTitle = "Product List";
-
-              Navigator.pushNamed(context, '/productList');
+              navigateToProductListPage(context);
             },
           ),
           ListTile(
@@ -102,7 +102,7 @@ class NavigationBarPageState extends State<NavigationBarPage> {
               // Update the state of the app
               // ...
               // Then close the drawer
-              Navigator.pushNamed(context, '/invoiceList');
+              login > 0 ? navigateToInvoiceListPage(context) : navigateToLoginPage(context);
             },
           ),
           ListTile(
@@ -124,7 +124,7 @@ class NavigationBarPageState extends State<NavigationBarPage> {
               // Update the state of the app
               // ...
               // Then close the drawer
-              login < 1 ? Navigator.pushNamed(context, '/login') : Navigator.pushNamed(context, '/myProfile');
+              login < 1 ? navigateToLoginPage(context) : navigateToMyProfilePage(context);
             },
           ),
         ],

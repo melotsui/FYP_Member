@@ -22,7 +22,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
     return Scaffold(
       appBar: new AppBar(
         backgroundColor: Colors.deepPurpleAccent,
-        title: Text("$appBarTitle"),
+        title: Text("Invoice List"),
         actions: [
           IconButton(
             onPressed: () {},

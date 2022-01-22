@@ -123,7 +123,7 @@ class LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         login = 1;
                         setState(() {});
-                        navigateToProfilePage(context);
+                        navigateToMyProfilePage(context);
                       },
                       child: Text(
                         'LOGIN',

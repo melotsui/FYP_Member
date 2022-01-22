@@ -69,7 +69,7 @@ class ProductListPageState extends State<ProductListPage> {
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
-                labelText: 'Search',
+                labelText: 'Search Product',
               ),
               onChanged: (text) {
                 searchProduct = [];

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'Var/var.dart';
 import 'Login/login.dart';
@@ -10,20 +9,11 @@ import 'Invoice/invoiceList.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;
-  runApp(MaterialApp(
-    home: new HomePage(),
-    initialRoute: '/',
-    routes: {
-      // When navigating to the "/" route, build the FirstScreen widget.
-      '/productList': (context) => ProductListPage(),
-      '/login': (context) => LoginPage(),
-      '/register': (context) => RegisterPage(),
-      '/invoiceList': (context) => InvoiceListPage(),
-      '/myProfile': (context) => AccountPage(),
-      // When navigating to the "/second" route, build the SecondScreen widget.
-      // '/second': (context) => const SecondScreen(),
-    },
-  ));
+  runApp(
+    MaterialApp(
+      home: new HomePage(),
+    ),
+  );
 }
 
 class HomePage extends StatefulWidget {
@@ -32,7 +22,6 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -41,9 +30,15 @@ class HomePageState extends State<HomePage> {
 
   List<Widget> pages = [
     ProductListPage(),
-    Container(color: Colors.grey,),
-    login < 1 ? LoginPage() : Container(color: Colors.green,),
-    login < 1 ? LoginPage() : AccountPage(),
+    Container(
+      color: Colors.grey,
+    ),
+    login < 1
+        ? LoginPage()
+        : Container(
+            color: Colors.green,
+          ),
+    login < 1 ? LoginPage() : MyProfilePage(),
   ];
 
   Widget build(BuildContext context) {
