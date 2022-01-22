@@ -27,7 +27,7 @@ class AccountPageState extends State<AccountPage> {
     return Scaffold(
       appBar: new AppBar(
         backgroundColor: Colors.deepPurpleAccent,
-        title: Text("$appBarTitle"),
+        title: Text("My Profile"),
         centerTitle: true,
         actions: [
           IconButton(
@@ -245,15 +245,23 @@ class AccountPageState extends State<AccountPage> {
                     Divider(color: Colors.black),
                     ListTile(
                       leading: Icon(
-                        Icons.account_circle,
+                        Icons.power_settings_new,
+                        color: Colors.black,
                       ),
-                      title: Text('Profile'),
+                      title: Text(
+                        'Log out',
+                        style: TextStyle(
+                          color: Color.fromRGBO(249, 162, 193, 100),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       onTap: () {
-                        appBarTitle = "My Profile";
+                        // appBarTitle = "productList";
                         // Update the state of the app
                         // ...
                         // Then close the drawer
-                        Navigator.pushNamed(context, '/myProfile');
+                        login = 0;
+                        Navigator.pushNamed(context, '/productList');
                       },
                     ),
                   ],
@@ -263,7 +271,6 @@ class AccountPageState extends State<AccountPage> {
           ),
         ),
       ),
-
 
       // body:
       // ElevatedButton(onPressed: (){

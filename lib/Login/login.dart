@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:member/Login/register.dart';
 
+import '../Var/natigate.dart';
 import '../main.dart';
 import '../Navigation/navigationBar.dart';
+import '../Var/var.dart';
+import '../Account/profile.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -30,7 +33,7 @@ class LoginPageState extends State<LoginPage> {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               stops: [
-                0.0,
+                0.1,
                 0.4,
                 0.6,
                 0.9,
@@ -118,8 +121,9 @@ class LoginPageState extends State<LoginPage> {
                         onPrimary: Colors.white, // foreground
                       ),
                       onPressed: () {
+                        login = 1;
                         setState(() {});
-                        // navigateToRegisterPage(context);
+                        navigateToProfilePage(context);
                       },
                       child: Text(
                         'LOGIN',
@@ -198,8 +202,4 @@ class LoginPageState extends State<LoginPage> {
     );
   }
 
-  void navigateToRegisterPage(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => RegisterPage()));
-  }
 }

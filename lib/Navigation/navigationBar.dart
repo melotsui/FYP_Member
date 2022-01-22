@@ -124,7 +124,7 @@ class NavigationBarPageState extends State<NavigationBarPage> {
               // Update the state of the app
               // ...
               // Then close the drawer
-              Navigator.pushNamed(context, '/myProfile');
+              login < 1 ? Navigator.pushNamed(context, '/login') : Navigator.pushNamed(context, '/myProfile');
             },
           ),
         ],
