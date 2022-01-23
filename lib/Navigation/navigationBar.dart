@@ -19,7 +19,6 @@ class NavigationBarPageState extends State<NavigationBarPage> {
     super.initState();
   }
 
-
   Widget navBar(BuildContext context){
     return new Drawer(
       // Add a ListView to the drawer. This ensures the user can scroll
