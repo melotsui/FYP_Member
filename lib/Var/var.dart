@@ -28,7 +28,6 @@ class Account {
   int accountPhone;
   String accountEmail;
   double accountBalance;
-  int loginStatus;
 
   Account({
     required this.accountID,
@@ -37,7 +36,6 @@ class Account {
     required this.accountPhone,
     required this.accountEmail,
     required this.accountBalance,
-    required this.loginStatus,
   });
 }
 
@@ -49,7 +47,6 @@ List<Account> account = [
     accountPhone: 51581556,
     accountEmail: 'melotsui@gmail.com',
     accountBalance: 80.2,
-    loginStatus: 1,
   ),
 ];
 

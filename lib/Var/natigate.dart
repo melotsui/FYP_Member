@@ -6,6 +6,7 @@ import '../Account/profile.dart';
 import '../Invoice/invoiceList.dart';
 import '../Login/login.dart';
 import '../Login/register.dart';
+import '../Product/favourite.dart';
 import '../Product/productList.dart';
 
 // RegisterPage
@@ -42,4 +43,10 @@ void navigateToLoginPage(BuildContext context) {
 void navigateToInvoiceListPage(BuildContext context) {
   Navigator.of(context)
       .push(MaterialPageRoute(builder: (context) => InvoiceListPage()));
+}
+
+// FavouriteProductPage
+void navigateToFavouriteProductPage(BuildContext context) {
+  Navigator.of(context)
+      .push(MaterialPageRoute(builder: (context) => FavouriteProductPage()));
 }
