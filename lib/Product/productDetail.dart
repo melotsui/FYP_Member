@@ -162,7 +162,6 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
               ),
               Container(
                 // padding: EdgeInsets.only(top: 0),
-                height: MediaQuery.of(context).size.height * 0.4,
                 width: MediaQuery.of(context).size.width * 0.85,
                 decoration: BoxDecoration(
                   boxShadow: [
@@ -193,6 +192,77 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                         ],
                       ),
                     ),
+                    SizedBox(
+                      width: double.infinity,
+                      // child: DataTable(
+                      //   columns: <DataColumn>[
+                      //     DataColumn(
+                      //       label: Text(
+                      //         'Name',
+                      //         style: TextStyle(fontStyle: FontStyle.italic),
+                      //       ),
+                      //     ),
+                      //     DataColumn(
+                      //       label: Text(
+                      //         'Role',
+                      //         style: TextStyle(fontStyle: FontStyle.italic),
+                      //       ),
+                      //     ),
+                      //   ],
+                      //   rows: const <DataRow>[
+                      //     DataRow(
+                      //       cells: <DataCell>[
+                      //         DataCell(Text('Sarah')),
+                      //         DataCell(Text('19')),
+                      //       ],
+                      //     ),
+                      //     DataRow(
+                      //       cells: <DataCell>[
+                      //         DataCell(Text('Janine')),
+                      //         DataCell(Text('43')),
+                      //       ],
+                      //     ),
+                      //     DataRow(
+                      //       cells: <DataCell>[
+                      //         DataCell(Text('William')),
+                      //         DataCell(Text('27')),
+                      //       ],
+                      //     ),
+                      //   ],
+                      // ),
+                      child: DataTable(
+                        columns: <DataColumn>[
+                          DataColumn(
+                            label: Text('Branch'),
+                          ),
+                          DataColumn(
+                            label: Text('Quantity'),
+                          ),
+                        ],
+                        rows: List<DataRow>.generate(
+                          6,
+                          (int index) => DataRow(
+                            color: MaterialStateProperty.resolveWith<Color?>(
+                                (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.selected)) {
+                                return Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withOpacity(0.08);
+                              }
+                              if (index.isEven) {
+                                return Colors.grey.withOpacity(0.3);
+                              }
+                              return null; // Use default value for other states and odd rows.
+                            }),
+                            cells: <DataCell>[
+                              DataCell(Text('Row $index')),
+                              DataCell(Text('Row $index')),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
