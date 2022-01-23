@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:member/Var/var.dart';
 
+import '../Account/icon.dart';
 import '../Account/profile.dart';
 import '../Invoice/invoiceList.dart';
 import '../Login/login.dart';
@@ -31,6 +32,12 @@ void navigateToProductListPage(BuildContext context) {
 void navigateToLoginPage(BuildContext context) {
   Navigator.of(context)
       .push(MaterialPageRoute(builder: (context) => LoginPage()));
+}
+
+// IconPage
+void navigateToIconPage(BuildContext context) {
+  Navigator.of(context)
+      .push(MaterialPageRoute(builder: (context) => IconPage()));
 }
 
 // ChangePasswordPage

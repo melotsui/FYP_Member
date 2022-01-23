@@ -18,11 +18,11 @@ class InvoiceListPageState extends State<InvoiceListPage> {
   }
 
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: new AppBar(
         backgroundColor: Colors.deepPurpleAccent,
         title: Text("Invoice List"),
+        centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {},

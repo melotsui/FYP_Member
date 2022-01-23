@@ -2,16 +2,16 @@
 import 'package:flutter/cupertino.dart';
 
 int login = 0;
-String appBarTitle = "Product List";
-String userIcon = "https://image-resizer.cwg.tw/resize/uri/https%3A%2F%2Fcw1.tw%2FCC%2Fimages%2Farticle%2F201710%2Farticle-59d1f2b06a7a2.jpg/?w=810&h=543&fit=fill";
 String unknownIcon = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/925px-Unknown_person.jpg";
-String userName = "Melo Tsui";
-String role = "VIP Member";
-String userTel = "51581556";
-String accountEmail = "melotsui@gmail.com";
 String unknownName = "Login";
-double accountBalance = 80.2;
-var varFav = [1, 1, 1, 1, 1];
+String userIcon = account[0].accountIcon;
+String userName = account[0].accountName;
+String role = account[0].accountRole;
+String userTel = account[0].accountPhone;
+String accountEmail = account[0].accountEmail;
+double accountBalance = account[0].accountBalance;
+int order = account[0].order;
+int point = account[0].point;
 var displayBalance = 1;
 // int fav = 1;
 //         leading: IconButton(
@@ -24,18 +24,24 @@ var displayBalance = 1;
 class Account {
   String accountID;
   String accountName;
+  String accountIcon;
   String accountRole;
-  int accountPhone;
+  String accountPhone;
   String accountEmail;
   double accountBalance;
+  int order;
+  int point;
 
   Account({
     required this.accountID,
     required this.accountName,
+    required this.accountIcon,
     required this.accountRole,
     required this.accountPhone,
     required this.accountEmail,
     required this.accountBalance,
+    required this.order,
+    required this.point,
   });
 }
 
@@ -43,10 +49,13 @@ List<Account> account = [
   Account(
     accountID: '1',
     accountName: 'Melo Tsui',
-    accountRole: 'https://image-resizer.cwg.tw/resize/uri/https%3A%2F%2Fcw1.tw%2FCC%2Fimages%2Farticle%2F201710%2Farticle-59d1f2b06a7a2.jpg/?w=810&h=543&fit=fill',
-    accountPhone: 51581556,
+    accountIcon: 'https://image-resizer.cwg.tw/resize/uri/https%3A%2F%2Fcw1.tw%2FCC%2Fimages%2Farticle%2F201710%2Farticle-59d1f2b06a7a2.jpg/?w=810&h=543&fit=fill',
+    accountRole: 'VIP Member',
+    accountPhone: '51581556',
     accountEmail: 'melotsui@gmail.com',
     accountBalance: 80.2,
+    order: 12,
+    point: 842,
   ),
 ];
 

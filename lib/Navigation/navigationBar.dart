@@ -90,7 +90,6 @@ class NavigationBarPageState extends State<NavigationBarPage> {
             leading: Icon(Icons.shopping_cart),
             title: Text('Products'),
             onTap: () {
-              appBarTitle = "Product List";
               navigateToProductListPage(context);
             },
           ),
@@ -98,7 +97,6 @@ class NavigationBarPageState extends State<NavigationBarPage> {
             leading: Icon(Icons.web),
             title: Text('Invoices'),
             onTap: () {
-              appBarTitle = "Invoices";
               // Update the state of the app
               // ...
               // Then close the drawer
@@ -109,7 +107,6 @@ class NavigationBarPageState extends State<NavigationBarPage> {
             leading: Icon(Icons.store),
             title: Text('Branch'),
             onTap: () {
-              appBarTitle = "Branch";
               // Update the state of the app
               // ...
               // Then close the drawer
@@ -120,7 +117,6 @@ class NavigationBarPageState extends State<NavigationBarPage> {
             leading: Icon(Icons.account_circle,),
             title: Text('Profile'),
             onTap: () {
-              appBarTitle = "My Profile";
               // Update the state of the app
               // ...
               // Then close the drawer
@@ -137,7 +133,7 @@ class NavigationBarPageState extends State<NavigationBarPage> {
     return Scaffold(
       appBar: new AppBar(
         backgroundColor: Colors.deepPurpleAccent,
-        title: Text("$appBarTitle"),
+        title: Text("Navigation Bar"),
         actions: [
           IconButton(
             onPressed: () {},

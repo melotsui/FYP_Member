@@ -34,18 +34,13 @@ class FavouriteProductPageState extends State<FavouriteProductPage> {
       appBar: new AppBar(
         backgroundColor: Colors.deepPurpleAccent,
         title: Text("Favourite Product"),
+        centerTitle: true,
         leading: IconButton(
           onPressed: (){
             Navigator.pop(context);
           },
           icon: Icon(Icons.arrow_back_ios),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.favorite, color: Colors.redAccent,),
-          ),
-        ],
       ),
       body: Column(
         children: <Widget>[

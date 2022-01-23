@@ -60,7 +60,9 @@ class MyProfilePageState extends State<MyProfilePage> {
                               ? NetworkImage(userIcon)
                               : NetworkImage(unknownIcon),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          navigateToIconPage(context);
+                        },
                       ),
                     ),
                     Column(
@@ -152,7 +154,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                     child: Column(
                       children: [
                         Text(
-                          "12",
+                          "$order",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
@@ -172,7 +174,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                     child: Column(
                       children: [
                         Text(
-                          "842",
+                          "$point",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
@@ -197,40 +199,32 @@ class MyProfilePageState extends State<MyProfilePage> {
                       leading: Icon(Icons.shopping_cart),
                       title: Text('Products'),
                       onTap: () {
-                        appBarTitle = "Product List";
 
-                        Navigator.pushNamed(context, '/productList');
                       },
                     ),
                     ListTile(
                       leading: Icon(Icons.shopping_cart),
                       title: Text('Products'),
                       onTap: () {
-                        appBarTitle = "Product List";
 
-                        Navigator.pushNamed(context, '/productList');
                       },
                     ),
                     ListTile(
                       leading: Icon(Icons.web),
                       title: Text('Invoices'),
                       onTap: () {
-                        appBarTitle = "Invoices";
                         // Update the state of the app
                         // ...
                         // Then close the drawer
-                        Navigator.pushNamed(context, '/invoiceList');
                       },
                     ),
                     ListTile(
                       leading: Icon(Icons.store),
                       title: Text('Branch'),
                       onTap: () {
-                        appBarTitle = "Branch";
                         // Update the state of the app
                         // ...
                         // Then close the drawer
-                        Navigator.pop(context);
                       },
                     ),
                     ListTile(
@@ -239,11 +233,9 @@ class MyProfilePageState extends State<MyProfilePage> {
                       ),
                       title: Text('Profile'),
                       onTap: () {
-                        appBarTitle = "My Profile";
                         // Update the state of the app
                         // ...
                         // Then close the drawer
-                        Navigator.pushNamed(context, '/myProfile');
                       },
                     ),
                     Divider(color: Colors.black),
