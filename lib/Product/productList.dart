@@ -29,7 +29,7 @@ class ProductListPageState extends State<ProductListPage> {
     if (currentBackPressTime == null ||
         now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
       currentBackPressTime = now;
-      Fluttertoast.showToast(msg: "press one more time to close the app");
+      Fluttertoast.showToast(msg: "Press one more time to close the app");
       return Future.value(false);
     }
     return Future.value(true);
