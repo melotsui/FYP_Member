@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:member/Product/productList.dart';
 
 import '../Var/natigate.dart';
 import '../main.dart';
@@ -27,18 +28,26 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
   }
 
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope( onWillPop: (){
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+          ProductListPage()), (Route<dynamic> route) => false);
+          return Future.value(false);
+    },
+      child: Scaffold(
       appBar: new AppBar(
         backgroundColor: Colors.deepPurpleAccent,
         title: Text("Product Detail"), //widget.productDetail.productName
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                ProductListPage()), (Route<dynamic> route) => false);
+
           },
           icon: Icon(Icons.arrow_back_ios),
         ),
       ),
+
       drawer: NavigationBarPageState().navBar(context),
       body: SingleChildScrollView(
         child: Container(
@@ -150,9 +159,30 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                       width: MediaQuery.of(context).size.width * 0.05,
                       child: Column(
                         children: <Widget>[
-                          Icon(
-                            Icons.favorite,
-                            color: Colors.red,
+                          // (widget.productDetail.fav%2) == 0 ?
+                          GestureDetector(
+                            child:
+                            widget.productDetail.fav % 2 == 0 &&
+                                login > 0
+                                ? Icon(Icons.favorite,
+                                color: Colors.redAccent)
+                                : Icon(Icons.favorite_border),
+                            onTap: () {
+                              if(login > 0){
+                                widget.productDetail.fav++;
+                              }
+                              print('fav');
+                              for (int i = 0; i < product.length; i++) {
+                                if (product[i].productName == widget.productDetail.productName) {
+                                  product[i].fav = widget.productDetail.fav;
+                                  print(product[i].productName + " and " + widget.productDetail.productName);
+                                  print(product[i].fav.toString() + " and " + widget.productDetail.fav.toString());
+                                }
+                              }
+                              // storage.write(key: "product", value: product);
+                              // storage.read(key: product);
+                              setState(() {});
+                            },
                           ),
                         ],
                       ),
@@ -270,6 +300,7 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
           ),
         ),
       ),
+    ),
     );
   }
 }
