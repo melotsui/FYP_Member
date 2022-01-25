@@ -4,6 +4,7 @@ import 'package:member/Var/var.dart';
 
 import '../Account/icon.dart';
 import '../Account/profile.dart';
+import '../Invoice/invoiceDetail.dart';
 import '../Invoice/invoiceList.dart';
 import '../Login/login.dart';
 import '../Login/register.dart';
@@ -54,4 +55,9 @@ void navigateToFavouriteProductPage(BuildContext context) {
 // ProductDetailPage
 void navigateToProductDetailPage(BuildContext context, Product productDetail) {
   Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductDetailPage(productDetail: productDetail,)));
+}
+
+// InvoiceDetailPage
+void navigateToInvoiceDetailPage(BuildContext context) {
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => InvoiceDetailPage()));
 }

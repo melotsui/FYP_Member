@@ -79,7 +79,7 @@ class FavouriteProductPageState extends State<FavouriteProductPage> {
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 200,
-                  childAspectRatio: 2 / 3,
+                  childAspectRatio: 3 / 5,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 20),
               itemCount: searchProduct.length,

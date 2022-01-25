@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:member/Login/register.dart';
 
+import '../Product/productList.dart';
 import '../Var/natigate.dart';
 import '../main.dart';
 import '../Navigation/navigationBar.dart';
@@ -26,6 +27,14 @@ class LoginPageState extends State<LoginPage> {
         title: Text("Login"),
         backgroundColor: Colors.deepPurpleAccent,
         centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => ProductListPage()),
+                    (Route<dynamic> route) => false);
+          },
+          icon: Icon(Icons.arrow_back_ios),
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(

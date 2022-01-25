@@ -40,7 +40,7 @@ class NavigationBarPageState extends State<NavigationBarPage> {
                     backgroundImage: login > 0 ? NetworkImage(userIcon) : NetworkImage(unknownIcon),
                   ),
                   onTap: () {
-                    login > 0 ? navigateToMyProfilePage(context) : navigateToLoginPage(context);
+                    login > 0 ? navigateToIconPage(context) : navigateToLoginPage(context);
                   },
                 ),
                 Divider(),
@@ -48,7 +48,7 @@ class NavigationBarPageState extends State<NavigationBarPage> {
                 Text(userName,style: TextStyle(fontWeight: FontWeight.bold),) :
                 Text(unknownName,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
 
-                SizedBox(height: 10,),
+                SizedBox(height: 5,),
                 Row(
                   children: <Widget>[
                     login > 0 ? Text(
