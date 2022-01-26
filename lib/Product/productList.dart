@@ -109,15 +109,13 @@ class ProductListPageState extends State<ProductListPage> {
                       alignment: Alignment.centerLeft,
                       child: Column(
                         children: <Widget>[
-                          Container(
-                            width: (MediaQuery.of(context).size.width - 50) / 2,
-                            padding: EdgeInsets.only(top: 10),
-                            height: 150,
+                          Expanded(
+                            flex: 60,
                             child: Row(
                               children: <Widget>[
-                                Expanded(flex: 20, child: SizedBox()),
+                                Expanded(child: SizedBox()),
                                 Expanded(
-                                  flex: 80,
+                                  flex: 5,
                                   child: Image(
                                     image: NetworkImage(
                                         searchProduct[index].productImage),
@@ -125,7 +123,6 @@ class ProductListPageState extends State<ProductListPage> {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 10,
                                   child: Column(
                                     children: <Widget>[
                                       Expanded(
@@ -165,9 +162,8 @@ class ProductListPageState extends State<ProductListPage> {
                               ],
                             ),
                           ),
-                          SizedBox(
-                            width: (MediaQuery.of(context).size.width - 60) / 2,
-                            height: 100,
+                          Expanded(
+                            flex: 40,
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10),
                               child: Text(searchProduct[index].productName),

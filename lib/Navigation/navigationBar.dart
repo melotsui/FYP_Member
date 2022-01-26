@@ -25,12 +25,10 @@ class NavigationBarPageState extends State<NavigationBarPage> {
       // through the options in the drawer if there isn't enough vertical
       // space to fit everything.
       child: ListView(
-
         // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -47,8 +45,8 @@ class NavigationBarPageState extends State<NavigationBarPage> {
                 login > 0 ?
                 Text(userName,style: TextStyle(fontWeight: FontWeight.bold),) :
                 Text(unknownName,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-
-                SizedBox(height: 5,),
+                Expanded(child: Text("")),
+                // SizedBox(height: 5,),
                 Row(
                   children: <Widget>[
                     login > 0 ? Text(
@@ -66,11 +64,8 @@ class NavigationBarPageState extends State<NavigationBarPage> {
                         //
                         // });
                         displayBalance = displayBalance + 1;
-
-
                       },
                     ),
-
                   ],
                 ),
               ],
@@ -81,7 +76,6 @@ class NavigationBarPageState extends State<NavigationBarPage> {
               // image: DecorationImage(
               //     image: NetworkImage("https://www.interviewmagazine.com/wp-content/uploads/2015/07/img-justin-bieber_112022637363.jpg"),
               //     fit: BoxFit.contain)
-
             ),
           ),
 
