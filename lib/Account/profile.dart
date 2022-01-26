@@ -74,7 +74,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                       Column(
                         children: <Widget>[
                           Container(
-                            padding: EdgeInsets.only(top: 35, left: 50),
+                            padding: EdgeInsets.only(top: 35, left: MediaQuery.of(context).size.width * 0.1),
                             child: Text(
                               userName,
                               textAlign: TextAlign.left,
@@ -86,7 +86,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                             width: MediaQuery.of(context).size.width * 0.5,
                           ),
                           Container(
-                            padding: EdgeInsets.only(top: 5, left: 50),
+                            padding: EdgeInsets.only(top: 5, left: MediaQuery.of(context).size.width * 0.1),
                             child: Text(
                               role,
                               textAlign: TextAlign.left,

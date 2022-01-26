@@ -166,7 +166,78 @@ class ProductListPageState extends State<ProductListPage> {
                             flex: 40,
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: Text(searchProduct[index].productName),
+                              // child: Text(searchProduct[index].productName),
+                              child: Expanded(
+                                child: Column(
+                                  children: <Widget>[
+                                    Expanded(child: Text("")),
+                                    Row(children: [Expanded(child: Text(
+                                      searchProduct[index].productName,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                        color: Color.fromRGBO(0, 0, 0, 60),
+                                      ),
+                                    ),)],),
+                                    Expanded(child: Text("")),
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          'HK\$' +
+                                              searchProduct[index]
+                                                  .sellPrice
+                                                  .toString() + ' ',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        searchProduct[index].retailPrice !=
+                                            searchProduct[index].sellPrice
+                                            ? Text(
+                                          'HK\$' +
+                                              searchProduct[index]
+                                                  .retailPrice
+                                                  .toString(),
+                                          style: TextStyle(
+                                            decoration: TextDecoration
+                                                .lineThrough,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color.fromRGBO(
+                                                196, 196, 196, 73),
+                                            fontSize: 13,
+                                          ),
+                                        )
+                                            : Text(""),
+                                      ],
+                                    ),
+                                    Expanded(child: Text("")),
+                                    Row(
+                                      children: <Widget>[
+                                        searchProduct[index].retailPrice !=
+                                                searchProduct[index].sellPrice
+                                            ? Text(
+                                                'Save \$' +
+                                                    (searchProduct[index]
+                                                                .retailPrice -
+                                                            searchProduct[index]
+                                                                .sellPrice)
+                                                        .toStringAsFixed(1) +
+                                                    '!',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color.fromRGBO(
+                                                      214, 39, 218, 100),
+                                                  fontSize: 15,
+                                                ),
+                                              )
+                                            : Text(""),
+                                      ],
+                                    ),
+                                    Expanded(child: Text("")),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         ],
