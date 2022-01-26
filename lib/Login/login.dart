@@ -31,7 +31,7 @@ class LoginPageState extends State<LoginPage> {
           onPressed: () {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (context) => ProductListPage()),
-                    (Route<dynamic> route) => false);
+                (Route<dynamic> route) => false);
           },
           icon: Icon(Icons.arrow_back_ios),
         ),
@@ -39,23 +39,21 @@ class LoginPageState extends State<LoginPage> {
       body: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [
-                0.1,
-                0.4,
-                0.6,
-                0.9,
-              ],
-              colors: [
-                Colors.white24,
-                Colors.lightBlueAccent,
-                Colors.blueAccent,
-                Colors.indigo,
-              ],
-            )
-
-        ),
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          stops: [
+            0.1,
+            0.4,
+            0.6,
+            0.9,
+          ],
+          colors: [
+            Colors.white24,
+            Colors.lightBlueAccent,
+            Colors.blueAccent,
+            Colors.indigo,
+          ],
+        )),
         child: Container(
           margin: new EdgeInsets.symmetric(horizontal: 15),
           child: Column(
@@ -148,10 +146,12 @@ class LoginPageState extends State<LoginPage> {
               Expanded(child: Text("")),
               Row(
                 children: <Widget>[
-                  SizedBox(
-                    width: 10,
+                  Expanded(
+                    child: Text(""),
+                    flex: 5,
                   ),
                   Expanded(
+                    flex: 100,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: Colors.green, // background
@@ -170,10 +170,12 @@ class LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 10,
+                  Expanded(
+                    child: Text(""),
+                    flex: 5,
                   ),
                   Expanded(
+                      flex: 100,
                       child: TextButton(
                     style: ButtonStyle(
                       overlayColor: MaterialStateProperty.resolveWith<Color?>(
@@ -192,8 +194,10 @@ class LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   )),
-                  SizedBox(
-                    width: 10,
+
+                  Expanded(
+                    child: Text(""),
+                    flex: 5,
                   ),
                 ],
               ),
@@ -210,5 +214,4 @@ class LoginPageState extends State<LoginPage> {
       // }, child: Text("haha"),),
     );
   }
-
 }

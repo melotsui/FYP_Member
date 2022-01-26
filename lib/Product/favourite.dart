@@ -93,15 +93,13 @@ class FavouriteProductPageState extends State<FavouriteProductPage> {
                     alignment: Alignment.centerLeft,
                     child: Column(
                       children: <Widget>[
-                        Container(
-                          width: (MediaQuery.of(context).size.width - 50) / 2,
-                          padding: EdgeInsets.only(top: 10),
-                          height: 150,
+                        Expanded(
+                          flex: 60,
                           child: Row(
                             children: <Widget>[
-                              Expanded(flex: 20, child: SizedBox()),
+                              Expanded(child: SizedBox()),
                               Expanded(
-                                flex: 80,
+                                flex: 5,
                                 child: Image(
                                   image: NetworkImage(
                                       searchProduct[index].productImage),
@@ -109,7 +107,6 @@ class FavouriteProductPageState extends State<FavouriteProductPage> {
                                 ),
                               ),
                               Expanded(
-                                flex: 10,
                                 child: Column(
                                   children: <Widget>[
                                     Expanded(
@@ -147,12 +144,86 @@ class FavouriteProductPageState extends State<FavouriteProductPage> {
                             ],
                           ),
                         ),
-                        SizedBox(
-                          width: (MediaQuery.of(context).size.width - 60) / 2,
-                          height: 100,
+                        Expanded(
+                          flex: 40,
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(searchProduct[index].productName),
+                            child: Column(
+                              children: <Widget>[
+                                Expanded(child: Text("")),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        searchProduct[index].productName,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                          color: Color.fromRGBO(0, 0, 0, 60),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Expanded(child: Text("")),
+                                Row(
+                                  children: <Widget>[
+                                    Text(
+                                      'HK\$' +
+                                          searchProduct[index]
+                                              .sellPrice
+                                              .toString() +
+                                          ' ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    searchProduct[index].retailPrice !=
+                                        searchProduct[index].sellPrice
+                                        ? Text(
+                                      'HK\$' +
+                                          searchProduct[index]
+                                              .retailPrice
+                                              .toString(),
+                                      style: TextStyle(
+                                        decoration:
+                                        TextDecoration.lineThrough,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromRGBO(
+                                            196, 196, 196, 73),
+                                        fontSize: 13,
+                                      ),
+                                    )
+                                        : Text(""),
+                                  ],
+                                ),
+                                Expanded(child: Text("")),
+                                Row(
+                                  children: <Widget>[
+                                    searchProduct[index].retailPrice !=
+                                        searchProduct[index].sellPrice
+                                        ? Text(
+                                      'Save \$' +
+                                          (searchProduct[index]
+                                              .retailPrice -
+                                              searchProduct[index]
+                                                  .sellPrice)
+                                              .toStringAsFixed(1) +
+                                          '!',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromRGBO(
+                                            214, 39, 218, 100),
+                                        fontSize: 15,
+                                      ),
+                                    )
+                                        : Text(""),
+                                  ],
+                                ),
+                                Expanded(child: Text("")),
+                              ],
+                            ),
                           ),
                         ),
                       ],
