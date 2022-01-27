@@ -185,7 +185,9 @@ class LoginPageState extends State<LoginPage> {
                         return null; // Defer to the widget's default.
                       }),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      navigateToForgetPasswordPage(context);
+                    },
                     child: Text(
                       'FORGET PASSWORD',
                       style: TextStyle(

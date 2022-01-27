@@ -48,6 +48,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
+                // hintText: 'Input invoice ID',
                 labelText: 'Search Invoice',
               ),
               onChanged: (text) {

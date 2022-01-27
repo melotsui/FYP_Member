@@ -41,7 +41,9 @@ class MyProfilePageState extends State<MyProfilePage> {
           centerTitle: true,
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                navigateToEditProfilePage(context);
+              },
               icon: Icon(Icons.app_registration),
             ),
           ],
@@ -74,7 +76,9 @@ class MyProfilePageState extends State<MyProfilePage> {
                       Column(
                         children: <Widget>[
                           Container(
-                            padding: EdgeInsets.only(top: 35, left: MediaQuery.of(context).size.width * 0.1),
+                            padding: EdgeInsets.only(
+                                top: 35,
+                                left: MediaQuery.of(context).size.width * 0.1),
                             child: Text(
                               userName,
                               textAlign: TextAlign.left,
@@ -86,7 +90,9 @@ class MyProfilePageState extends State<MyProfilePage> {
                             width: MediaQuery.of(context).size.width * 0.5,
                           ),
                           Container(
-                            padding: EdgeInsets.only(top: 5, left: MediaQuery.of(context).size.width * 0.1),
+                            padding: EdgeInsets.only(
+                                top: 5,
+                                left: MediaQuery.of(context).size.width * 0.1),
                             child: Text(
                               role,
                               textAlign: TextAlign.left,
@@ -202,9 +208,11 @@ class MyProfilePageState extends State<MyProfilePage> {
                   child: ListView(
                     children: [
                       ListTile(
-                        leading: Icon(Icons.shopping_cart),
-                        title: Text('Products'),
-                        onTap: () {},
+                        leading: Icon(Icons.lock_open),
+                        title: Text('Change Password'),
+                        onTap: () {
+                          navigateToChangePasswordPage(context);
+                        },
                       ),
                       ListTile(
                         leading: Icon(Icons.shopping_cart),
