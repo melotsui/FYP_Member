@@ -41,36 +41,36 @@ class InvoiceListPageState extends State<InvoiceListPage> {
       drawer: NavigationBarPageState().navBar(context),
       body: Column(
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 10),
-            child: TextField(
-              // obscureText: true,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(),
-                // hintText: 'Input invoice ID',
-                labelText: 'Search Invoice',
-              ),
-              onChanged: (text) {
-                // searchProduct = [];
-                // print(searchProduct);
-                // print(product);
-                // if (text != "") {
-                //   for (int i = 0; i < product.length; i++) {
-                //     if (product[i]
-                //         .productName
-                //         .toLowerCase()
-                //         .contains(text.toLowerCase())) {
-                //       searchProduct.add(product[i]);
-                //     }
-                //   }
-                // } else {
-                //   searchProduct = product;
-                // }
-                // setState(() {});
-              },
-            ),
-          ),
+          // Container(
+          //   padding: EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 10),
+          //   child: TextField(
+          //     // obscureText: true,
+          //     decoration: InputDecoration(
+          //       prefixIcon: Icon(Icons.search),
+          //       border: OutlineInputBorder(),
+          //       // hintText: 'Input invoice ID',
+          //       labelText: 'Search Invoice',
+          //     ),
+          //     onChanged: (text) {
+          //       // searchProduct = [];
+          //       // print(searchProduct);
+          //       // print(product);
+          //       // if (text != "") {
+          //       //   for (int i = 0; i < product.length; i++) {
+          //       //     if (product[i]
+          //       //         .productName
+          //       //         .toLowerCase()
+          //       //         .contains(text.toLowerCase())) {
+          //       //       searchProduct.add(product[i]);
+          //       //     }
+          //       //   }
+          //       // } else {
+          //       //   searchProduct = product;
+          //       // }
+          //       // setState(() {});
+          //     },
+          //   ),
+          // ),
           Expanded(
             child: ListView.builder(
                 // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),

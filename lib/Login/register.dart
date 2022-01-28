@@ -21,6 +21,7 @@ class RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       appBar: new AppBar(
         title: Text("Register"),
+        backgroundColor: Colors.deepPurpleAccent,
         centerTitle: true,
       ),
 

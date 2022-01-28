@@ -80,7 +80,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                                 top: 35,
                                 left: MediaQuery.of(context).size.width * 0.1),
                             child: Text(
-                              userName,
+                              userFirstName + " " + userLastName,
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontSize: 20,
@@ -113,7 +113,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                     ),
                     Container(
                       child: Text(
-                        "$userTel",
+                        "$userPhone",
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.black54),
                       ),
@@ -129,14 +129,15 @@ class MyProfilePageState extends State<MyProfilePage> {
                     ),
                     Container(
                       child: Text(
-                        "$accountEmail",
+                        "$userEmail",
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.black54),
                       ),
                     ),
                   ],
                 ),
-                Divider(color: Colors.black),
+                SizedBox(height: 5,),
+                Divider(color: Colors.black54),
                 Row(
                   children: <Widget>[
                     Container(

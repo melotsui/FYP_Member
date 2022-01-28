@@ -43,29 +43,31 @@ class NavigationBarPageState extends State<NavigationBarPage> {
                 ),
                 Divider(),
                 login > 0 ?
-                Text(userName,style: TextStyle(fontWeight: FontWeight.bold),) :
+                Text(userFirstName + " " + userLastName,style: TextStyle(fontWeight: FontWeight.bold),) :
                 Text(unknownName,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                 Expanded(child: Text("")),
                 // SizedBox(height: 5,),
                 Row(
                   children: <Widget>[
-                    login > 0 ? Text(
-                      displayBalance%2 ==1 ? 'Balance: \$$accountBalance ' : 'Balance: ****** ',
-                      style: TextStyle(color: Colors.black54),
-                    ) : Text(""),
-                    GestureDetector(
-                      child: login > 0 ? Icon(
-                        Icons.remove_red_eye,
-                        color: displayBalance%1 ==0 ?
-                        Colors.black38 : Colors.black,
-                      ) : Text(""),
-                      onTap: () {
-                        // setState(() {
-                        //
-                        // });
-                        displayBalance = displayBalance + 1;
-                      },
-                    ),
+                    login > 0 ? Text('Balance: \$$accountBalance ',
+                      style: TextStyle(color: Colors.black54),) : Text(""),
+                    // login > 0 ? Text(
+                    //   displayBalance%2 ==1 ? 'Balance: \$$accountBalance ' : 'Balance: ****** ',
+                    //   style: TextStyle(color: Colors.black54),
+                    // ) : Text(""),
+                    // GestureDetector(
+                    //   child: login > 0 ? Icon(
+                    //     Icons.remove_red_eye,
+                    //     color: displayBalance%1 ==0 ?
+                    //     Colors.black38 : Colors.black,
+                    //   ) : Text(""),
+                    //   onTap: () {
+                    //     // setState(() {
+                    //     //
+                    //     // });
+                    //     displayBalance = displayBalance + 1;
+                    //   },
+                    // ),
                   ],
                 ),
               ],

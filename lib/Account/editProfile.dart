@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
+import 'package:member/Var/natigate.dart';
 
+import '../Var/var.dart';
 import '../main.dart';
 import '../Navigation/navigationBar.dart';
 
@@ -10,7 +12,9 @@ class EditProfilePage extends StatefulWidget {
   EditProfilePageState createState() => EditProfilePageState();
 }
 
+
 enum SingingCharacter { male, female }
+SingingCharacter? _gender = SingingCharacter.male;
 
 class EditProfilePageState extends State<EditProfilePage> {
   @override
@@ -20,7 +24,11 @@ class EditProfilePageState extends State<EditProfilePage> {
   }
 
   Widget build(BuildContext context) {
-    SingingCharacter? _character = SingingCharacter.male;
+    if(userGender == "female"){
+      _gender = SingingCharacter.female;
+    } else if(userGender == "male"){
+      _gender = SingingCharacter.male;
+    }
     return Scaffold(
       appBar: new AppBar(
         title: Text("Edit My Profile"),
@@ -41,6 +49,7 @@ class EditProfilePageState extends State<EditProfilePage> {
               Container(
                 padding: EdgeInsets.only(top: 30),
                 child: TextFormField(
+                  initialValue: userFirstName,
                   style: TextStyle(fontSize: 20),
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
@@ -49,6 +58,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                     // icon: Icon(Icons.person),
                     hintText: '',
                     labelText: 'First Name',
+
                     border: OutlineInputBorder(),
                   ),
                   onSaved: (String? value) {
@@ -65,6 +75,7 @@ class EditProfilePageState extends State<EditProfilePage> {
               Container(
                 padding: EdgeInsets.only(top: 20),
                 child: TextFormField(
+                  initialValue: userLastName,
                   style: TextStyle(fontSize: 20),
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
@@ -89,6 +100,7 @@ class EditProfilePageState extends State<EditProfilePage> {
               Container(
                 padding: EdgeInsets.only(top: 20),
                 child: TextFormField(
+                  initialValue: userEmail,
                   style: TextStyle(fontSize: 20),
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
@@ -113,6 +125,7 @@ class EditProfilePageState extends State<EditProfilePage> {
               Container(
                 padding: EdgeInsets.only(top: 20),
                 child: TextFormField(
+                  initialValue: userPhone,
                   style: TextStyle(fontSize: 20),
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
@@ -137,13 +150,14 @@ class EditProfilePageState extends State<EditProfilePage> {
               Container(
                 padding: EdgeInsets.only(top: 20),
                 child: TextFormField(
+                  initialValue: userBirthday,
                   style: TextStyle(fontSize: 20),
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
                     helperText: 'Assistive text',
                     // icon: Icon(Icons.person),
-                    hintText: 'mm/dd/yyyy',
+                    hintText: 'dd/mm/yyyy',
                     labelText: 'Your Birthday',
                     border: OutlineInputBorder(),
                   ),
@@ -188,10 +202,12 @@ class EditProfilePageState extends State<EditProfilePage> {
                       horizontalTitleGap: 0,
                       leading: Radio<SingingCharacter>(
                         value: SingingCharacter.male,
-                        groupValue: _character,
+                        groupValue: _gender,
                         onChanged: (SingingCharacter? value) {
+                          print(value);
                           setState(() {
-                            _character = value;
+                            userGender = "male";
+                            _gender = value;
                           });
                         },
                       ),
@@ -203,10 +219,12 @@ class EditProfilePageState extends State<EditProfilePage> {
                       title: Text('Female'),
                       leading: Radio<SingingCharacter>(
                         value: SingingCharacter.female,
-                        groupValue: _character,
+                        groupValue: _gender,
                         onChanged: (SingingCharacter? value) {
+                          print(value);
                           setState(() {
-                            _character = value;
+                            userGender = "female";
+                            _gender = value;
                           });
                         },
                       ),
@@ -224,6 +242,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                         onPrimary: Colors.white, // foreground
                       ),
                       onPressed: () {
+                        navigateToMyProfilePage(context);
                         // login = 1;
                         // setState(() {});
                         // navigateToMyProfilePage(context);

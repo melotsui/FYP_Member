@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:member/Var/natigate.dart';
 
 import '../main.dart';
 import '../Navigation/navigationBar.dart';
@@ -107,7 +108,9 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                 },
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Row(
               children: <Widget>[
                 Expanded(
@@ -117,7 +120,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                       onPrimary: Colors.white, // foreground
                     ),
                     onPressed: () {
-
+                      navigateToMyProfilePage(context);
                     },
                     child: Text(
                       'SAVE',

@@ -5,10 +5,13 @@ int login = 0;
 String unknownIcon = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/925px-Unknown_person.jpg";
 String unknownName = "Login";
 String userIcon = account[0].accountIcon;
-String userName = account[0].accountName;
+String userFirstName = account[0].accountFirstName;
+String userLastName = account[0].accountLastName;
 String role = account[0].accountRole;
-String userTel = account[0].accountPhone;
-String accountEmail = account[0].accountEmail;
+String userPhone = account[0].accountPhone;
+String userEmail = account[0].accountEmail;
+String userBirthday = account[0].accountBirthday;
+String userGender = account[0].accountGender;
 double accountBalance = account[0].accountBalance;
 int order = account[0].order;
 int point = account[0].point;
@@ -23,22 +26,28 @@ var displayBalance = 1;
 
 class Account {
   String accountID;
-  String accountName;
+  String accountFirstName;
+  String accountLastName;
   String accountIcon;
   String accountRole;
   String accountPhone;
   String accountEmail;
+  String accountBirthday;
+  String accountGender;
   double accountBalance;
   int order;
   int point;
 
   Account({
     required this.accountID,
-    required this.accountName,
+    required this.accountFirstName,
+    required this.accountLastName,
     required this.accountIcon,
     required this.accountRole,
     required this.accountPhone,
     required this.accountEmail,
+    required this.accountBirthday,
+    required this.accountGender,
     required this.accountBalance,
     required this.order,
     required this.point,
@@ -48,11 +57,14 @@ class Account {
 List<Account> account = [
   Account(
     accountID: '1',
-    accountName: 'Melo Tsui',
+    accountFirstName: 'Melo',
+    accountLastName: 'Tsui',
     accountIcon: 'https://image-resizer.cwg.tw/resize/uri/https%3A%2F%2Fcw1.tw%2FCC%2Fimages%2Farticle%2F201710%2Farticle-59d1f2b06a7a2.jpg/?w=810&h=543&fit=fill',
     accountRole: 'VIP Member',
     accountPhone: '51581556',
     accountEmail: 'melotsui@gmail.com',
+    accountBirthday: "11/09/2001",
+    accountGender: "male",
     accountBalance: 80.2,
     order: 12,
     point: 842,
