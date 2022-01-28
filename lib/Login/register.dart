@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import '../Var/natigate.dart';
 import '../Var/var.dart';
 import '../main.dart';
@@ -25,6 +26,7 @@ String newPhone = "";
 String newBirthday = "";
 String newGender = "";
 
+String image="";
 class RegisterPageState extends State<RegisterPage> {
   @override
   void initState() {
@@ -33,6 +35,16 @@ class RegisterPageState extends State<RegisterPage> {
   }
 
   Widget build(BuildContext context) {
+    final _picker = ImagePicker();
+    Future<void> _imgFromGallery() async {
+      final pickedImage = await _picker.pickImage(source: ImageSource.gallery);
+      if (pickedImage != null)
+        setState(() {
+          // image = pickedImage;
+        });
+      print(pickedImage!.path);
+      image = pickedImage.path;
+    }
     print(newFirstName);
     print(formattedDate);
     for (int i = 1; i <= account.length + 1; i++) {
@@ -65,7 +77,7 @@ class RegisterPageState extends State<RegisterPage> {
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                    helperText: 'Assistive text',
+                    // helperText: 'Assistive text',
                     // icon: Icon(Icons.person),
                     hintText: '',
                     labelText: 'First Name',
@@ -88,7 +100,7 @@ class RegisterPageState extends State<RegisterPage> {
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                    helperText: 'Assistive text',
+                    // helperText: 'Assistive text',
                     // icon: Icon(Icons.person),
                     hintText: '',
                     labelText: 'Last Name',
@@ -110,7 +122,7 @@ class RegisterPageState extends State<RegisterPage> {
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                    helperText: 'Assistive text',
+                    // helperText: 'Assistive text',
                     // icon: Icon(Icons.person),
                     hintText: '',
                     labelText: 'Email',
@@ -132,7 +144,7 @@ class RegisterPageState extends State<RegisterPage> {
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                    helperText: 'Assistive text',
+                    // helperText: 'Assistive text',
                     // icon: Icon(Icons.person),
                     hintText: '',
                     labelText: 'Phone Number',
@@ -149,12 +161,66 @@ class RegisterPageState extends State<RegisterPage> {
               Container(
                 padding: EdgeInsets.only(top: 20),
                 child: TextFormField(
+                  obscureText: true,
+                  style: TextStyle(fontSize: 20),
+                  scrollPadding: EdgeInsets.symmetric(horizontal: 20),
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20),
+
+                    // icon: Icon(Icons.person),
+                    hintText: '',
+                    labelText: 'Password',
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (String? value) {
+                    if (value != null) {
+                      // loginPassword = value;
+                      // print(loginPassword);
+                    }
+                  },
+                  validator: (String? value) {
+                    return (value != null && value.contains('@'))
+                        ? 'Do not use the @ char.'
+                        : null;
+                  },
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 20),
+                child: TextFormField(
+                  obscureText: true,
+                  style: TextStyle(fontSize: 20),
+                  scrollPadding: EdgeInsets.symmetric(horizontal: 20),
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20),
+
+                    // icon: Icon(Icons.person),
+                    hintText: '',
+                    labelText: 'ConfirmPassword',
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (String? value) {
+                    if (value != null) {
+                      // loginPassword = value;
+                      // print(loginPassword);
+                    }
+                  },
+                  validator: (String? value) {
+                    return (value != null && value.contains('@'))
+                        ? 'Do not use the @ char.'
+                        : null;
+                  },
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 20),
+                child: TextFormField(
                   // initialValue: userBirthday,
                   style: TextStyle(fontSize: 20),
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                    helperText: 'Assistive text',
+                    // helperText: 'Assistive text',
                     // icon: Icon(Icons.person),
                     hintText: 'dd/mm/yyyy',
                     labelText: 'Your Birthday',
@@ -230,8 +296,25 @@ class RegisterPageState extends State<RegisterPage> {
                   ),
                 ],
               ),
+              GestureDetector(
+                child: Container(
+                  width: double.infinity,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    color: Colors.black26,
+                    image: DecorationImage(
+                        image: NetworkImage(
+                            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Upload_alt_font_awesome.svg/100px-Upload_alt_font_awesome.svg.png"),
+                        fit: BoxFit.contain),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                  onTap: () {
+                    _imgFromGallery();
+                  }
+              ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               Row(
                 children: <Widget>[
@@ -247,7 +330,7 @@ class RegisterPageState extends State<RegisterPage> {
                             accountID: newID,
                             accountFirstName: newFirstName,
                             accountLastName: newLastName,
-                            accountIcon: unknownIcon,
+                            accountIcon: image, //image path
                             accountRole: 'VIP Member',
                             accountPhone: newPhone,
                             accountEmail: newEmail,
