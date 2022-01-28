@@ -1,3 +1,6 @@
+import 'dart:io';
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -20,6 +23,7 @@ class ProductListPageState extends State<ProductListPage> {
   @override
   void initState() {
     // TODO: implement initState
+
     searchProduct = product;
     super.initState();
   }
@@ -30,9 +34,10 @@ class ProductListPageState extends State<ProductListPage> {
         now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
       currentBackPressTime = now;
       Fluttertoast.showToast(msg: "Press one more time to close the app");
+
       return Future.value(false);
     }
-    return Future.value(true);
+    return exit(0);
   }
 
   Widget build(BuildContext context) {

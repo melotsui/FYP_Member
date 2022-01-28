@@ -14,6 +14,9 @@ class LoginPage extends StatefulWidget {
   LoginPageState createState() => LoginPageState();
 }
 
+String loginPassword = "";
+String loginEmail = "";
+
 class LoginPageState extends State<LoginPage> {
   @override
   void initState() {
@@ -81,9 +84,11 @@ class LoginPageState extends State<LoginPage> {
                   labelText: 'Email',
                   border: OutlineInputBorder(),
                 ),
-                onSaved: (String? value) {
-                  // This optional block of code can be used to run
-                  // code when the user saves the form.
+                onChanged: (String? value) {
+                  if (value != null) {
+                    loginEmail = value;
+                    print(loginEmail);
+                  }
                 },
                 validator: (String? value) {
                   return (value != null && value.contains('@'))
@@ -106,9 +111,11 @@ class LoginPageState extends State<LoginPage> {
                   labelText: 'Password',
                   border: OutlineInputBorder(),
                 ),
-                onSaved: (String? value) {
-                  // This optional block of code can be used to run
-                  // code when the user saves the form.
+                onChanged: (String? value) {
+                  if (value != null) {
+                    loginPassword = value;
+                    print(loginPassword);
+                  }
                 },
                 validator: (String? value) {
                   return (value != null && value.contains('@'))
@@ -129,6 +136,21 @@ class LoginPageState extends State<LoginPage> {
                       ),
                       onPressed: () {
                         login = 1;
+                        for(int i=0; i<account.length; i++){
+                          if(account[i].accountEmail==loginEmail){
+                            userIcon = account[i].accountIcon;
+                            userFirstName = account[i].accountFirstName;
+                            userLastName = account[i].accountLastName;
+                            role = account[i].accountRole;
+                            userPhone = account[i].accountPhone;
+                            userEmail = account[i].accountEmail;
+                            userBirthday = account[i].accountBirthday;
+                            userGender = account[i].accountGender;
+                            accountBalance = account[i].accountBalance;
+                            order = account[i].order;
+                            point = account[i].point;
+                          }
+                        }
                         setState(() {});
                         navigateToMyProfilePage(context);
                       },
@@ -177,26 +199,26 @@ class LoginPageState extends State<LoginPage> {
                   Expanded(
                       flex: 100,
                       child: TextButton(
-                    style: ButtonStyle(
-                      overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                          (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.focused))
-                          return Colors.red;
-                        return null; // Defer to the widget's default.
-                      }),
-                    ),
-                    onPressed: () {
-                      navigateToForgetPasswordPage(context);
-                    },
-                    child: Text(
-                      'FORGET PASSWORD',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )),
-
+                        style: ButtonStyle(
+                          overlayColor:
+                              MaterialStateProperty.resolveWith<Color?>(
+                                  (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.focused))
+                              return Colors.red;
+                            return null; // Defer to the widget's default.
+                          }),
+                        ),
+                        onPressed: () {
+                          navigateToForgetPasswordPage(context);
+                        },
+                        child: Text(
+                          'FORGET PASSWORD',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )),
                   Expanded(
                     child: Text(""),
                     flex: 5,
