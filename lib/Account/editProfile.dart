@@ -23,6 +23,12 @@ class EditProfilePageState extends State<EditProfilePage> {
     super.initState();
   }
 
+  String editFirstName = "";
+  String editLastName = "";
+  String editEmail = "";
+  String editPhone = "";
+  String editBirthday = "";
+
   Widget build(BuildContext context) {
     if(userGender == "female"){
       _gender = SingingCharacter.female;
@@ -61,6 +67,12 @@ class EditProfilePageState extends State<EditProfilePage> {
 
                     border: OutlineInputBorder(),
                   ),
+                  onChanged: (String? value) {
+                    if (value != null) {
+                      editFirstName = value;
+                      print(editFirstName);
+                    }
+                  },
                   onSaved: (String? value) {
                     // This optional block of code can be used to run
                     // code when the user saves the form.
@@ -86,6 +98,12 @@ class EditProfilePageState extends State<EditProfilePage> {
                     labelText: 'Last Name',
                     border: OutlineInputBorder(),
                   ),
+                  onChanged: (String? value) {
+                    if (value != null) {
+                      editLastName = value;
+                      print(editLastName);
+                    }
+                  },
                   onSaved: (String? value) {
                     // This optional block of code can be used to run
                     // code when the user saves the form.
@@ -111,6 +129,12 @@ class EditProfilePageState extends State<EditProfilePage> {
                     labelText: 'Email',
                     border: OutlineInputBorder(),
                   ),
+                  onChanged: (String? value) {
+                    if (value != null) {
+                      editEmail = value;
+                      print(editEmail);
+                    }
+                  },
                   onSaved: (String? value) {
                     // This optional block of code can be used to run
                     // code when the user saves the form.
@@ -136,6 +160,12 @@ class EditProfilePageState extends State<EditProfilePage> {
                     labelText: 'Phone Number',
                     border: OutlineInputBorder(),
                   ),
+                  onChanged: (String? value) {
+                    if (value != null) {
+                      editPhone = value;
+                      print(editPhone);
+                    }
+                  },
                   onSaved: (String? value) {
                     // This optional block of code can be used to run
                     // code when the user saves the form.
@@ -161,6 +191,12 @@ class EditProfilePageState extends State<EditProfilePage> {
                     labelText: 'Your Birthday',
                     border: OutlineInputBorder(),
                   ),
+                  onChanged: (String? value) {
+                    if (value != null) {
+                      editBirthday = value;
+                      print(editBirthday);
+                    }
+                  },
                   onSaved: (String? value) {
                     // This optional block of code can be used to run
                     // code when the user saves the form.
@@ -242,6 +278,32 @@ class EditProfilePageState extends State<EditProfilePage> {
                         onPrimary: Colors.white, // foreground
                       ),
                       onPressed: () {
+                        for(int i=0; i<account.length; i++){
+                          print(account[i].accountID);
+                          print(userID);
+                          if(account[i].accountID == userID){
+                            if(editFirstName!=""){
+                              account[i].accountFirstName = editFirstName;
+                              userFirstName = editFirstName;
+                            }
+                            if(editLastName!=""){
+                              account[i].accountLastName = editLastName;
+                              userLastName = editLastName;
+                            }
+                            if(editEmail!=""){
+                              account[i].accountEmail = editEmail;
+                              userEmail = editEmail;
+                            }
+                            if(editPhone!=""){
+                              account[i].accountPhone = editPhone;
+                              userPhone = editPhone;
+                            }
+                            if(editBirthday!=""){
+                              account[i].accountBirthday = editBirthday;
+                              userBirthday = editBirthday;
+                            }
+                          }
+                        }
                         navigateToMyProfilePage(context);
                         // login = 1;
                         // setState(() {});

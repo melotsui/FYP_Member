@@ -74,7 +74,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
           Expanded(
             child: ListView.builder(
                 // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                itemCount: 5,
+                itemCount: invoiceList.length,
                 itemBuilder: (BuildContext ctx, index) {
                   return GestureDetector(
                     child: Card(
@@ -95,7 +95,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
                                     padding: EdgeInsets.symmetric(vertical: 5),
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      "Invoice ID: 989607210831",
+                                      "Invoice ID: " + invoiceList[index].invoiceID,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15),
@@ -105,7 +105,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
                                     padding: EdgeInsets.symmetric(vertical: 5),
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      "Date: 2021.03.31",
+                                      "Date: " + invoiceList[index].date,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15),
@@ -115,7 +115,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
                                     padding: EdgeInsets.symmetric(vertical: 5),
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      "Time: 23:59:59",
+                                      "Time: " + invoiceList[index].time,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15),
@@ -125,7 +125,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
                                     padding: EdgeInsets.symmetric(vertical: 5),
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      "Payment: Account Balance",
+                                      "Payment: " + invoiceList[index].paymentMethod,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15),
@@ -145,7 +145,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
                                       radius: 35,
                                       backgroundImage: login > 0
                                           ? NetworkImage(
-                                              product[index].productImage)
+                                          invoiceList[index].invoiceImage)
                                           : NetworkImage(unknownIcon),
                                     ),
                                   ),
@@ -153,7 +153,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
                                     height: 5,
                                   ),
                                   Text(
-                                    "\$1000",
+                                    "\$" + invoiceList[index].totalPrice.toString(),
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15,

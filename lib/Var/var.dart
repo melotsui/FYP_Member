@@ -1,11 +1,12 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 DateTime now = new DateTime.now();
 int login = 0;
-String unknownIcon = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/925px-Unknown_person.jpg";
+String unknownIcon =
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/925px-Unknown_person.jpg";
 String unknownName = "Login";
+String userID = account[0].accountID;
 String userIcon = account[0].accountIcon;
 String userFirstName = account[0].accountFirstName;
 String userLastName = account[0].accountLastName;
@@ -25,7 +26,6 @@ var displayBalance = 1;
 //           },
 //           icon: Icon(Icons.arrow_back),
 //         ),
-
 
 class Account {
   String accountID;
@@ -62,7 +62,8 @@ List<Account> account = [
     accountID: '20220128001',
     accountFirstName: 'Melo',
     accountLastName: 'Tsui',
-    accountIcon: 'https://image-resizer.cwg.tw/resize/uri/https%3A%2F%2Fcw1.tw%2FCC%2Fimages%2Farticle%2F201710%2Farticle-59d1f2b06a7a2.jpg/?w=810&h=543&fit=fill',
+    accountIcon:
+        'https://image-resizer.cwg.tw/resize/uri/https%3A%2F%2Fcw1.tw%2FCC%2Fimages%2Farticle%2F201710%2Farticle-59d1f2b06a7a2.jpg/?w=810&h=543&fit=fill',
     accountRole: 'VIP Member',
     accountPhone: '51581556',
     accountEmail: 'melotsui@gmail.com',
@@ -74,6 +75,41 @@ List<Account> account = [
   ),
 ];
 
+class InvoiceList {
+  String invoiceID;
+  String date;
+  String time;
+  String paymentMethod;
+  double totalPrice;
+  String invoiceImage;
+
+  InvoiceList({
+    required this.invoiceID,
+    required this.date,
+    required this.time,
+    required this.paymentMethod,
+    required this.totalPrice,
+    required this.invoiceImage,
+  });
+}
+
+List<InvoiceList> invoiceList = [
+  InvoiceList(
+      invoiceID: "20190721060",
+      date: "2019/07/21",
+      time: "04:28",
+      paymentMethod: "Account Balance",
+      totalPrice: 98.7,
+      invoiceImage: "https://images.hktvmall.com/h0888001/427e4800fe055ca10b737d54e45ca60f787d3de5/h0888001_10060249_190315122522_01_515.jpg"),
+  InvoiceList(
+      invoiceID: "20190612001",
+      date: "2019/06/12",
+      time: "00:01",
+      paymentMethod: "Account Balance",
+      totalPrice: 69.6,
+      invoiceImage: "https://images.hktv-img.com/images/HKTV/15953/400285_main_73896179_20210920110521_01_1200.jpg"),
+];
+
 class Product {
   String productID;
   String productName;
@@ -81,7 +117,7 @@ class Product {
   double sellPrice;
   // double cost;
   double retailPrice;
-   String productImage;
+  String productImage;
   // String productStatus;
   int fav;
 
@@ -102,7 +138,8 @@ List<Product> product = [
   Product(
     productID: '1',
     productName: 'Coca-Cola Zero (330ml X 8)',
-    productImage: 'https://images.hktv-img.com/images/HKTV/15953/400285_main_73896179_20210920110521_01_1200.jpg',
+    productImage:
+        'https://images.hktv-img.com/images/HKTV/15953/400285_main_73896179_20210920110521_01_1200.jpg',
     fav: 1,
     retailPrice: 48,
     sellPrice: 34.4,
@@ -110,7 +147,8 @@ List<Product> product = [
   Product(
     productID: '2',
     productName: 'Laurier - Anti-Bacterial Ultra Slim Night 30cm',
-    productImage: 'https://images.hktvmall.com/h0888001/427e4800fe055ca10b737d54e45ca60f787d3de5/h0888001_10060249_190315122522_01_515.jpg',
+    productImage:
+        'https://images.hktvmall.com/h0888001/427e4800fe055ca10b737d54e45ca60f787d3de5/h0888001_10060249_190315122522_01_515.jpg',
     fav: 1,
     retailPrice: 34.9,
     sellPrice: 32.9,
@@ -118,7 +156,8 @@ List<Product> product = [
   Product(
     productID: '3',
     productName: 'COOL Water 750ml',
-    productImage: 'https://hk.ulifestyle.com.hk/cms/images/event/w600/202111/20211129180351_1_2.png',
+    productImage:
+        'https://hk.ulifestyle.com.hk/cms/images/event/w600/202111/20211129180351_1_2.png',
     fav: 1,
     retailPrice: 6,
     sellPrice: 4,
@@ -126,7 +165,8 @@ List<Product> product = [
   Product(
     productID: '4',
     productName: 'LINDOR Milk Cornet',
-    productImage: 'http://images.hktvmall.com/h0888001/967376c97fb5b9399d8d64f87e9ee0122240ab80/h0888001_10137528_191121053206_01_1200.jpg',
+    productImage:
+        'http://images.hktvmall.com/h0888001/967376c97fb5b9399d8d64f87e9ee0122240ab80/h0888001_10137528_191121053206_01_1200.jpg',
     fav: 1,
     retailPrice: 184,
     sellPrice: 129,
@@ -134,7 +174,8 @@ List<Product> product = [
   Product(
     productID: '5',
     productName: 'Trappist Dairy - Fresh Milk (Chilled) 236ml',
-    productImage: 'http://images.hktvmall.com/h1115001/260619/h1115001_10138104_200828031816_01_1200.jpg',
+    productImage:
+        'http://images.hktvmall.com/h1115001/260619/h1115001_10138104_200828031816_01_1200.jpg',
     fav: 1,
     retailPrice: 8,
     sellPrice: 6,

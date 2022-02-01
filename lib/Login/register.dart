@@ -25,8 +25,8 @@ String newEmail = "";
 String newPhone = "";
 String newBirthday = "";
 String newGender = "";
-
 String image="";
+
 class RegisterPageState extends State<RegisterPage> {
   @override
   void initState() {
@@ -325,6 +325,9 @@ class RegisterPageState extends State<RegisterPage> {
                         onPrimary: Colors.white, // foreground
                       ),
                       onPressed: () {
+                        if(image==""){
+                          image=unknownIcon;
+                        }
                         List<Account> newAccount = [
                           Account(
                             accountID: newID,
