@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:member/Var/natigate.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ScanQRCodePage extends StatefulWidget {
@@ -71,6 +72,8 @@ class ScanQRCodePageState extends State<ScanQRCodePage> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
+        print(result!.code.toString());
+        navigateToMyProfilePage(context);
       });
     });
   }
