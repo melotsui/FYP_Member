@@ -216,9 +216,11 @@ class MyProfilePageState extends State<MyProfilePage> {
                         },
                       ),
                       ListTile(
-                        leading: Icon(Icons.shopping_cart),
-                        title: Text('Products'),
-                        onTap: () {},
+                        leading: Icon(Icons.qr_code_scanner),
+                        title: Text('Connect to POS'),
+                        onTap: () {
+                          navigateToScanQRCodePage(context);
+                        },
                       ),
                       ListTile(
                         leading: Icon(Icons.web),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:member/Account/qrCode.dart';
 import 'package:member/Var/var.dart';
 
 import '../Account/changePassword.dart';
@@ -73,4 +74,9 @@ void navigateToEditProfilePage(BuildContext context){
 // ForgetPasswordPage
 void navigateToForgetPasswordPage(BuildContext context){
   Navigator.of(context).push(MaterialPageRoute(builder: (context) => ForgetPasswordPage()));
+}
+
+// ScanQRCodePage
+void navigateToScanQRCodePage(BuildContext context){
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ScanQRCodePage()));
 }
