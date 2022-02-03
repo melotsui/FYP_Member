@@ -77,6 +77,7 @@ List<Account> account = [
 
 class InvoiceList {
   String invoiceID;
+  List productList;
   String date;
   String time;
   String paymentMethod;
@@ -85,6 +86,7 @@ class InvoiceList {
 
   InvoiceList({
     required this.invoiceID,
+    required this.productList,
     required this.date,
     required this.time,
     required this.paymentMethod,
@@ -96,6 +98,9 @@ class InvoiceList {
 List<InvoiceList> invoiceList = [
   InvoiceList(
       invoiceID: "20190721060",
+      productList: [
+        "2", "2", "2"
+      ],
       date: "2019/07/21",
       time: "04:28",
       paymentMethod: "Account Balance",
@@ -103,6 +108,9 @@ List<InvoiceList> invoiceList = [
       invoiceImage: "https://images.hktvmall.com/h0888001/427e4800fe055ca10b737d54e45ca60f787d3de5/h0888001_10060249_190315122522_01_515.jpg"),
   InvoiceList(
       invoiceID: "20190612001",
+      productList: [
+        "1", "1"
+      ],
       date: "2019/06/12",
       time: "00:01",
       paymentMethod: "Account Balance",

@@ -168,7 +168,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
                       ),
                     ),
                     onTap: () {
-                      navigateToInvoiceDetailPage(context);
+                      navigateToInvoiceDetailPage(context, invoiceList[index]);
                     },
                   );
                 },
