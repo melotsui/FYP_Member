@@ -136,7 +136,9 @@ class MyProfilePageState extends State<MyProfilePage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 5,),
+                SizedBox(
+                  height: 5,
+                ),
                 Divider(color: Colors.black54),
                 Row(
                   children: <Widget>[
@@ -226,6 +228,24 @@ class MyProfilePageState extends State<MyProfilePage> {
                         leading: Icon(Icons.web),
                         title: Text('Invoices'),
                         onTap: () {
+                          showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: Text('AlertDialog Title'),
+                              content: Text('AlertDialog description'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'OK'),
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            ),
+                          );
                           // Update the state of the app
                           // ...
                           // Then close the drawer
@@ -265,12 +285,32 @@ class MyProfilePageState extends State<MyProfilePage> {
                           ),
                         ),
                         onTap: () {
+                          showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              content: Text(
+                                "Are you sure you want to log out?",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: Text('Cancel'),
+                                ),
+                                TextButton(
+                                    child: Text('Log Out'),
+                                    onPressed: () {
+                                      login = 0;
+                                      navigateToProductListPage(context);
+                                    }),
+                              ],
+                            ),
+                          );
                           // appBarTitle = "productList";
                           // Update the state of the app
                           // ...
                           // Then close the drawer
-                          login = 0;
-                          navigateToProductListPage(context);
                         },
                       ),
                     ],

@@ -109,12 +109,12 @@ List<InvoiceList> invoiceList = [
   InvoiceList(
       invoiceID: "20190612001",
       productList: [
-        "1", "1"
+        "1", "4"
       ],
       date: "2019/06/12",
       time: "00:01",
       paymentMethod: "Account Balance",
-      totalPrice: 69.6,
+      totalPrice: 163.4,
       invoiceImage: "https://images.hktv-img.com/images/HKTV/15953/400285_main_73896179_20210920110521_01_1200.jpg"),
 ];
 

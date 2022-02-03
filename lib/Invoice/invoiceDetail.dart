@@ -103,17 +103,6 @@ class InvoiceDetailPageState extends State<InvoiceDetailPage> {
                                 : NetworkImage(unknownIcon),
                           ),
                         ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "\$" + widget.invoiceDetail.totalPrice.toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                            color: Colors.green,
-                          ),
-                        ),
                       ],
                     ),
                   ),
@@ -155,11 +144,43 @@ class InvoiceDetailPageState extends State<InvoiceDetailPage> {
                                     fontWeight: FontWeight.bold, fontSize: 15),
                               ),
                             ),
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "Quantity: " + "1",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "Price: " +
+                                          invoiceProduct.retailPrice.toString(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                             Container(
                               padding: EdgeInsets.symmetric(vertical: 5),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "Quantyty: " + invoiceList[index].date,
+                                "Discount: " +
+                                    (invoiceProduct.retailPrice -
+                                            invoiceProduct.sellPrice)
+                                        .toStringAsFixed(1),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 15),
                               ),
@@ -168,16 +189,7 @@ class InvoiceDetailPageState extends State<InvoiceDetailPage> {
                               padding: EdgeInsets.symmetric(vertical: 5),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "Time: " + invoiceList[index].time,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 15),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(vertical: 5),
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Payment: " + invoiceList[index].paymentMethod,
+                                "Total: " + invoiceProduct.sellPrice.toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 15),
                               ),
@@ -195,20 +207,8 @@ class InvoiceDetailPageState extends State<InvoiceDetailPage> {
                               child: CircleAvatar(
                                 radius: 35,
                                 backgroundImage: login > 0
-                                    ? NetworkImage(
-                                        invoiceList[index].invoiceImage)
+                                    ? NetworkImage(invoiceProduct.productImage)
                                     : NetworkImage(unknownIcon),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "\$" + invoiceList[index].totalPrice.toString(),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                                color: Colors.green,
                               ),
                             ),
                           ],
@@ -245,7 +245,7 @@ class InvoiceDetailPageState extends State<InvoiceDetailPage> {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            "\$104.7",
+                            "\$232.0",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
@@ -268,9 +268,11 @@ class InvoiceDetailPageState extends State<InvoiceDetailPage> {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            "\$6",
+                            "-\$68.6",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: Colors.red),
                           ),
                         ),
                       ],
@@ -291,7 +293,7 @@ class InvoiceDetailPageState extends State<InvoiceDetailPage> {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            "\$98.7",
+                            "\$163.4",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
@@ -307,7 +309,29 @@ class InvoiceDetailPageState extends State<InvoiceDetailPage> {
                             primary: Colors.deepPurpleAccent, // background
                             onPrimary: Colors.white, // foreground
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                content: Text(
+                                  "Are you sure you want to push refund request?",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, 'Cancel'),
+                                    child: Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                      child: Text('Yes'),
+                                      onPressed: () {
+                                        Navigator.pop(context, 'Yes');
+                                      }),
+                                ],
+                              ),
+                            );
+                          },
                           child: Text(
                             'REQUEST REFUND',
                             style: TextStyle(
