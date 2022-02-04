@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -51,9 +50,31 @@ class ProductListPageState extends State<ProductListPage> {
           actions: [
             IconButton(
               onPressed: () {
-                login > 0
-                    ? navigateToFavouriteProductPage(context)
-                    : navigateToLoginPage(context);
+                if (login == 0) {
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      content: Text(
+                        "You have not login. \nDo you want to login?",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'No'),
+                          child: Text('No'),
+                        ),
+                        TextButton(
+                            child: Text('Yes'),
+                            onPressed: () {
+                              navigateToLoginPage(context);
+                            }),
+                      ],
+                    ),
+                  );
+                  // Fluttertoast.showToast(msg: "You have not login.");
+                } else {
+                  navigateToFavouriteProductPage(context);
+                }
               },
               icon: Icon(
                 Icons.favorite,
@@ -143,6 +164,8 @@ class ProductListPageState extends State<ProductListPage> {
                                           onTap: () {
                                             if (login > 0) {
                                               searchProduct[index].fav++;
+                                            } else {
+                                              Fluttertoast.showToast(msg: "Please login.");
                                             }
                                             print('fav');
                                             for (int i = 0;

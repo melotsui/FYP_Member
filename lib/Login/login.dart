@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:member/Login/register.dart';
 
 import '../Product/productList.dart';
@@ -153,6 +154,7 @@ class LoginPageState extends State<LoginPage> {
                           }
                         }
                         setState(() {});
+                        Fluttertoast.showToast(msg: "Welcome, " + userFirstName + " " + userLastName + ".");
                         navigateToMyProfilePage(context);
                       },
                       child: Text(

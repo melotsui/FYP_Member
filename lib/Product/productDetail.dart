@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:member/Product/productList.dart';
 
 import '../Var/natigate.dart';
@@ -183,6 +184,8 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                               onTap: () {
                                 if (login > 0) {
                                   widget.productDetail.fav++;
+                                } else {
+                                  Fluttertoast.showToast(msg: "Please login.");
                                 }
                                 print('fav');
                                 for (int i = 0; i < product.length; i++) {

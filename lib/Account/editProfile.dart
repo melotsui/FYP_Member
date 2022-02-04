@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:member/Var/natigate.dart';
 
@@ -304,6 +305,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                             }
                           }
                         }
+                        Fluttertoast.showToast(msg: "Profile Edit Successful.");
                         navigateToMyProfilePage(context);
                         // login = 1;
                         // setState(() {});

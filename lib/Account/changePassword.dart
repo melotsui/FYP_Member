@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:member/Var/natigate.dart';
 
 import '../main.dart';
@@ -16,6 +17,9 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
     super.initState();
   }
 
+  String oldPW = "";
+  String newPW = "";
+  String confirmPW = "";
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
@@ -47,6 +51,14 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                   labelText: 'Old Password',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (String? value) {
+                  if (value != null) {
+                    if (value != "") {
+                      oldPW = value;
+                      print(oldPW);
+                    }
+                  }
+                },
                 onSaved: (String? value) {
                   // This optional block of code can be used to run
                   // code when the user saves the form.
@@ -72,6 +84,14 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                   labelText: 'New Password',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (String? value) {
+                  if (value != null) {
+                    if (value != "") {
+                      newPW = value;
+                      print(newPW);
+                    }
+                  }
+                },
                 onSaved: (String? value) {
                   // This optional block of code can be used to run
                   // code when the user saves the form.
@@ -97,6 +117,14 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                   labelText: 'Confirm New Password',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (String? value) {
+                  if (value != null) {
+                    if (value != "") {
+                      confirmPW = value;
+                      print(confirmPW);
+                    }
+                  }
+                },
                 onSaved: (String? value) {
                   // This optional block of code can be used to run
                   // code when the user saves the form.
@@ -120,7 +148,28 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                       onPrimary: Colors.white, // foreground
                     ),
                     onPressed: () {
-                      navigateToMyProfilePage(context);
+                      if (oldPW != "") {
+                        if(newPW != ""){
+                          if(confirmPW != ""){
+                            if(newPW == confirmPW){
+                              Fluttertoast.showToast(msg: "Password Changed.");
+                              navigateToMyProfilePage(context);
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "Confirm Password must be equal to New Password.");
+                            }
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Please enter the confirm password.");
+                          }
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: "Please enter the new password.");
+                        }
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: "Please enter the old password.");
+                      }
                     },
                     child: Text(
                       'SAVE',

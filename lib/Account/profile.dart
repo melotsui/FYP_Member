@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:member/Login/login.dart';
 import 'package:member/Var/natigate.dart';
 
@@ -302,6 +303,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                                     child: Text('Log Out'),
                                     onPressed: () {
                                       login = 0;
+                                      Fluttertoast.showToast(msg: "Log Out Successful");
                                       navigateToLoginPage(context);
                                     }),
                               ],
