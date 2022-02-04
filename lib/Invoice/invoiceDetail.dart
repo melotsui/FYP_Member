@@ -245,7 +245,7 @@ class InvoiceDetailPageState extends State<InvoiceDetailPage> {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            "\$232.0",
+                            "\$238.0",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
@@ -268,7 +268,7 @@ class InvoiceDetailPageState extends State<InvoiceDetailPage> {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            "-\$68.6",
+                            "-\$70.6",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
@@ -293,7 +293,7 @@ class InvoiceDetailPageState extends State<InvoiceDetailPage> {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            "\$163.4",
+                            "\$" + widget.invoiceDetail.totalPrice.toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
@@ -306,7 +306,7 @@ class InvoiceDetailPageState extends State<InvoiceDetailPage> {
                       Expanded(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.deepPurpleAccent, // background
+                            primary: widget.invoiceDetail.request ? Colors.blueAccent : Colors.deepPurpleAccent, // background
                             onPrimary: Colors.white, // foreground
                           ),
                           onPressed: () {
@@ -314,7 +314,7 @@ class InvoiceDetailPageState extends State<InvoiceDetailPage> {
                               context: context,
                               builder: (BuildContext context) => AlertDialog(
                                 content: Text(
-                                  "Are you sure you want to push refund request?",
+                                  widget.invoiceDetail.request ? "Are you sure you want to cancel refund request?" : "Are you sure you want to push refund request?",
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 actions: <Widget>[
@@ -326,14 +326,28 @@ class InvoiceDetailPageState extends State<InvoiceDetailPage> {
                                   TextButton(
                                       child: Text('Yes'),
                                       onPressed: () {
+                                        if(!widget.invoiceDetail.request){
+                                          widget.invoiceDetail.request = true;
+                                        }
+                                        else{
+                                          widget.invoiceDetail.request = false;
+                                        }
+                                        for(int i=0; i<invoiceList.length; i++){
+                                          if(invoiceList[i].invoiceID == widget.invoiceDetail.invoiceID){
+                                            invoiceList[i] = widget.invoiceDetail;
+                                          }
+                                        }
                                         Navigator.pop(context, 'Yes');
+                                        setState(() {
+
+                                        });
                                       }),
                                 ],
                               ),
                             );
                           },
                           child: Text(
-                            'REQUEST REFUND',
+                            widget.invoiceDetail.request ? 'Waiting Approval' : 'REQUEST REFUND',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,

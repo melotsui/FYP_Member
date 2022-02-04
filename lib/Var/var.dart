@@ -83,6 +83,7 @@ class InvoiceList {
   String paymentMethod;
   double totalPrice;
   String invoiceImage;
+  bool request;
 
   InvoiceList({
     required this.invoiceID,
@@ -92,30 +93,33 @@ class InvoiceList {
     required this.paymentMethod,
     required this.totalPrice,
     required this.invoiceImage,
+    required this.request,
   });
 }
 
 List<InvoiceList> invoiceList = [
   InvoiceList(
-      invoiceID: "20190721060",
+      invoiceID: "20190721831",
       productList: [
         "2", "2", "2"
       ],
       date: "2019/07/21",
-      time: "04:28",
+      time: "11:01",
       paymentMethod: "Account Balance",
       totalPrice: 98.7,
+      request: false,
       invoiceImage: "https://images.hktvmall.com/h0888001/427e4800fe055ca10b737d54e45ca60f787d3de5/h0888001_10060249_190315122522_01_515.jpg"),
   InvoiceList(
       invoiceID: "20190612001",
       productList: [
-        "1", "4"
+        "3", "4", "1"
       ],
       date: "2019/06/12",
       time: "00:01",
       paymentMethod: "Account Balance",
-      totalPrice: 163.4,
-      invoiceImage: "https://images.hktv-img.com/images/HKTV/15953/400285_main_73896179_20210920110521_01_1200.jpg"),
+      totalPrice: 167.4,
+      request: false,
+      invoiceImage: "https://hk.ulifestyle.com.hk/cms/images/event/w600/202111/20211129180351_1_2.png"),
 ];
 
 class Product {
@@ -187,5 +191,35 @@ List<Product> product = [
     fav: 1,
     retailPrice: 8,
     sellPrice: 6,
+  ),
+];
+
+class Branch {
+  String branchID;
+  String branchName;
+  int qty;
+
+  Branch({
+    required this.branchID,
+    required this.branchName,
+    required this.qty,
+  });
+}
+
+List<Branch> branch = [
+  Branch(
+    branchID: "1",
+    branchName: "Branch A",
+    qty: 52
+  ),
+  Branch(
+      branchID: "2",
+      branchName: "Branch B",
+      qty: 68
+  ),
+  Branch(
+      branchID: "1",
+      branchName: "Branch C",
+      qty: 99
   ),
 ];

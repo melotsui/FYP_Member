@@ -302,7 +302,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                                     child: Text('Log Out'),
                                     onPressed: () {
                                       login = 0;
-                                      navigateToProductListPage(context);
+                                      navigateToLoginPage(context);
                                     }),
                               ],
                             ),

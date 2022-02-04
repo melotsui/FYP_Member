@@ -288,7 +288,7 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                             ),
                           ],
                           rows: List<DataRow>.generate(
-                            6,
+                            branch.length,
                             (int index) => DataRow(
                               color: MaterialStateProperty.resolveWith<Color?>(
                                   (Set<MaterialState> states) {
@@ -304,8 +304,8 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                                 return null; // Use default value for other states and odd rows.
                               }),
                               cells: <DataCell>[
-                                DataCell(Text('Row $index')),
-                                DataCell(Text('Row $index')),
+                                DataCell(Text(branch[index].branchName)),
+                                DataCell(Text(branch[index].qty.toString())),
                               ],
                             ),
                           ),
