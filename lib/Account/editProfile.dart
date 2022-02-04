@@ -199,10 +199,11 @@ class EditProfilePageState extends State<EditProfilePage> {
                         initialDate: DateTime.now(),
                         firstDate: DateTime(1900),
                         lastDate: DateTime.now()))!;
-
-                    dateCtl.text = date.day.toString() +
+                    String day = date.day.toString().length == 1 ? "0" + date.day.toString() : date.day.toString();
+                    String month = date.month.toString().length == 1 ? "0" + date.month.toString() : date.month.toString();
+                    dateCtl.text = day +
                         "/" +
-                        date.month.toString() +
+                        month +
                         "/" +
                         date.year.toString();
                     editBirthday = dateCtl.text;

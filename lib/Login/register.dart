@@ -15,12 +15,14 @@ class RegisterPage extends StatefulWidget {
 // List<Account> newAccount = [];
 var formatter = new DateFormat('yyyyMMdd');
 String formattedDate = formatter.format(now);
+
 class RegisterPageState extends State<RegisterPage> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
+
   SingingCharacter? _gender = SingingCharacter.male;
   TextEditingController dateCtl = TextEditingController(text: "");
   String newID = "";
@@ -30,8 +32,7 @@ class RegisterPageState extends State<RegisterPage> {
   String newPhone = "";
   String newBirthday = "";
   String newGender = "";
-  String image="";
-
+  String image = "";
 
   Widget build(BuildContext context) {
     final _picker = ImagePicker();
@@ -44,6 +45,7 @@ class RegisterPageState extends State<RegisterPage> {
       print(pickedImage!.path);
       image = pickedImage.path;
     }
+
     print(newFirstName);
     print(formattedDate);
     for (int i = 1; i <= account.length + 1; i++) {
@@ -105,6 +107,11 @@ class RegisterPageState extends State<RegisterPage> {
                     labelText: 'Last Name',
                     border: OutlineInputBorder(),
                   ),
+                  validator: (String? value) {
+                    return (value != null && value.contains('@'))
+                        ? 'Do not use the @ char.'
+                        : null;
+                  },
                   onChanged: (String? value) {
                     if (value != null) {
                       newLastName = value;
@@ -127,6 +134,15 @@ class RegisterPageState extends State<RegisterPage> {
                     labelText: 'Email',
                     border: OutlineInputBorder(),
                   ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (String? value) {
+                    if (value!.isValidEmail()) {
+
+                      return null;
+                    } else {
+                      return "Invalid Email Address";
+                    }
+                  },
                   onChanged: (String? value) {
                     if (value != null) {
                       newEmail = value;
@@ -149,6 +165,9 @@ class RegisterPageState extends State<RegisterPage> {
                     labelText: 'Phone Number',
                     border: OutlineInputBorder(),
                   ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (String? value) =>
+                      isNumeric(value!) ? null : "Invalid Phone Number",
                   onChanged: (String? value) {
                     if (value != null) {
                       newPhone = value;
@@ -232,11 +251,14 @@ class RegisterPageState extends State<RegisterPage> {
                         firstDate: DateTime(1900),
                         lastDate: DateTime.now()))!;
 
-                    dateCtl.text = date.day.toString() +
-                        "/" +
-                        date.month.toString() +
-                        "/" +
-                        date.year.toString();
+                    String day = date.day.toString().length == 1
+                        ? "0" + date.day.toString()
+                        : date.day.toString();
+                    String month = date.month.toString().length == 1
+                        ? "0" + date.month.toString()
+                        : date.month.toString();
+                    dateCtl.text =
+                        day + "/" + month + "/" + date.year.toString();
                     newBirthday = dateCtl.text;
                   },
                 ),
@@ -304,22 +326,21 @@ class RegisterPageState extends State<RegisterPage> {
                 ],
               ),
               GestureDetector(
-                child: Container(
-                  width: double.infinity,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.black26,
-                    image: DecorationImage(
-                        image: NetworkImage(
-                            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Upload_alt_font_awesome.svg/100px-Upload_alt_font_awesome.svg.png"),
-                        fit: BoxFit.contain),
-                    borderRadius: BorderRadius.circular(30),
+                  child: Container(
+                    width: double.infinity,
+                    height: 150,
+                    decoration: BoxDecoration(
+                      color: Colors.black26,
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Upload_alt_font_awesome.svg/100px-Upload_alt_font_awesome.svg.png"),
+                          fit: BoxFit.contain),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
-                ),
                   onTap: () {
                     _imgFromGallery();
-                  }
-              ),
+                  }),
               SizedBox(
                 height: 10,
               ),
@@ -332,8 +353,9 @@ class RegisterPageState extends State<RegisterPage> {
                         onPrimary: Colors.white, // foreground
                       ),
                       onPressed: () {
-                        if(image==""){
-                          image=unknownIcon;
+                        if (newID == "") {}
+                        if (image == "") {
+                          image = unknownIcon;
                         }
                         List<Account> newAccount = [
                           Account(
@@ -374,4 +396,26 @@ class RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
+}
+
+extension EmailValidator on String {
+  bool isValidEmail() {
+    return RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(this);
+  }
+}
+
+bool isNumeric(String s) {
+  if (s == null) {
+    return false;
+  }
+  return int.tryParse(s) != null;
+}
+
+bool isNull(String s) {
+  if (s == "") {
+    return false;
+  }
+  return true;
 }
