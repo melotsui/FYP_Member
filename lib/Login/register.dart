@@ -12,27 +12,26 @@ class RegisterPage extends StatefulWidget {
   RegisterPageState createState() => RegisterPageState();
 }
 
-enum SingingCharacter { male, female }
-SingingCharacter? _gender = SingingCharacter.male;
-
 // List<Account> newAccount = [];
 var formatter = new DateFormat('yyyyMMdd');
 String formattedDate = formatter.format(now);
-String newID = "";
-String newFirstName = "";
-String newLastName = "";
-String newEmail = "";
-String newPhone = "";
-String newBirthday = "";
-String newGender = "";
-String image="";
-
 class RegisterPageState extends State<RegisterPage> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
+  SingingCharacter? _gender = SingingCharacter.male;
+  TextEditingController dateCtl = TextEditingController(text: "");
+  String newID = "";
+  String newFirstName = "";
+  String newLastName = "";
+  String newEmail = "";
+  String newPhone = "";
+  String newBirthday = "";
+  String newGender = "";
+  String image="";
+
 
   Widget build(BuildContext context) {
     final _picker = ImagePicker();
@@ -215,22 +214,30 @@ class RegisterPageState extends State<RegisterPage> {
               Container(
                 padding: EdgeInsets.only(top: 20),
                 child: TextFormField(
-                  // initialValue: userBirthday,
+                  controller: dateCtl,
                   style: TextStyle(fontSize: 20),
-                  scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                    // helperText: 'Assistive text',
-                    // icon: Icon(Icons.person),
-                    hintText: 'dd/mm/yyyy',
-                    labelText: 'Your Birthday',
+                    labelText: "Your Birthday",
+                    hintText: "Ex. Insert your dob",
                     border: OutlineInputBorder(),
                   ),
-                  onChanged: (String? value) {
-                    if (value != null) {
-                      newBirthday = value;
-                      print(newBirthday);
-                    }
+                  onTap: () async {
+                    DateTime date = DateTime(1900);
+                    FocusScope.of(context).requestFocus(new FocusNode());
+
+                    date = (await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime.now()))!;
+
+                    dateCtl.text = date.day.toString() +
+                        "/" +
+                        date.month.toString() +
+                        "/" +
+                        date.year.toString();
+                    newBirthday = dateCtl.text;
                   },
                 ),
               ),

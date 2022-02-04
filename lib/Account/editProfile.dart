@@ -14,9 +14,6 @@ class EditProfilePage extends StatefulWidget {
 }
 
 
-enum SingingCharacter { male, female }
-SingingCharacter? _gender = SingingCharacter.male;
-
 class EditProfilePageState extends State<EditProfilePage> {
   @override
   void initState() {
@@ -24,16 +21,19 @@ class EditProfilePageState extends State<EditProfilePage> {
     super.initState();
   }
 
+  SingingCharacter? _gender = SingingCharacter.male;
+  TextEditingController dateCtl = TextEditingController(text: userBirthday);
   String editFirstName = "";
   String editLastName = "";
   String editEmail = "";
   String editPhone = "";
   String editBirthday = "";
+  String editGender = userGender;
 
   Widget build(BuildContext context) {
-    if(userGender == "female"){
+    if (editGender == "female") {
       _gender = SingingCharacter.female;
-    } else if(userGender == "male"){
+    } else if (editGender == "male") {
       _gender = SingingCharacter.male;
     }
     return Scaffold(
@@ -181,31 +181,31 @@ class EditProfilePageState extends State<EditProfilePage> {
               Container(
                 padding: EdgeInsets.only(top: 20),
                 child: TextFormField(
-                  initialValue: userBirthday,
+
+                  controller: dateCtl,
                   style: TextStyle(fontSize: 20),
-                  scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                    helperText: 'Assistive text',
-                    // icon: Icon(Icons.person),
-                    hintText: 'dd/mm/yyyy',
-                    labelText: 'Your Birthday',
+                    labelText: "Your Birthday",
+                    hintText: "Ex. Insert your dob",
                     border: OutlineInputBorder(),
                   ),
-                  onChanged: (String? value) {
-                    if (value != null) {
-                      editBirthday = value;
-                      print(editBirthday);
-                    }
-                  },
-                  onSaved: (String? value) {
-                    // This optional block of code can be used to run
-                    // code when the user saves the form.
-                  },
-                  validator: (String? value) {
-                    return (value != null && value.contains('@'))
-                        ? 'Do not use the @ char.'
-                        : null;
+                  onTap: () async {
+                    DateTime date = DateTime(1900);
+                    FocusScope.of(context).requestFocus(new FocusNode());
+
+                    date = (await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime.now()))!;
+
+                    dateCtl.text = date.day.toString() +
+                        "/" +
+                        date.month.toString() +
+                        "/" +
+                        date.year.toString();
+                    editBirthday = dateCtl.text;
                   },
                 ),
               ),
@@ -243,7 +243,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                         onChanged: (SingingCharacter? value) {
                           print(value);
                           setState(() {
-                            userGender = "male";
+                            editGender = "male";
                             _gender = value;
                           });
                         },
@@ -260,7 +260,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                         onChanged: (SingingCharacter? value) {
                           print(value);
                           setState(() {
-                            userGender = "female";
+                            editGender = "female";
                             _gender = value;
                           });
                         },
@@ -269,7 +269,9 @@ class EditProfilePageState extends State<EditProfilePage> {
                   ),
                 ],
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -279,30 +281,31 @@ class EditProfilePageState extends State<EditProfilePage> {
                         onPrimary: Colors.white, // foreground
                       ),
                       onPressed: () {
-                        for(int i=0; i<account.length; i++){
+                        for (int i = 0; i < account.length; i++) {
                           print(account[i].accountID);
                           print(userID);
-                          if(account[i].accountID == userID){
-                            if(editFirstName!=""){
+                          if (account[i].accountID == userID) {
+                            if (editFirstName != "") {
                               account[i].accountFirstName = editFirstName;
                               userFirstName = editFirstName;
                             }
-                            if(editLastName!=""){
+                            if (editLastName != "") {
                               account[i].accountLastName = editLastName;
                               userLastName = editLastName;
                             }
-                            if(editEmail!=""){
+                            if (editEmail != "") {
                               account[i].accountEmail = editEmail;
                               userEmail = editEmail;
                             }
-                            if(editPhone!=""){
+                            if (editPhone != "") {
                               account[i].accountPhone = editPhone;
                               userPhone = editPhone;
                             }
-                            if(editBirthday!=""){
+                            if (editBirthday != "") {
                               account[i].accountBirthday = editBirthday;
                               userBirthday = editBirthday;
                             }
+                            userGender = editGender;
                           }
                         }
                         Fluttertoast.showToast(msg: "Profile Edit Successful.");
