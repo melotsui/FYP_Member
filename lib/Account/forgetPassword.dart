@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:member/Var/var.dart';
+import 'package:string_validator/string_validator.dart';
 
 import '../Login/login.dart';
 import '../main.dart';
@@ -16,6 +19,7 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage> {
     super.initState();
   }
 
+  String forgetEmail = "";
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
@@ -47,14 +51,20 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage> {
                   labelText: 'Email',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (String? value) {
+                  forgetEmail = value!;
+                },
                 onSaved: (String? value) {
                   // This optional block of code can be used to run
                   // code when the user saves the form.
                 },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (String? value) {
-                  return (value != null && value.contains('@'))
-                      ? 'Do not use the @ char.'
-                      : null;
+                  if (isEmail(value!)) {
+                    return null;
+                  } else {
+                    return "Invalid Email Address";
+                  }
                 },
               ),
             ),
@@ -67,9 +77,28 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage> {
                       onPrimary: Colors.white, // foreground
                     ),
                     onPressed: () {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (context) => LoginPage()),
-                              (Route<dynamic> route) => false);
+                      if(forgetEmail != ""){
+                        bool hasEmail = false;
+                        for (int i = 0; i < account.length; i++) {
+                          if (account[i].accountEmail == forgetEmail) {
+                            hasEmail = true;
+                          }
+                        }
+                        if (hasEmail == true) {
+                          Fluttertoast.showToast(
+                            msg:
+                            "One time password will send to you email address.",
+                          );
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPage()),
+                                  (Route<dynamic> route) => false);
+                        } else {
+                          Fluttertoast.showToast(msg: "Wrong Email.");
+                        }
+                      } else {
+                        Fluttertoast.showToast(msg: "Email cannot be null.");
+                      }
                       // login = 1;
                       // setState(() {});
                       // navigateToMyProfilePage(context);

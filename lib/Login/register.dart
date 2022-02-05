@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -6,6 +7,7 @@ import '../Var/natigate.dart';
 import '../Var/var.dart';
 import '../main.dart';
 import '../Navigation/navigationBar.dart';
+import 'package:string_validator/string_validator.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -33,6 +35,8 @@ class RegisterPageState extends State<RegisterPage> {
   String newBirthday = "";
   String newGender = "";
   String image = "";
+  String newPw = "";
+  String newConfirmPw = "";
 
   Widget build(BuildContext context) {
     final _picker = ImagePicker();
@@ -85,6 +89,14 @@ class RegisterPageState extends State<RegisterPage> {
 
                     border: OutlineInputBorder(),
                   ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (String? value) {
+                    if (isAlpha(value!)) {
+                      return null;
+                    } else {
+                      return "Invalid Name";
+                    }
+                  },
                   onChanged: (String? value) {
                     if (value != null) {
                       newFirstName = value;
@@ -107,10 +119,18 @@ class RegisterPageState extends State<RegisterPage> {
                     labelText: 'Last Name',
                     border: OutlineInputBorder(),
                   ),
+                  // validator: (String? value) {
+                  //   return (value != null && value.contains('@'))
+                  //       ? 'Do not use the @ char.'
+                  //       : null;
+                  // },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (String? value) {
-                    return (value != null && value.contains('@'))
-                        ? 'Do not use the @ char.'
-                        : null;
+                    if (isAlpha(value!)) {
+                      return null;
+                    } else {
+                      return "Invalid Name";
+                    }
                   },
                   onChanged: (String? value) {
                     if (value != null) {
@@ -136,8 +156,7 @@ class RegisterPageState extends State<RegisterPage> {
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (String? value) {
-                    if (value!.isValidEmail()) {
-
+                    if (isEmail(value!)) {
                       return null;
                     } else {
                       return "Invalid Email Address";
@@ -166,8 +185,17 @@ class RegisterPageState extends State<RegisterPage> {
                     border: OutlineInputBorder(),
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (String? value) =>
-                      isNumeric(value!) ? null : "Invalid Phone Number",
+                  validator: (String? value) {
+                    if (isNumeric(value!)) {
+                      if (value.length == 8) {
+                        return null;
+                      } else {
+                        return "Phone must be 8 digits";
+                      }
+                    } else {
+                      return "Invalid Phone Number";
+                    }
+                  },
                   onChanged: (String? value) {
                     if (value != null) {
                       newPhone = value;
@@ -184,7 +212,6 @@ class RegisterPageState extends State<RegisterPage> {
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
-
                     // icon: Icon(Icons.person),
                     hintText: '',
                     labelText: 'Password',
@@ -192,14 +219,28 @@ class RegisterPageState extends State<RegisterPage> {
                   ),
                   onChanged: (String? value) {
                     if (value != null) {
-                      // loginPassword = value;
-                      // print(loginPassword);
+                      newPw = value;
+                      print(newPw);
                     }
                   },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (String? value) {
-                    return (value != null && value.contains('@'))
-                        ? 'Do not use the @ char.'
-                        : null;
+                    if (value != null) {
+                      if (!passwordValidation(value) && value.length < 8) {
+                        return "Equal to or more than 8 letters and digits\nMust have uppercase and lowercase and digit";
+                      } else {
+                        if (value.length < 8 || !passwordValidation(value)) {
+                          if (value.length < 8) {
+                            return "Equal to or more than 8 letters and digits";
+                          }
+                          if (!passwordValidation(value)) {
+                            return "Must have uppercase and lowercase and digit";
+                          }
+                        } else {
+                          return null;
+                        }
+                      }
+                    }
                   },
                 ),
               ),
@@ -211,7 +252,6 @@ class RegisterPageState extends State<RegisterPage> {
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
-
                     // icon: Icon(Icons.person),
                     hintText: '',
                     labelText: 'ConfirmPassword',
@@ -219,14 +259,28 @@ class RegisterPageState extends State<RegisterPage> {
                   ),
                   onChanged: (String? value) {
                     if (value != null) {
-                      // loginPassword = value;
-                      // print(loginPassword);
+                      newConfirmPw = value;
+                      print(newConfirmPw);
                     }
                   },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (String? value) {
-                    return (value != null && value.contains('@'))
-                        ? 'Do not use the @ char.'
-                        : null;
+                    if (value != null) {
+                      if (!passwordValidation(value) && value.length < 8) {
+                        return "Equal to or more than 8 letters and digits\nMust have uppercase and lowercase and digit";
+                      } else {
+                        if (value.length < 8 || !passwordValidation(value)) {
+                          if (value.length < 8) {
+                            return "Equal to or more than 8 letters and digits";
+                          }
+                          if (!passwordValidation(value)) {
+                            return "Must have uppercase and lowercase and digit";
+                          }
+                        } else {
+                          return null;
+                        }
+                      }
+                    }
                   },
                 ),
               ),
@@ -238,7 +292,7 @@ class RegisterPageState extends State<RegisterPage> {
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
                     labelText: "Your Birthday",
-                    hintText: "Ex. Insert your dob",
+                    hintText: "",
                     border: OutlineInputBorder(),
                   ),
                   onTap: () async {
@@ -353,28 +407,79 @@ class RegisterPageState extends State<RegisterPage> {
                         onPrimary: Colors.white, // foreground
                       ),
                       onPressed: () {
-                        if (newID == "") {}
-                        if (image == "") {
-                          image = unknownIcon;
+                        if (newFirstName != "" &&
+                            newLastName != "" &&
+                            newPhone != "" &&
+                            newEmail != "" &&
+                            newPw != "" &&
+                            newConfirmPw != "" &&
+                            newBirthday != "") {
+                          if (newConfirmPw != newPw) {
+                            Fluttertoast.showToast(
+                                msg:
+                                    "Confirm Password should be equal to Password.");
+                          } else {
+                            if (image == "") {
+                              image = unknownIcon;
+                            }
+                            List<Account> newAccount = [
+                              Account(
+                                accountID: newID,
+                                accountFirstName: newFirstName,
+                                accountLastName: newLastName,
+                                accountIcon: image, //image path
+                                accountRole: 'VIP Member',
+                                accountPhone: newPhone,
+                                accountEmail: newEmail,
+                                accountPassword: newPw,
+                                accountBirthday: newBirthday,
+                                accountGender: newGender,
+                                accountBalance: 0,
+                                order: 0,
+                                point: 0,
+                              ),
+                            ];
+                            account.add(newAccount[0]);
+                            navigateToLoginPage(context);
+                          }
+                        } else {
+                          List<String> errMsg = [
+                            "The following field(s) cannot be null:"
+                          ];
+                          if (newFirstName == "") {
+                            // Fluttertoast.showToast(msg: "First Name can not be null.");
+                            errMsg.add("\n- First Name");
+                          }
+                          if (newLastName == "") {
+                            // Fluttertoast.showToast(msg: "Last Name can not be null.");
+                            errMsg.add("\n- Last Name");
+                          }
+                          if (newEmail == "") {
+                            // Fluttertoast.showToast(msg: "Email can not be null.");
+                            errMsg.add("\n- Email");
+                          }
+                          if (newPhone == "") {
+                            // Fluttertoast.showToast(msg: "Phone can not be null.");
+                            errMsg.add("\n- Phone Number");
+                          }
+                          if (newPw == "") {
+                            // Fluttertoast.showToast(msg: "Password can not be null.");
+                            errMsg.add("\n- Password");
+                          }
+                          if (newConfirmPw == "") {
+                            // Fluttertoast.showToast(msg: "Confirm Password can not be null.");
+                            errMsg.add("\n- Confirm Password");
+                          }
+                          if (newBirthday == "") {
+                            // Fluttertoast.showToast(msg: "Birthday can not be null.");
+                            errMsg.add("\n- Birthday");
+                          }
+                          String toString = "";
+                          for (int i = 0; i < errMsg.length; i++) {
+                            toString += errMsg[i];
+                          }
+                          Fluttertoast.showToast(msg: toString);
                         }
-                        List<Account> newAccount = [
-                          Account(
-                            accountID: newID,
-                            accountFirstName: newFirstName,
-                            accountLastName: newLastName,
-                            accountIcon: image, //image path
-                            accountRole: 'VIP Member',
-                            accountPhone: newPhone,
-                            accountEmail: newEmail,
-                            accountBirthday: newBirthday,
-                            accountGender: newGender,
-                            accountBalance: 0,
-                            order: 0,
-                            point: 0,
-                          ),
-                        ];
-                        account.add(newAccount[0]);
-                        navigateToLoginPage(context);
                         // login = 1;
                         // setState(() {});
                         // navigateToMyProfilePage(context);
@@ -406,12 +511,12 @@ extension EmailValidator on String {
   }
 }
 
-bool isNumeric(String s) {
-  if (s == null) {
-    return false;
-  }
-  return int.tryParse(s) != null;
-}
+// bool isNumeric(String s) {
+//   if (s == null) {
+//     return false;
+//   }
+//   return int.tryParse(s) != null;
+// }
 
 bool isNull(String s) {
   if (s == "") {

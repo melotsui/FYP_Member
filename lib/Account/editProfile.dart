@@ -3,6 +3,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:member/Var/natigate.dart';
+import 'package:string_validator/string_validator.dart';
 
 import '../Var/var.dart';
 import '../main.dart';
@@ -78,10 +79,13 @@ class EditProfilePageState extends State<EditProfilePage> {
                     // This optional block of code can be used to run
                     // code when the user saves the form.
                   },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (String? value) {
-                    return (value != null && value.contains('@'))
-                        ? 'Do not use the @ char.'
-                        : null;
+                    if (isAlpha(value!)) {
+                      return null;
+                    } else {
+                      return "Invalid Name";
+                    }
                   },
                 ),
               ),
@@ -109,10 +113,13 @@ class EditProfilePageState extends State<EditProfilePage> {
                     // This optional block of code can be used to run
                     // code when the user saves the form.
                   },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (String? value) {
-                    return (value != null && value.contains('@'))
-                        ? 'Do not use the @ char.'
-                        : null;
+                    if (isAlpha(value!)) {
+                      return null;
+                    } else {
+                      return "Invalid Name";
+                    }
                   },
                 ),
               ),
@@ -140,10 +147,13 @@ class EditProfilePageState extends State<EditProfilePage> {
                     // This optional block of code can be used to run
                     // code when the user saves the form.
                   },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (String? value) {
-                    return (value != null && value.contains('@'))
-                        ? 'Do not use the @ char.'
-                        : null;
+                    if (isEmail(value!)) {
+                      return null;
+                    } else {
+                      return "Invalid Email Address";
+                    }
                   },
                 ),
               ),
@@ -171,10 +181,17 @@ class EditProfilePageState extends State<EditProfilePage> {
                     // This optional block of code can be used to run
                     // code when the user saves the form.
                   },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (String? value) {
-                    return (value != null && value.contains('@'))
-                        ? 'Do not use the @ char.'
-                        : null;
+                    if (isNumeric(value!)) {
+                      if (value.length == 8) {
+                        return null;
+                      } else {
+                        return "Phone must be 8 digits";
+                      }
+                    } else {
+                      return "Invalid Phone Number";
+                    }
                   },
                 ),
               ),

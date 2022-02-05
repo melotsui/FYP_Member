@@ -29,10 +29,31 @@ class MyProfilePageState extends State<MyProfilePage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        login = 0;
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => LoginPage()),
-            (Route<dynamic> route) => false);
+        showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            content: Text(
+              "Are you sure you want to log out?",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () =>
+                    Navigator.pop(context, 'Cancel'),
+                child: Text('Cancel'),
+              ),
+              TextButton(
+                  child: Text('Log Out'),
+                  onPressed: () {
+                    login = 0;
+                    Fluttertoast.showToast(msg: "Log Out Successful");
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                            (Route<dynamic> route) => false);
+                  }),
+            ],
+          ),
+        );
         return Future.value(false);
       },
       child: Scaffold(
@@ -304,7 +325,9 @@ class MyProfilePageState extends State<MyProfilePage> {
                                     onPressed: () {
                                       login = 0;
                                       Fluttertoast.showToast(msg: "Log Out Successful");
-                                      navigateToLoginPage(context);
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                          MaterialPageRoute(builder: (context) => LoginPage()),
+                                              (Route<dynamic> route) => false);
                                     }),
                               ],
                             ),

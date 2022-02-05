@@ -37,6 +37,7 @@ class Account {
   String accountPhone;
   String accountEmail;
   String accountBirthday;
+  String accountPassword;
   String accountGender;
   double accountBalance;
   int order;
@@ -51,6 +52,7 @@ class Account {
     required this.accountPhone,
     required this.accountEmail,
     required this.accountBirthday,
+    required this.accountPassword,
     required this.accountGender,
     required this.accountBalance,
     required this.order,
@@ -69,6 +71,7 @@ List<Account> account = [
     accountPhone: '51581556',
     accountEmail: 'melotsui@gmail.com',
     accountBirthday: "11/09/2001",
+    accountPassword: "Aa123456",
     accountGender: "male",
     accountBalance: 80.2,
     order: 12,
@@ -225,3 +228,9 @@ List<Branch> branch = [
   ),
 ];
 
+
+bool passwordValidation(String value) {
+  String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{0,}$';
+  RegExp regExp = new RegExp(pattern);
+  return regExp.hasMatch(value);
+}
