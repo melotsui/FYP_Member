@@ -466,6 +466,8 @@ class RegisterPageState extends State<RegisterPage> {
                                 ),
                               ];
                               account.add(newAccount[0]);
+                              Fluttertoast.showToast(
+                                  msg: "Account Created.");
                               navigateToLoginPage(context);
                             }
                           }

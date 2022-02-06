@@ -75,7 +75,7 @@ List<Account> account = [
     accountPassword: "Aa123456",
     accountGender: "male",
     accountBalance: 80.2,
-    order: 12,
+    order: 2,
     point: 842,
   ),
 ];
