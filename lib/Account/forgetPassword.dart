@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:member/Var/var.dart';
@@ -18,7 +20,7 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage> {
     // TODO: implement initState
     super.initState();
   }
-
+  bool isValid = false;
   String forgetEmail = "";
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,8 +63,10 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage> {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (String? value) {
                   if (isEmail(value!)) {
+                    isValid = true;
                     return null;
                   } else {
+                    isValid = false;
                     return "Invalid Email Address";
                   }
                 },
@@ -77,7 +81,7 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage> {
                       onPrimary: Colors.white, // foreground
                     ),
                     onPressed: () {
-                      if(forgetEmail != ""){
+                      if(isValid){
                         bool hasEmail = false;
                         for (int i = 0; i < account.length; i++) {
                           if (account[i].accountEmail == forgetEmail) {
@@ -97,7 +101,7 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage> {
                           Fluttertoast.showToast(msg: "Wrong Email.");
                         }
                       } else {
-                        Fluttertoast.showToast(msg: "Email cannot be null.");
+                        Fluttertoast.showToast(msg: "Invalid Email.");
                       }
                       // login = 1;
                       // setState(() {});

@@ -22,6 +22,7 @@ class EditProfilePageState extends State<EditProfilePage> {
     super.initState();
   }
 
+  List<bool> isValid = [true, true, true, true];
   SingingCharacter? _gender = SingingCharacter.male;
   TextEditingController dateCtl = TextEditingController(text: userBirthday);
   String editFirstName = "";
@@ -82,8 +83,10 @@ class EditProfilePageState extends State<EditProfilePage> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (String? value) {
                     if (isAlpha(value!)) {
+                      isValid[0] = true;
                       return null;
                     } else {
+                      isValid[0] = false;
                       return "Invalid Name";
                     }
                   },
@@ -116,8 +119,10 @@ class EditProfilePageState extends State<EditProfilePage> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (String? value) {
                     if (isAlpha(value!)) {
+                      isValid[1] = true;
                       return null;
                     } else {
+                      isValid[1] = false;
                       return "Invalid Name";
                     }
                   },
@@ -150,8 +155,10 @@ class EditProfilePageState extends State<EditProfilePage> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (String? value) {
                     if (isEmail(value!)) {
+                      isValid[2] = true;
                       return null;
                     } else {
+                      isValid[2] = false;
                       return "Invalid Email Address";
                     }
                   },
@@ -185,11 +192,14 @@ class EditProfilePageState extends State<EditProfilePage> {
                   validator: (String? value) {
                     if (isNumeric(value!)) {
                       if (value.length == 8) {
+                        isValid[3] = true;
                         return null;
                       } else {
+                        isValid[3] = false;
                         return "Phone must be 8 digits";
                       }
                     } else {
+                      isValid[3] = false;
                       return "Invalid Phone Number";
                     }
                   },
@@ -299,38 +309,52 @@ class EditProfilePageState extends State<EditProfilePage> {
                         onPrimary: Colors.white, // foreground
                       ),
                       onPressed: () {
-                        for (int i = 0; i < account.length; i++) {
-                          print(account[i].accountID);
-                          print(userID);
-                          if (account[i].accountID == userID) {
-                            if (editFirstName != "") {
-                              account[i].accountFirstName = editFirstName;
-                              userFirstName = editFirstName;
+                        if(isValid[0] && isValid[1] && isValid[2] && isValid[3]){
+                          for (int i = 0; i < account.length; i++) {
+                            print(account[i].accountID);
+                            print(userID);
+                            if (account[i].accountID == userID) {
+                              if (editFirstName != "") {
+                                account[i].accountFirstName = editFirstName;
+                                userFirstName = editFirstName;
+                              }
+                              if (editLastName != "") {
+                                account[i].accountLastName = editLastName;
+                                userLastName = editLastName;
+                              }
+                              if (editEmail != "") {
+                                account[i].accountEmail = editEmail;
+                                userEmail = editEmail;
+                              }
+                              if (editPhone != "") {
+                                account[i].accountPhone = editPhone;
+                                userPhone = editPhone;
+                              }
+                              if (editBirthday != "") {
+                                account[i].accountBirthday = editBirthday;
+                                userBirthday = editBirthday;
+                              }
+                              userGender = editGender;
                             }
-                            if (editLastName != "") {
-                              account[i].accountLastName = editLastName;
-                              userLastName = editLastName;
-                            }
-                            if (editEmail != "") {
-                              account[i].accountEmail = editEmail;
-                              userEmail = editEmail;
-                            }
-                            if (editPhone != "") {
-                              account[i].accountPhone = editPhone;
-                              userPhone = editPhone;
-                            }
-                            if (editBirthday != "") {
-                              account[i].accountBirthday = editBirthday;
-                              userBirthday = editBirthday;
-                            }
-                            userGender = editGender;
                           }
+                          Fluttertoast.showToast(msg: "Profile Edit Successful.");
+                          navigateToMyProfilePage(context);
+                        } else {
+                          String errMsg = "The following field(s) is invalid";
+                          if(!isValid[0]){
+                            errMsg += "\n- First Name";
+                          }
+                          if(!isValid[1]){
+                            errMsg += "\n- Last Name";
+                          }
+                          if(!isValid[2]){
+                            errMsg += "\n- Email";
+                          }
+                          if(!isValid[3]){
+                            errMsg += "\n- Phone";
+                          }
+                          Fluttertoast.showToast(msg: errMsg);
                         }
-                        Fluttertoast.showToast(msg: "Profile Edit Successful.");
-                        navigateToMyProfilePage(context);
-                        // login = 1;
-                        // setState(() {});
-                        // navigateToMyProfilePage(context);
                       },
                       child: Text(
                         'SAVE',

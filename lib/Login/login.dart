@@ -23,6 +23,7 @@ class LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
+  List<bool> isValid = [false, false];
   String loginPassword = "";
   String loginEmail = "";
 
@@ -103,8 +104,10 @@ class LoginPageState extends State<LoginPage> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (String? value) {
                     if (isEmail(value!)) {
+                      isValid[0] = true;
                       return null;
                     } else {
+                      isValid[0] = false;
                       return "Invalid Email Address";
                     }
                   },
@@ -134,8 +137,10 @@ class LoginPageState extends State<LoginPage> {
                   validator: (String? value) {
                     if (value != null) {
                       if (!passwordValidation(value) && value.length < 8) {
+                        isValid[1] = false;
                         return "Equal to or more than 8 letters and digits\nMust have uppercase and lowercase and digit";
                       } else {
+                        isValid[1] = false;
                         if (value.length < 8 || !passwordValidation(value)) {
                           if (value.length < 8) {
                             return "Equal to or more than 8 letters and digits";
@@ -144,6 +149,7 @@ class LoginPageState extends State<LoginPage> {
                             return "Must have uppercase and lowercase and digit";
                           }
                         } else {
+                          isValid[1] = true;
                           return null;
                         }
                       }
@@ -162,7 +168,7 @@ class LoginPageState extends State<LoginPage> {
                           onPrimary: Colors.white, // foreground
                         ),
                         onPressed: () {
-                          if (loginEmail != "" && loginPassword != "") {
+                          if (isValid[0] && isValid[1]) {
                             bool isEmailValid = false;
                             bool isPwValid = false;
                             for (int i = 0; i < account.length; i++) {
@@ -187,6 +193,7 @@ class LoginPageState extends State<LoginPage> {
                                   userEmail = account[i].accountEmail;
                                   userBirthday = account[i].accountBirthday;
                                   userGender = account[i].accountGender;
+                                  userPw = account[i].accountPassword;
                                   accountBalance = account[i].accountBalance;
                                   order = account[i].order;
                                   point = account[i].point;
@@ -212,11 +219,11 @@ class LoginPageState extends State<LoginPage> {
                             }
                           } else {
                             String errMsg =
-                                "The following field(s) cannot be null";
-                            if (loginEmail == "") {
+                                "The following field(s) is valid";
+                            if (!isValid[0]) {
                               errMsg += "\n- Email";
                             }
-                            if (loginPassword == "") {
+                            if (!isValid[1]) {
                               errMsg += "\n- Password";
                             }
                             Fluttertoast.showToast(msg: errMsg);

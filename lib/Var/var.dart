@@ -16,6 +16,7 @@ String userPhone = account[0].accountPhone;
 String userEmail = account[0].accountEmail;
 String userBirthday = account[0].accountBirthday;
 String userGender = account[0].accountGender;
+String userPw = account[0].accountPassword;
 double accountBalance = account[0].accountBalance;
 int order = account[0].order;
 int point = account[0].point;

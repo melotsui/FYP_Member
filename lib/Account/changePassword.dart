@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:member/Var/natigate.dart';
+import 'package:member/Var/var.dart';
 
 import '../main.dart';
 import '../Navigation/navigationBar.dart';
@@ -16,7 +17,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
     // TODO: implement initState
     super.initState();
   }
-
+  List<bool> isValid = [false, false, false];
   String oldPW = "";
   String newPW = "";
   String confirmPW = "";
@@ -63,10 +64,27 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                   // This optional block of code can be used to run
                   // code when the user saves the form.
                 },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (String? value) {
-                  return (value != null && value.contains('@'))
-                      ? 'Do not use the @ char.'
-                      : null;
+                  if (value != null) {
+                    if (!passwordValidation(value) && value.length < 8) {
+                      isValid[0] = false;
+                      return "Equal to or more than 8 letters and digits\nMust have uppercase and lowercase and digit";
+                    } else {
+                      if (value.length < 8 || !passwordValidation(value)) {
+                        isValid[0] = false;
+                        if (value.length < 8) {
+                          return "Equal to or more than 8 letters and digits";
+                        }
+                        if (!passwordValidation(value)) {
+                          return "Must have uppercase and lowercase and digit";
+                        }
+                      } else {
+                        isValid[0] = true;
+                        return null;
+                      }
+                    }
+                  }
                 },
               ),
             ),
@@ -96,10 +114,27 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                   // This optional block of code can be used to run
                   // code when the user saves the form.
                 },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (String? value) {
-                  return (value != null && value.contains('@'))
-                      ? 'Do not use the @ char.'
-                      : null;
+                  if (value != null) {
+                    if (!passwordValidation(value) && value.length < 8) {
+                      isValid[1] = false;
+                      return "Equal to or more than 8 letters and digits\nMust have uppercase and lowercase and digit";
+                    } else {
+                      if (value.length < 8 || !passwordValidation(value)) {
+                        isValid[1] = false;
+                        if (value.length < 8) {
+                          return "Equal to or more than 8 letters and digits";
+                        }
+                        if (!passwordValidation(value)) {
+                          return "Must have uppercase and lowercase and digit";
+                        }
+                      } else {
+                        isValid[1] = true;
+                        return null;
+                      }
+                    }
+                  }
                 },
               ),
             ),
@@ -126,13 +161,28 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                   }
                 },
                 onSaved: (String? value) {
-                  // This optional block of code can be used to run
-                  // code when the user saves the form.
                 },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (String? value) {
-                  return (value != null && value.contains('@'))
-                      ? 'Do not use the @ char.'
-                      : null;
+                  if (value != null) {
+                    if (!passwordValidation(value) && value.length < 8) {
+                      isValid[2] = false;
+                      return "Equal to or more than 8 letters and digits\nMust have uppercase and lowercase and digit";
+                    } else {
+                      if (value.length < 8 || !passwordValidation(value)) {
+                        isValid[2] = false;
+                        if (value.length < 8) {
+                          return "Equal to or more than 8 letters and digits";
+                        }
+                        if (!passwordValidation(value)) {
+                          return "Must have uppercase and lowercase and digit";
+                        }
+                      } else {
+                        isValid[2] = true;
+                        return null;
+                      }
+                    }
+                  }
                 },
               ),
             ),
@@ -148,27 +198,64 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                       onPrimary: Colors.white, // foreground
                     ),
                     onPressed: () {
-                      if (oldPW != "") {
-                        if(newPW != ""){
-                          if(confirmPW != ""){
-                            if(newPW == confirmPW){
-                              Fluttertoast.showToast(msg: "Password Changed.");
+                      if(isValid[0] && isValid[1] && isValid[2]){
+                        // if (oldPW != "" && newPW != "" && confirmPW != "") {
+                          if (newPW == confirmPW) {
+                            if (oldPW == userPw) {
+                              userPw = confirmPW;
+                              for (int i = 0; i < account.length; i++) {
+                                if (userEmail == account[i].accountEmail) {
+                                  account[i].accountPassword = userPw;
+                                }
+                              }
+                              print(userPw);
+                              Fluttertoast.showToast(
+                                  msg: "Password Changed.");
                               navigateToMyProfilePage(context);
                             } else {
                               Fluttertoast.showToast(
-                                  msg: "Confirm Password must be equal to New Password.");
+                                  msg: "Wrong Old Password.");
                             }
                           } else {
                             Fluttertoast.showToast(
-                                msg: "Please enter the confirm password.");
+                                msg:
+                                "Confirm Password must be equal to New Password.");
                           }
-                        } else {
-                          Fluttertoast.showToast(
-                              msg: "Please enter the new password.");
-                        }
+                          //   } else {
+                          //     Fluttertoast.showToast(
+                          //         msg: "Please enter the confirm password.");
+                          //   }
+                          // } else {
+                          //   Fluttertoast.showToast(
+                          //       msg: "Please enter the new password.");
+                          // }
+                        // } else {
+                        //   String errMsg = "The following field(s) cannot be null:";
+                        //   if(oldPW == ""){
+                        //     errMsg += "\n- Old Password";
+                        //   }
+                        //   if(newPW == ""){
+                        //     errMsg += "\n- New Password";
+                        //   }
+                        //   if(confirmPW == ""){
+                        //     errMsg += "\n- Confirm Password";
+                        //   }
+                        //   Fluttertoast.showToast(
+                        //       msg: errMsg);
+                        // }
                       } else {
+                        String errMsg = "The following field(s) is invalid:";
+                        if(!isValid[0]){
+                          errMsg += "\n- Old Password";
+                        }
+                        if(!isValid[1]){
+                          errMsg += "\n- New Password";
+                        }
+                        if(!isValid[2]){
+                          errMsg += "\n- Confirm Password";
+                        }
                         Fluttertoast.showToast(
-                            msg: "Please enter the old password.");
+                            msg: errMsg);
                       }
                     },
                     child: Text(
