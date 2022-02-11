@@ -17,15 +17,30 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
+  List<bool> isValid = [];
+  String loginPassword = "";
+  String loginEmail = "";
   @override
   void initState() {
     // TODO: implement initState
+    isValid = [false, false];
+    loginPassword = "Aa123456";
+    loginEmail = "melotsui@gmail.com";
+
+    if (isEmail(loginEmail)) {
+      isValid[0] = true;
+    } else {
+      isValid[0] = false;
+    }
+    if (loginPassword != null) {
+      if (!passwordValidation(loginPassword) || loginPassword.length < 8) {
+        isValid[1] = false;
+      } else {
+        isValid[1] = true;
+      }
+    }
     super.initState();
   }
-
-  List<bool> isValid = [false, false];
-  String loginPassword = "";
-  String loginEmail = "";
 
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -85,11 +100,11 @@ class LoginPageState extends State<LoginPage> {
                   height: 30,
                 ),
                 TextFormField(
+                  initialValue: loginEmail,
                   style: TextStyle(fontSize: 20),
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
-
                     // icon: Icon(Icons.person),
                     hintText: '',
                     labelText: 'Email',
@@ -116,6 +131,7 @@ class LoginPageState extends State<LoginPage> {
                   height: 20,
                 ),
                 TextFormField(
+                  initialValue: loginPassword,
                   obscureText: true,
                   style: TextStyle(fontSize: 20),
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
@@ -218,8 +234,7 @@ class LoginPageState extends State<LoginPage> {
                               }
                             }
                           } else {
-                            String errMsg =
-                                "The following field(s) is valid";
+                            String errMsg = "The following field(s) is valid";
                             if (!isValid[0]) {
                               errMsg += "\n- Email";
                             }
