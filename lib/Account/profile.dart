@@ -226,10 +226,10 @@ class MyProfilePageState extends State<MyProfilePage> {
                   child: ListView(
                     children: [
                       ListTile(
-                        leading: Icon(Icons.lock_open),
-                        title: Text('Change Password'),
+                        leading: Icon(Icons.attach_money),
+                        title: Text('Top Up'),
                         onTap: () {
-                          navigateToChangePasswordPage(context);
+                          navigateToTopUpPage(context);
                         },
                       ),
                       ListTile(
@@ -240,30 +240,24 @@ class MyProfilePageState extends State<MyProfilePage> {
                         },
                       ),
                       ListTile(
-                        leading: Icon(Icons.attach_money),
-                        title: Text('Top Up'),
+                        leading: Icon(Icons.lock_open),
+                        title: Text('Change Password'),
                         onTap: () {
-                          navigateToTopUpPage(context);
+                          navigateToChangePasswordPage(context);
                         },
                       ),
                       ListTile(
-                        leading: Icon(Icons.store),
-                        title: Text('Branch'),
+                        leading: Icon(Icons.face),
+                        title: Text('Title'),
                         onTap: () {
-                          // Update the state of the app
-                          // ...
-                          // Then close the drawer
+
                         },
                       ),
                       ListTile(
-                        leading: Icon(
-                          Icons.account_circle,
-                        ),
-                        title: Text('Profile'),
+                        leading: Icon(Icons.face),
+                        title: Text('Title'),
                         onTap: () {
-                          // Update the state of the app
-                          // ...
-                          // Then close the drawer
+
                         },
                       ),
                       Divider(color: Colors.black),

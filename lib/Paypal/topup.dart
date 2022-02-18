@@ -133,6 +133,11 @@ class TopUpPageState extends State<TopUpPage> {
                               print('order id: ' + number);
                               accountBalance += 100;
                               print('accountBalance: $accountBalance');
+                              for(int i=0; i<account.length; i++){
+                                if(account[i].accountID == userID){
+                                  account[i].accountBalance = accountBalance;
+                                }
+                              }
                             },
                           ),
                         ),
