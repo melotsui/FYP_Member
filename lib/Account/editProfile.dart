@@ -63,7 +63,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                    helperText: 'Assistive text',
+                    // helperText: 'Assistive text',
                     // icon: Icon(Icons.person),
                     hintText: '',
                     labelText: 'First Name',
@@ -100,7 +100,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                    helperText: 'Assistive text',
+                    // helperText: 'Assistive text',
                     // icon: Icon(Icons.person),
                     hintText: '',
                     labelText: 'Last Name',
@@ -136,7 +136,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                    helperText: 'Assistive text',
+                    // helperText: 'Assistive text',
                     // icon: Icon(Icons.person),
                     hintText: '',
                     labelText: 'Email',
@@ -172,7 +172,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                    helperText: 'Assistive text',
+                    // helperText: 'Assistive text',
                     // icon: Icon(Icons.person),
                     hintText: '',
                     labelText: 'Phone Number',

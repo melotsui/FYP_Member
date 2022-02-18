@@ -14,11 +14,15 @@ class TopUpPage extends StatefulWidget {
   TopUpPageState createState() => TopUpPageState();
 }
 
+bool isValid = false;
+
 class TopUpPageState extends State<TopUpPage> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    topupValue = 0;
+    isValid = false;
   }
 
   Widget build(BuildContext context) {
@@ -72,7 +76,7 @@ class TopUpPageState extends State<TopUpPage> {
                 Container(
                   padding: EdgeInsets.only(top: 5, left: 0),
                   child: Text(
-                    "HKD " + accountBalance.toString(),
+                    "HKD " + accountBalance.toStringAsFixed(2),
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 20,
@@ -89,7 +93,9 @@ class TopUpPageState extends State<TopUpPage> {
                 style: TextStyle(fontSize: 20),
                 scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.attach_money),
+                  prefixIcon: Icon(
+                    Icons.attach_money,
+                  ),
                   contentPadding: EdgeInsets.symmetric(horizontal: 20),
                   // helperText: 'Assistive text',
                   // icon: Icon(Icons.person),
@@ -100,17 +106,21 @@ class TopUpPageState extends State<TopUpPage> {
                 keyboardType: TextInputType.number,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (String? value) {
-                  if (isNumeric(value!)) {
-                    // return null;
+                  if (isValid) {
+                    return null;
                   } else {
-                    // isValid[3] = false;
-                    // return "Invalid Phone Number";
+                    return "Invalid Value";
                   }
                 },
                 onChanged: (String? value) {
                   if (value != null) {
-                    // newPhone = value;
-                    // print(newPhone);
+                    try {
+                      topupValue = double.parse(value);
+                      print(topupValue);
+                      isValid = true;
+                    } on Exception catch (ex) {
+                      isValid = false;
+                    }
                   }
                 },
               ),
@@ -125,23 +135,29 @@ class TopUpPageState extends State<TopUpPage> {
                       onPrimary: Colors.white, // foreground
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => PaypalPayment(
-                            onFinish: (number) async {
-                              // payment done
-                              print('order id: ' + number);
-                              accountBalance += 100;
-                              print('accountBalance: $accountBalance');
-                              for(int i=0; i<account.length; i++){
-                                if(account[i].accountID == userID){
-                                  account[i].accountBalance = accountBalance;
+                      if(isValid){
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => PaypalPayment(
+                              onFinish: (number) async {
+                                // payment done
+                                print('order id: ' + number);
+                                accountBalance += topupValue;
+                                print('accountBalance: $accountBalance');
+                                for (int i = 0; i < account.length; i++) {
+                                  if (account[i].accountID == userID) {
+                                    account[i].accountBalance = accountBalance;
+                                  }
                                 }
-                              }
-                            },
+                              },
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      } else {
+                        Fluttertoast.showToast(
+                            msg:
+                            "Invalid Top Up Value");
+                      }
                     },
                     child: Text(
                       'Top Up',

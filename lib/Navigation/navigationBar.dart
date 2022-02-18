@@ -49,7 +49,7 @@ class NavigationBarPageState extends State<NavigationBarPage> {
                 // SizedBox(height: 5,),
                 Row(
                   children: <Widget>[
-                    login > 0 ? Text('Balance: \$$accountBalance ',
+                    login > 0 ? Text('Balance: \$' + accountBalance.toStringAsFixed(2),
                       style: TextStyle(color: Colors.black54),) : Text(""),
                     // login > 0 ? Text(
                     //   displayBalance%2 ==1 ? 'Balance: \$$accountBalance ' : 'Balance: ****** ',
@@ -57,7 +57,8 @@ class NavigationBarPageState extends State<NavigationBarPage> {
                     // ) : Text(""),
                     // GestureDetector(
                     //   child: login > 0 ? Icon(
-                    //     Icons.remove_red_eye,
+                    //     Icons.add,
+                    //     size: 25,
                     //     color: displayBalance%1 ==0 ?
                     //     Colors.black38 : Colors.black,
                     //   ) : Text(""),
@@ -65,7 +66,8 @@ class NavigationBarPageState extends State<NavigationBarPage> {
                     //     // setState(() {
                     //     //
                     //     // });
-                    //     displayBalance = displayBalance + 1;
+                    //     // displayBalance = displayBalance + 1;
+                    //     navigateToTopUpPage(context);
                     //   },
                     // ),
                   ],
@@ -119,6 +121,7 @@ class NavigationBarPageState extends State<NavigationBarPage> {
             },
           ),
         ],
+
       ),
     );
   }

@@ -46,7 +46,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                 scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                  helperText: 'Assistive text',
+                  // helperText: '',
                   // icon: Icon(Icons.person),
                   hintText: '',
                   labelText: 'Old Password',
@@ -96,7 +96,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                 scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                  helperText: 'Assistive text',
+                  // helperText: '',
                   // icon: Icon(Icons.person),
                   hintText: '',
                   labelText: 'New Password',
@@ -146,7 +146,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                 scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                  helperText: 'Assistive text',
+                  // helperText: '',
                   // icon: Icon(Icons.person),
                   hintText: '',
                   labelText: 'Confirm New Password',
@@ -187,7 +187,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 15,
             ),
             Row(
               children: <Widget>[

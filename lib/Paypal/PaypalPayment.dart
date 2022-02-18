@@ -2,6 +2,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:member/Var/natigate.dart';
+import 'package:member/Var/var.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'PaypalServices.dart';
@@ -76,7 +77,7 @@ class PaypalPaymentState extends State<PaypalPayment> {
 
   // item name, price and quantity
   String itemName = 'E-Cash';
-  String itemPrice = '100';
+  String itemPrice = topupValue.toString();
   int quantity = 1;
 
   Map<String, dynamic> getOrderParams() {
@@ -90,8 +91,8 @@ class PaypalPaymentState extends State<PaypalPayment> {
     ];
 
     // checkout invoice details
-    String totalAmount = '100';
-    String subTotalAmount = '100';
+    String totalAmount = topupValue.toString();
+    String subTotalAmount = topupValue.toString();
     String shippingCost = '0';
     int shippingDiscountCost = 0;
     String userFirstName = 'Gulshan';

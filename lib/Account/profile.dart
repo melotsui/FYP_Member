@@ -163,7 +163,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                       child: Column(
                         children: [
                           Text(
-                            "\$$accountBalance",
+                            "\$" + accountBalance.toStringAsFixed(2),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 20,
