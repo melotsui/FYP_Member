@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:member/Paypal/PaypalPayment.dart';
 import 'package:member/Var/natigate.dart';
 import 'package:member/Var/var.dart';
 import 'package:string_validator/string_validator.dart';
@@ -55,16 +56,13 @@ class TopUpPageState extends State<TopUpPage> {
                     },
                   ),
                 ),
-
                 Expanded(child: Text("")),
               ],
             ),
             Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(
-                      top: 10,
-                      left: 0),
+                  padding: EdgeInsets.only(top: 10, left: 0),
                   child: Text(
                     "Account Balance",
                     textAlign: TextAlign.left,
@@ -72,9 +70,7 @@ class TopUpPageState extends State<TopUpPage> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(
-                      top: 5,
-                      left: 0),
+                  padding: EdgeInsets.only(top: 5, left: 0),
                   child: Text(
                     "HKD " + accountBalance.toString(),
                     textAlign: TextAlign.left,
@@ -129,10 +125,21 @@ class TopUpPageState extends State<TopUpPage> {
                       onPrimary: Colors.white, // foreground
                     ),
                     onPressed: () {
-
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => PaypalPayment(
+                            onFinish: (number) async {
+                              // payment done
+                              print('order id: ' + number);
+                              accountBalance += 100;
+                              print('accountBalance: $accountBalance');
+                            },
+                          ),
+                        ),
+                      );
                     },
                     child: Text(
-                      'Top up',
+                      'Top Up',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -142,7 +149,9 @@ class TopUpPageState extends State<TopUpPage> {
                 ),
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
           ],
         ),
       ),

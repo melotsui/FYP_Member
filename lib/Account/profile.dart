@@ -19,13 +19,6 @@ class MyProfilePageState extends State<MyProfilePage> {
     super.initState();
   }
 
-  var profileItem = [
-    'Change Password',
-    'Subtitle',
-    'Subtitle',
-    'Subtitle',
-    'Subtitle'
-  ];
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
