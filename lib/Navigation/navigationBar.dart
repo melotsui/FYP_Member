@@ -107,7 +107,7 @@ class NavigationBarPageState extends State<NavigationBarPage> {
               // Update the state of the app
               // ...
               // Then close the drawer
-              Navigator.pop(context);
+              navigateToBranchListPage(context);
             },
           ),
           ListTile(

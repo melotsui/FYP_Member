@@ -174,6 +174,13 @@ class PaypalPaymentState extends State<PaypalPayment> {
               } else {
                 navigateToMyProfilePage(context);
               }
+              accountBalance += topupValue;
+              print('accountBalance: $accountBalance');
+              for (int i = 0; i < account.length; i++) {
+                if (account[i].accountID == userID) {
+                  account[i].accountBalance = accountBalance;
+                }
+              }
               Fluttertoast.showToast(msg: "Top Up Successful");
               // showDialog<String>(
               //   context: context,

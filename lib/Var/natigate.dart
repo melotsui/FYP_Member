@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:member/Account/qrCode.dart';
+import 'package:member/Branch/branchList.dart';
 import 'package:member/Paypal/topup.dart';
 import 'package:member/Var/var.dart';
 
@@ -85,4 +86,9 @@ void navigateToScanQRCodePage(BuildContext context){
 // TopUpPage
 void navigateToTopUpPage(BuildContext context){
   Navigator.of(context).push(MaterialPageRoute(builder: (context) => TopUpPage()));
+}
+
+// BranchListPage
+void navigateToBranchListPage(BuildContext context){
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => BranchListPage()));
 }

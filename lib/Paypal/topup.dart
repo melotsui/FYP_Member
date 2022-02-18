@@ -131,6 +131,16 @@ class TopUpPageState extends State<TopUpPage> {
             Expanded(child: Text("")),
             Row(
               children: <Widget>[
+                Expanded(child: Text("")),
+                Text("Available to top up from Paypal"),
+                Expanded(child: Text("")),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: <Widget>[
                 Expanded(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -145,13 +155,6 @@ class TopUpPageState extends State<TopUpPage> {
                               onFinish: (number) async {
                                 // payment done
                                 print('order id: ' + number);
-                                accountBalance += topupValue;
-                                print('accountBalance: $accountBalance');
-                                for (int i = 0; i < account.length; i++) {
-                                  if (account[i].accountID == userID) {
-                                    account[i].accountBalance = accountBalance;
-                                  }
-                                }
                               },
                             ),
                           ),
@@ -172,7 +175,7 @@ class TopUpPageState extends State<TopUpPage> {
               ],
             ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
           ],
         ),
