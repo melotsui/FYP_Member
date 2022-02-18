@@ -104,9 +104,6 @@ class NavigationBarPageState extends State<NavigationBarPage> {
             leading: Icon(Icons.store),
             title: Text('Branch'),
             onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
               navigateToBranchListPage(context);
             },
           ),

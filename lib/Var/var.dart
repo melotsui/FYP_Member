@@ -106,26 +106,24 @@ class InvoiceList {
 List<InvoiceList> invoiceList = [
   InvoiceList(
       invoiceID: "20190721831",
-      productList: [
-        "2", "2", "2"
-      ],
+      productList: ["2", "2", "2"],
       date: "2019/07/21",
       time: "11:01",
       paymentMethod: "Account Balance",
       totalPrice: 98.7,
       request: false,
-      invoiceImage: "https://images.hktvmall.com/h0888001/427e4800fe055ca10b737d54e45ca60f787d3de5/h0888001_10060249_190315122522_01_515.jpg"),
+      invoiceImage:
+          "https://images.hktvmall.com/h0888001/427e4800fe055ca10b737d54e45ca60f787d3de5/h0888001_10060249_190315122522_01_515.jpg"),
   InvoiceList(
       invoiceID: "20190612001",
-      productList: [
-        "3", "4", "1"
-      ],
+      productList: ["3", "4", "1"],
       date: "2019/06/12",
       time: "00:01",
       paymentMethod: "Account Balance",
       totalPrice: 167.4,
       request: false,
-      invoiceImage: "https://hk.ulifestyle.com.hk/cms/images/event/w600/202111/20211129180351_1_2.png"),
+      invoiceImage:
+          "https://hk.ulifestyle.com.hk/cms/images/event/w600/202111/20211129180351_1_2.png"),
 ];
 
 class Product {
@@ -204,11 +202,15 @@ class Branch {
   String branchID;
   String branchName;
   int qty;
+  String district;
+  String address;
 
   Branch({
     required this.branchID,
     required this.branchName,
     required this.qty,
+    required this.district,
+    required this.address,
   });
 }
 
@@ -216,20 +218,25 @@ List<Branch> branch = [
   Branch(
     branchID: "1",
     branchName: "Branch A",
-    qty: 52
+    qty: 52,
+    district: "NT",
+    address: "Shop No. 1, G/F, Kwai Chung Shopping Centre, Kwai Chung Estate, Kwai Chung, N.T.",
   ),
   Branch(
-      branchID: "2",
-      branchName: "Branch B",
-      qty: 68
+    branchID: "2",
+    branchName: "Branch B",
+    qty: 68,
+    district: "KLN",
+    address: "G/F, Dr. Ng Tor Tai International House, 32 Renfrew Road, Kowloon Tong",
   ),
   Branch(
-      branchID: "1",
-      branchName: "Branch C",
-      qty: 99
+    branchID: "3",
+    branchName: "Branch C",
+    qty: 99,
+    district: "HK",
+    address: "2 Catchick Street, Kennedy Town",
   ),
 ];
-
 
 bool passwordValidation(String value) {
   String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{0,}$';
