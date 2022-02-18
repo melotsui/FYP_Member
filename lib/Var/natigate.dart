@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:member/Account/qrCode.dart';
+import 'package:member/Paypal/topup.dart';
 import 'package:member/Var/var.dart';
 
 import '../Account/changePassword.dart';
@@ -79,4 +80,9 @@ void navigateToForgetPasswordPage(BuildContext context){
 // ScanQRCodePage
 void navigateToScanQRCodePage(BuildContext context){
   Navigator.of(context).push(MaterialPageRoute(builder: (context) => ScanQRCodePage()));
+}
+
+// TopUpPage
+void navigateToTopUpPage(BuildContext context){
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => TopUpPage()));
 }

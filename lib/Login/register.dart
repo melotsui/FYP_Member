@@ -191,6 +191,7 @@ class RegisterPageState extends State<RegisterPage> {
                     labelText: 'Phone Number',
                     border: OutlineInputBorder(),
                   ),
+                  keyboardType: TextInputType.number,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (String? value) {
                     if (isNumeric(value!)) {

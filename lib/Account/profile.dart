@@ -250,7 +250,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                         leading: Icon(Icons.attach_money),
                         title: Text('Top Up'),
                         onTap: () {
-                          
+                          navigateToTopUpPage(context);
                         },
                       ),
                       ListTile(

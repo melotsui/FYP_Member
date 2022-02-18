@@ -178,6 +178,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                     labelText: 'Phone Number',
                     border: OutlineInputBorder(),
                   ),
+                  keyboardType: TextInputType.number,
                   onChanged: (String? value) {
                     if (value != null) {
                       editPhone = value;
