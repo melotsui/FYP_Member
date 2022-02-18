@@ -247,30 +247,10 @@ class MyProfilePageState extends State<MyProfilePage> {
                         },
                       ),
                       ListTile(
-                        leading: Icon(Icons.web),
-                        title: Text('Invoices'),
+                        leading: Icon(Icons.attach_money),
+                        title: Text('Top Up'),
                         onTap: () {
-                          showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                              title: Text('AlertDialog Title'),
-                              content: Text('AlertDialog description'),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(context, 'Cancel'),
-                                  child: Text('Cancel'),
-                                ),
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context, 'OK'),
-                                  child: Text('OK'),
-                                ),
-                              ],
-                            ),
-                          );
-                          // Update the state of the app
-                          // ...
-                          // Then close the drawer
+                          
                         },
                       ),
                       ListTile(
