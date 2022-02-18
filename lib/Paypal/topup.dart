@@ -90,15 +90,18 @@ class TopUpPageState extends State<TopUpPage> {
               padding: EdgeInsets.only(top: 20),
               child: TextFormField(
                 // initialValue: userPhone,
+                autofocus: true,
                 style: TextStyle(fontSize: 20),
                 scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                 decoration: InputDecoration(
                   prefixIcon: Icon(
                     Icons.attach_money,
+                    color: Colors.grey,
                   ),
                   contentPadding: EdgeInsets.symmetric(horizontal: 20),
                   // helperText: 'Assistive text',
                   // icon: Icon(Icons.person),
+
                   hintText: '',
                   labelText: 'HKD',
                   border: OutlineInputBorder(),
@@ -135,7 +138,7 @@ class TopUpPageState extends State<TopUpPage> {
                       onPrimary: Colors.white, // foreground
                     ),
                     onPressed: () {
-                      if(isValid){
+                      if (isValid) {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (BuildContext context) => PaypalPayment(
@@ -154,9 +157,7 @@ class TopUpPageState extends State<TopUpPage> {
                           ),
                         );
                       } else {
-                        Fluttertoast.showToast(
-                            msg:
-                            "Invalid Top Up Value");
+                        Fluttertoast.showToast(msg: "Invalid Top Up Value");
                       }
                     },
                     child: Text(
