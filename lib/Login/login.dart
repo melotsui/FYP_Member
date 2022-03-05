@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:member/Login/register.dart';
 import 'package:string_validator/string_validator.dart';
+import 'package:http/http.dart' as http;
 
 import '../Product/productList.dart';
 import '../Var/natigate.dart';

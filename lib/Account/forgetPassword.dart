@@ -42,6 +42,7 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage> {
             Container(
               padding: EdgeInsets.only(top: 20),
               child: TextFormField(
+                autofocus: true,
                 style: TextStyle(fontSize: 20),
                 scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                 decoration: InputDecoration(

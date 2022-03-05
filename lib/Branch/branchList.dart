@@ -222,6 +222,7 @@ class BranchListPageState extends State<BranchListPage> {
                                       ),
                                     ),
                                     Container(
+                                      alignment: Alignment.centerLeft,
                                       child: Text(
                                         filterBranch[index].address,
                                         style: TextStyle(

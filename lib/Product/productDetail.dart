@@ -175,7 +175,7 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                         child: Column(
                           children: <Widget>[
                             // (widget.productDetail.fav%2) == 0 ?
-                            GestureDetector(
+                            login > 0 ? GestureDetector(
                               child:
                                   widget.productDetail.fav % 2 == 0 && login > 0
                                       ? Icon(Icons.favorite,
@@ -204,7 +204,7 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                                 // storage.read(key: product);
                                 setState(() {});
                               },
-                            ),
+                            ) : Text(""),
                           ],
                         ),
                       ),

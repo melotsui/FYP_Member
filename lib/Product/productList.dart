@@ -154,7 +154,7 @@ class ProductListPageState extends State<ProductListPage> {
                                     children: <Widget>[
                                       Expanded(
                                         flex: 30,
-                                        child: GestureDetector(
+                                        child: login > 0 ? GestureDetector(
                                           child: searchProduct[index].fav % 2 ==
                                                       0 &&
                                                   login > 0
@@ -182,7 +182,7 @@ class ProductListPageState extends State<ProductListPage> {
                                             // storage.read(key: product);
                                             setState(() {});
                                           },
-                                        ),
+                                        ) : Text(""),
                                       ),
                                       Expanded(flex: 70, child: SizedBox()),
                                     ],

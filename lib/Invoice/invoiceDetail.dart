@@ -99,8 +99,19 @@ class InvoiceDetailPageState extends State<InvoiceDetailPage> {
                             radius: 35,
                             backgroundImage: login > 0
                                 ? NetworkImage(
-                                    widget.invoiceDetail.invoiceImage)
+                                "https://media.istockphoto.com/vectors/convenience-store-vector-id1009031800?k=20&m=1009031800&s=170667a&w=0&h=r6UE66Xv6zgkHuyWbOzy_nrRnfNBwSS1nV7gfqNPGZY=")
                                 : NetworkImage(unknownIcon),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "Branch A",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: Colors.green,
                           ),
                         ),
                       ],
