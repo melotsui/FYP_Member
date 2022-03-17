@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
+String oID = "";
 DateTime now = new DateTime.now();
 enum SingingCharacter { male, female }
 int login = 0;

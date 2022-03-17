@@ -154,7 +154,20 @@ class TopUpPageState extends State<TopUpPage> {
                             builder: (BuildContext context) => PaypalPayment(
                               onFinish: (number) async {
                                 // payment done
-                                print('order id: ' + number);
+                                if(oID != number){
+                                  oID = number;
+                                  double x = accountBalance + topupValue;
+                                  accountBalance = x;
+                                  print('accountBalance: $accountBalance');
+                                  for (int i = 0; i < account.length; i++) {
+                                    if (account[i].accountID == userID) {
+                                      account[i].accountBalance = accountBalance;
+                                    }
+                                  }
+                                  Fluttertoast.showToast(msg: "Top Up Successful");
+                                  print('order id: ' + number);
+                                }
+
                               },
                             ),
                           ),

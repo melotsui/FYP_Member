@@ -165,6 +165,7 @@ class PaypalPaymentState extends State<PaypalPayment> {
               final uri = Uri.parse(request.url);
               final payerID = uri.queryParameters['PayerID'];
               if (payerID != null) {
+                print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
                 services
                     .executePayment(executeUrl, payerID, accessToken)
                     .then((id) {
@@ -174,14 +175,6 @@ class PaypalPaymentState extends State<PaypalPayment> {
               } else {
                 navigateToMyProfilePage(context);
               }
-              accountBalance += topupValue;
-              print('accountBalance: $accountBalance');
-              for (int i = 0; i < account.length; i++) {
-                if (account[i].accountID == userID) {
-                  account[i].accountBalance = accountBalance;
-                }
-              }
-              Fluttertoast.showToast(msg: "Top Up Successful");
               // showDialog<String>(
               //   context: context,
               //   builder: (BuildContext context) => AlertDialog(
@@ -200,6 +193,7 @@ class PaypalPaymentState extends State<PaypalPayment> {
               // );
             }
             if (request.url.contains(cancelURL)) {
+              print("cancelURLcancelURLcancelURLcancelURLcancelURLcancelURLcancelURL");
               Navigator.of(context).pop();
             }
             return NavigationDecision.navigate;
