@@ -79,9 +79,9 @@ class MyProfilePageState extends State<MyProfilePage> {
         drawer: NavigationBarPageState().navBar(context),
         body: status == Status.loading
             ? Center(
-                // child: CircularProgressIndicator(
-                //   color: Colors.deepPurpleAccent,
-                // ),
+                child: CircularProgressIndicator(
+                  color: Colors.deepPurpleAccent,
+                ),
               )
             : SingleChildScrollView(
                 child: Container(
