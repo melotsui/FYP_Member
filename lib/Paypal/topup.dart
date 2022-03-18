@@ -52,7 +52,7 @@ class TopUpPageState extends State<TopUpPage> {
                     child: CircleAvatar(
                       radius: 35,
                       backgroundImage: login > 0
-                          ? NetworkImage(userIcon)
+                          ? NetworkImage(userIcon!)
                           : NetworkImage(unknownIcon),
                     ),
                     onTap: () {
@@ -76,7 +76,7 @@ class TopUpPageState extends State<TopUpPage> {
                 Container(
                   padding: EdgeInsets.only(top: 5, left: 0),
                   child: Text(
-                    "HKD " + accountBalance.toStringAsFixed(2),
+                    "HKD " + accountBalance!.toStringAsFixed(2),
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 20,
@@ -156,7 +156,7 @@ class TopUpPageState extends State<TopUpPage> {
                                 // payment done
                                 if(oID != number){
                                   oID = number;
-                                  double x = accountBalance + topupValue;
+                                  double x = accountBalance! + topupValue;
                                   accountBalance = x;
                                   print('accountBalance: $accountBalance');
                                   for (int i = 0; i < account.length; i++) {

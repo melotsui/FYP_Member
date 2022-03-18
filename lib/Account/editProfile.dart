@@ -30,7 +30,7 @@ class EditProfilePageState extends State<EditProfilePage> {
   String editEmail = "";
   String editPhone = "";
   String editBirthday = "";
-  String editGender = userGender;
+  String? editGender = userGender;
 
   Widget build(BuildContext context) {
     if (editGender == "female") {

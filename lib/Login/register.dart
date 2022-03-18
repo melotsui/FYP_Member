@@ -454,7 +454,7 @@ class RegisterPageState extends State<RegisterPage> {
                                   accountID: newID,
                                   accountFirstName: newFirstName,
                                   accountLastName: newLastName,
-                                  accountIcon: image, //image path
+                                  // accountIcon: image, //image path
                                   accountRole: 'VIP Member',
                                   accountPhone: newPhone,
                                   accountEmail: newEmail,
@@ -462,7 +462,7 @@ class RegisterPageState extends State<RegisterPage> {
                                   accountBirthday: newBirthday,
                                   accountGender: newGender,
                                   accountBalance: 0,
-                                  order: 0,
+                                  // order: 0,
                                   point: 0,
                                 ),
                               ];

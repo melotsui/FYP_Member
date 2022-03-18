@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-
+String apiDomain = "http://api.chunon.me";
 String oID = "";
 DateTime now = new DateTime.now();
 enum SingingCharacter { male, female }
@@ -9,19 +9,19 @@ double topupValue = 0;
 String unknownIcon =
     "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/925px-Unknown_person.jpg";
 String unknownName = "Login";
-String userID = account[0].accountID;
-String userIcon = account[0].accountIcon;
-String userFirstName = account[0].accountFirstName;
-String userLastName = account[0].accountLastName;
-String role = account[0].accountRole;
-String userPhone = account[0].accountPhone;
-String userEmail = account[0].accountEmail;
-String userBirthday = account[0].accountBirthday;
-String userGender = account[0].accountGender;
-String userPw = account[0].accountPassword;
-double accountBalance = account[0].accountBalance;
-int order = account[0].order;
-int point = account[0].point;
+String? userID = account[0].accountID;
+String? userIcon = unknownIcon;
+String? userFirstName = account[0].accountFirstName;
+String? userLastName = account[0].accountLastName;
+String? role = account[0].accountRole;
+String? userPhone = account[0].accountPhone;
+String? userEmail = account[0].accountEmail;
+String? userBirthday = account[0].accountBirthday;
+String? userGender = account[0].accountGender;
+String? userPw = account[0].accountPassword;
+double? accountBalance = account[0].accountBalance;
+int? order = 2;
+int? point = account[0].point;
 var displayBalance = 1;
 // int fav = 1;
 //         leading: IconButton(
@@ -31,54 +31,75 @@ var displayBalance = 1;
 //           icon: Icon(Icons.arrow_back),
 //         ),
 
-class Account {
-  String accountID;
-  String accountFirstName;
-  String accountLastName;
-  String accountIcon;
-  String accountRole;
-  String accountPhone;
-  String accountEmail;
-  String accountBirthday;
-  String accountPassword;
-  String accountGender;
-  double accountBalance;
-  int order;
-  int point;
+enum Status{
+  loading, success, error
+}
 
-  Account({
-    required this.accountID,
-    required this.accountFirstName,
-    required this.accountLastName,
-    required this.accountIcon,
-    required this.accountRole,
-    required this.accountPhone,
-    required this.accountEmail,
-    required this.accountBirthday,
-    required this.accountPassword,
-    required this.accountGender,
-    required this.accountBalance,
-    required this.order,
-    required this.point,
-  });
+class Account {
+  String? accountID;
+  String? accountFirstName;
+  String? accountLastName;
+  String? accountEmail;
+  String? accountPassword;
+  String? accountPhone;
+  String? accountBirthday;
+  double? accountBalance;
+  String? accountGender;
+  int? point;
+  // List<Null>? invoice;
+  String? accountRole;
+
+  Account(
+      {this.accountID,
+        this.accountFirstName,
+        this.accountLastName,
+        this.accountEmail,
+        this.accountPassword,
+        this.accountPhone,
+        this.accountBirthday,
+        this.accountBalance,
+        this.accountGender,
+        this.point,
+        // this.invoice,
+        this.accountRole});
+
+  Account.fromJson(Map<String, dynamic> json) {
+    accountID = json['accountID'];
+    accountFirstName = json['firstName'];
+    accountLastName = json['lastName'];
+    accountEmail = json['email'];
+    accountPassword = json['password'];
+    accountPhone = json['phoneNumber'];
+    accountBirthday = json['birthday'];
+    accountBalance = json['balance'];
+    accountGender = json['gender'];
+    point = json['point'];
+    // if (json['invoice'] != null) {
+    //   invoice = <Null>[];
+    //   json['invoice'].forEach((v) {
+    //     invoice!.add(new Null.fromJson(v));
+    //   });
+    // }
+    accountRole = json['role'];
+  }
 }
 
 List<Account> account = [
   Account(
-    accountID: '20220128001',
-    accountFirstName: 'Melo',
-    accountLastName: 'Tsui',
-    accountIcon:
-        'https://image-resizer.cwg.tw/resize/uri/https%3A%2F%2Fcw1.tw%2FCC%2Fimages%2Farticle%2F201710%2Farticle-59d1f2b06a7a2.jpg/?w=810&h=543&fit=fill',
-    accountRole: 'VIP Member',
-    accountPhone: '51581556',
-    accountEmail: 'melotsui@gmail.com',
-    accountBirthday: "11/09/2001",
-    accountPassword: "Aa123456",
-    accountGender: "male",
-    accountBalance: 80.2,
-    order: 2,
-    point: 842,
+    accountID: '',
+    accountFirstName: '',
+    accountLastName: '',
+    // accountIcon:
+    //     'https://image-resizer.cwg.tw/resize/uri/https%3A%2F%2Fcw1.tw%2FCC%2Fimages%2Farticle%2F201710%2Farticle-59d1f2b06a7a2.jpg/?w=810&h=543&fit=fill',
+    accountRole: '',
+    accountPhone: '',
+    accountEmail: '',
+    accountBirthday: "",
+    accountPassword: "",
+    accountGender: "",
+    accountBalance: 0,
+    // order: 2,
+    point: 0,
   ),
 ];
 

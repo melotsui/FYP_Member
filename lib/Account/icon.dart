@@ -38,7 +38,7 @@ class IconPagePageState extends State<IconPage> {
             ),
           ),
           Image(
-            image: NetworkImage(userIcon),
+            image: NetworkImage(userIcon!),
             fit: BoxFit.contain,
           ),
           Expanded(

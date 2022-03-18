@@ -4,6 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:member/Login/register.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 import '../Product/productList.dart';
 import '../Var/natigate.dart';
@@ -12,12 +14,36 @@ import '../Navigation/navigationBar.dart';
 import '../Var/var.dart';
 import '../Account/profile.dart';
 
+Status status = Status.loading;
+Future<Account> loginAPI(String email, pwd) async {
+  final response = await http.post(
+    Uri.parse('$apiDomain/login'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode({"email": email, "password": pwd}),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    status = Status.success;
+    return Account.fromJson(jsonDecode(response.body));
+  } else {
+    status = Status.error;
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to login');
+  }
+}
+
 class LoginPage extends StatefulWidget {
   @override
   LoginPageState createState() => LoginPageState();
 }
 
 class LoginPageState extends State<LoginPage> {
+  bool isLoading = false;
   List<bool> isValid = [];
   String loginPassword = "";
   String loginEmail = "";
@@ -186,72 +212,80 @@ class LoginPageState extends State<LoginPage> {
                         ),
                         onPressed: () {
                           if (isValid[0] && isValid[1]) {
-                            bool isEmailValid = false;
-                            bool isPwValid = false;
-                            for (int i = 0; i < account.length; i++) {
-                              if (account[i].accountEmail == loginEmail) {
-                                isEmailValid = true;
-                                if (account[i].accountPassword ==
-                                    loginPassword) {
-                                  isPwValid = true;
-                                }
-                              }
-                            }
-                            if (isEmailValid && isPwValid) {
-                              login = 1;
-                              for (int i = 0; i < account.length; i++) {
-                                if (account[i].accountEmail == loginEmail) {
-                                  userID = account[i].accountID;
-                                  userIcon = account[i].accountIcon;
-                                  userFirstName = account[i].accountFirstName;
-                                  userLastName = account[i].accountLastName;
-                                  role = account[i].accountRole;
-                                  userPhone = account[i].accountPhone;
-                                  userEmail = account[i].accountEmail;
-                                  userBirthday = account[i].accountBirthday;
-                                  userGender = account[i].accountGender;
-                                  userPw = account[i].accountPassword;
-                                  accountBalance = account[i].accountBalance;
-                                  order = account[i].order;
-                                  point = account[i].point;
-                                }
-                              }
+                          isLoading = true;
+                          setState(() {});
+                          account = [];
+                          loginAPI(loginEmail, loginPassword).then((value) {
+                            if (status == Status.success) {
+                              isLoading = false;
                               setState(() {});
-                              Fluttertoast.showToast(
-                                  msg: "Welcome, " +
-                                      userFirstName +
-                                      " " +
-                                      userLastName +
-                                      ".");
-                              navigateToMyProfilePage(context);
-                            } else {
-                              if (!isEmailValid) {
-                                Fluttertoast.showToast(msg: "Wrong Email.");
-                              } else {
-                                if (!isPwValid) {
+                              Account acc = value;
+                              account.add(acc);
+                              status = Status.loading;
+                                bool isEmailValid = false;
+                                bool isPwValid = false;
+                                for (int i = 0; i < account.length; i++) {
+                                  if (account[i].accountEmail == loginEmail) {
+                                    isEmailValid = true;
+                                    if (account[i].accountPassword ==
+                                        loginPassword) {
+                                      isPwValid = true;
+                                    }
+                                  }
+                                }
+                                if (isEmailValid && isPwValid) {
+                                  login = 1;
+                                  for (int i = 0; i < account.length; i++) {
+                                    if (account[i].accountEmail == loginEmail) {
+                                      userID = account[i].accountID;
+                                      // userIcon = account[i].accountIcon;
+                                      userFirstName =
+                                          account[i].accountFirstName;
+                                      userLastName = account[i].accountLastName;
+                                      role = account[i].accountRole;
+                                      userPhone = account[i].accountPhone;
+                                      userEmail = account[i].accountEmail;
+                                      userBirthday = account[i].accountBirthday;
+                                      userGender = account[i].accountGender;
+                                      userPw = account[i].accountPassword;
+                                      accountBalance =
+                                          account[i].accountBalance;
+                                      // order = account[i].order;
+                                      point = account[i].point;
+                                    }
+                                  }
+                                  setState(() {});
                                   Fluttertoast.showToast(
-                                      msg: "Wrong Password.");
+                                      msg: "Welcome, " +
+                                          userFirstName! +
+                                          " " +
+                                          userLastName! +
+                                          ".");
+                                  navigateToMyProfilePage(context);
+                                } else {
+                                  if (!isEmailValid) {
+                                    Fluttertoast.showToast(
+                                        msg: "Wrong Email or Password.");
+                                  }
                                 }
                               }
-                            }
-                          } else {
-                            String errMsg = "The following field(s) is valid";
-                            if (!isValid[0]) {
-                              errMsg += "\n- Email";
-                            }
-                            if (!isValid[1]) {
-                              errMsg += "\n- Password";
-                            }
-                            Fluttertoast.showToast(msg: errMsg);
+                          });
                           }
                         },
-                        child: Text(
-                          'LOGIN',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        child: isLoading
+                            ? SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ))
+                            : Text(
+                                'LOGIN',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                       ),
                     ),
                   ],

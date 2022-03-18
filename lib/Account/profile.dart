@@ -80,7 +80,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                           child: CircleAvatar(
                             radius: 35,
                             backgroundImage: login > 0
-                                ? NetworkImage(userIcon)
+                                ? NetworkImage(userIcon!)
                                 : NetworkImage(unknownIcon),
                           ),
                           onTap: () {
@@ -93,9 +93,9 @@ class MyProfilePageState extends State<MyProfilePage> {
                           Container(
                             padding: EdgeInsets.only(
                                 top: 35,
-                                left: MediaQuery.of(context).size.width * 0.1),
+                                left: MediaQuery.of(context).size.width * 0.05),
                             child: Text(
-                              userFirstName + " " + userLastName,
+                              userFirstName! + " " + userLastName!,
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontSize: 20,
@@ -107,9 +107,9 @@ class MyProfilePageState extends State<MyProfilePage> {
                           Container(
                             padding: EdgeInsets.only(
                                 top: 5,
-                                left: MediaQuery.of(context).size.width * 0.1),
+                                left: MediaQuery.of(context).size.width * 0.05),
                             child: Text(
-                              role,
+                              role!,
                               textAlign: TextAlign.left,
                               style: TextStyle(color: Colors.black54),
                             ),
@@ -163,7 +163,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                       child: Column(
                         children: [
                           Text(
-                            "\$" + accountBalance.toStringAsFixed(2),
+                            "\$" + accountBalance!.toStringAsFixed(2),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 20,
@@ -290,6 +290,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                                 TextButton(
                                     child: Text('Log Out'),
                                     onPressed: () {
+                                      account = [];
                                       login = 0;
                                       Fluttertoast.showToast(msg: "Log Out Successful");
                                       Navigator.of(context).pushAndRemoveUntil(

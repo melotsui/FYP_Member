@@ -35,7 +35,7 @@ class NavigationBarPageState extends State<NavigationBarPage> {
                 GestureDetector(
                   child: CircleAvatar(
                     radius: 35,
-                    backgroundImage: login > 0 ? NetworkImage(userIcon) : NetworkImage(unknownIcon),
+                    backgroundImage: login > 0 ? NetworkImage(userIcon!) : NetworkImage(unknownIcon),
                   ),
                   onTap: () {
                     login > 0 ? navigateToIconPage(context) : navigateToLoginPage(context);
@@ -43,13 +43,13 @@ class NavigationBarPageState extends State<NavigationBarPage> {
                 ),
                 Divider(),
                 login > 0 ?
-                Text(userFirstName + " " + userLastName,style: TextStyle(fontWeight: FontWeight.bold),) :
+                Text(userFirstName! + " " + userLastName!,style: TextStyle(fontWeight: FontWeight.bold),) :
                 Text(unknownName,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                 Expanded(child: Text("")),
                 // SizedBox(height: 5,),
                 Row(
                   children: <Widget>[
-                    login > 0 ? Text('Balance: \$' + accountBalance.toStringAsFixed(2),
+                    login > 0 ? Text('Balance: \$' + accountBalance!.toStringAsFixed(2),
                       style: TextStyle(color: Colors.black54),) : Text(""),
                     // login > 0 ? Text(
                     //   displayBalance%2 ==1 ? 'Balance: \$$accountBalance ' : 'Balance: ****** ',
