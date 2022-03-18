@@ -4,10 +4,47 @@ import 'package:member/Paypal/PaypalPayment.dart';
 import 'package:member/Var/natigate.dart';
 import 'package:member/Var/var.dart';
 import 'package:string_validator/string_validator.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import '../Login/login.dart';
 import '../main.dart';
 import '../Navigation/navigationBar.dart';
+Status status = Status.loading;
+Future<TopupStatus> topupAPI(String id, double addValue) async {
+
+  final response = await http.post(
+    Uri.parse('$apiDomain/updateMemberBalance'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode({"accountID": id, "addBalance": addValue}),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    status = Status.success;
+    return TopupStatus.fromJson(jsonDecode(response.body));
+  } else {
+    status = Status.error;
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to topup');
+  }
+}
+
+class TopupStatus {
+  String? success;
+
+  TopupStatus({this.success});
+
+  TopupStatus.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+  }
+
+}
 
 class TopUpPage extends StatefulWidget {
   @override
@@ -156,15 +193,20 @@ class TopUpPageState extends State<TopUpPage> {
                                 // payment done
                                 if(oID != number){
                                   oID = number;
-                                  double x = accountBalance! + topupValue;
-                                  accountBalance = x;
-                                  print('accountBalance: $accountBalance');
-                                  for (int i = 0; i < account.length; i++) {
-                                    if (account[i].accountID == userID) {
-                                      account[i].accountBalance = accountBalance;
+                                  topupAPI(userID!, topupValue).then((value) {
+                                    loadingScreen(context);
+                                    if(status == Status.success){
+                                      double x = accountBalance! + topupValue;
+                                      accountBalance = x;
+                                      print('accountBalance: $accountBalance');
+                                      for (int i = 0; i < account.length; i++) {
+                                        if (account[i].accountID == userID) {
+                                          account[i].accountBalance = accountBalance;
+                                        }
+                                      }
+                                      Fluttertoast.showToast(msg: "Top Up Successful");
                                     }
-                                  }
-                                  Fluttertoast.showToast(msg: "Top Up Successful");
+                                  });
                                   print('order id: ' + number);
                                 }
 
