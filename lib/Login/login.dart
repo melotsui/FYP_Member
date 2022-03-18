@@ -14,8 +14,8 @@ import '../Navigation/navigationBar.dart';
 import '../Var/var.dart';
 import '../Account/profile.dart';
 
-Status status = Status.loading;
 Future<Account> loginAPI(String email, pwd) async {
+  status = Status.loading;
   final response = await http.post(
     Uri.parse('$apiDomain/login'),
     headers: <String, String>{
@@ -247,7 +247,7 @@ class LoginPageState extends State<LoginPage> {
                                       userPw = account[i].accountPassword;
                                       accountBalance =
                                           account[i].accountBalance;
-                                      // order = account[i].order;
+                                      order = account[i].order;
                                       point = account[i].point;
                                     }
                                   }
@@ -263,6 +263,7 @@ class LoginPageState extends State<LoginPage> {
                                   if (!isEmailValid) {
                                     Fluttertoast.showToast(
                                         msg: "Wrong Email or Password.");
+                                    Navigator.pop(context);
                                   }
                                 }
                               }

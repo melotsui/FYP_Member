@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:member/Account/profile.dart';
 import 'package:member/Var/natigate.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -29,40 +30,56 @@ class ScanQRCodePageState extends State<ScanQRCodePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: new AppBar(
-        backgroundColor: Colors.deepPurpleAccent,
-        title: Text("Scan QR Code"),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: <Widget>[
-          // Expanded(
-          //   flex: 2,
-          //   child: Center(
-          //     child: (result != null)
-          //         ? Text(
-          //         'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-          //         : Text('Scan a code'),
-          //   ),
-          // ),
-          Expanded(
-            flex: 6,
-            child: QRView(
-              key: qrKey,
-              onQRViewCreated: _onQRViewCreated,
-            ),
+    return WillPopScope(
+      onWillPop: () {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => MyProfilePage()),
+            (Route<dynamic> route) => false);
+        return Future.value(false);
+      },
+      child: Scaffold(
+        appBar: new AppBar(
+          backgroundColor: Colors.deepPurpleAccent,
+          title: Text("Scan QR Code"),
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => MyProfilePage()),
+                  (Route<dynamic> route) => false);
+            },
+            icon: Icon(Icons.arrow_back_ios),
           ),
-          // Expanded(
-          //   flex: 2,
-          //   child: Center(
-          //     child: (result != null)
-          //         ? Text(
-          //         'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-          //         : Text('Scan a code'),
-          //   ),
-          // ),
-        ],
+        ),
+        body: Column(
+          children: <Widget>[
+            // Expanded(
+            //   flex: 2,
+            //   child: Center(
+            //     child: (result != null)
+            //         ? Text(
+            //         'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
+            //         : Text('Scan a code'),
+            //   ),
+            // ),
+            Expanded(
+              flex: 6,
+              child: QRView(
+                key: qrKey,
+                onQRViewCreated: _onQRViewCreated,
+              ),
+            ),
+            // Expanded(
+            //   flex: 2,
+            //   child: Center(
+            //     child: (result != null)
+            //         ? Text(
+            //         'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
+            //         : Text('Scan a code'),
+            //   ),
+            // ),
+          ],
+        ),
       ),
     );
   }

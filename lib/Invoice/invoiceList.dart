@@ -15,6 +15,11 @@ class InvoiceListPageState extends State<InvoiceListPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    updateAccountAPI(account[0].accountID.toString()).then((value) {
+      account = [];
+      account.add(value);
+      setState(() {});
+    });
   }
 
   Widget build(BuildContext context) {
@@ -39,7 +44,13 @@ class InvoiceListPageState extends State<InvoiceListPage> {
         // ],
       ),
       drawer: NavigationBarPageState().navBar(context),
-      body: Column(
+      body: status == Status.loading
+          ? Center(
+        child: CircularProgressIndicator(
+          color: Colors.deepPurpleAccent,
+        ),
+      )
+          : Column(
         children: <Widget>[
           // Container(
           //   padding: EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 10),

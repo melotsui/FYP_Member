@@ -165,7 +165,6 @@ class PaypalPaymentState extends State<PaypalPayment> {
               final uri = Uri.parse(request.url);
               final payerID = uri.queryParameters['PayerID'];
               if (payerID != null) {
-                print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
                 services
                     .executePayment(executeUrl, payerID, accessToken)
                     .then((id) {
@@ -193,7 +192,6 @@ class PaypalPaymentState extends State<PaypalPayment> {
               // );
             }
             if (request.url.contains(cancelURL)) {
-              print("cancelURLcancelURLcancelURLcancelURLcancelURLcancelURLcancelURL");
               Navigator.of(context).pop();
             }
             return NavigationDecision.navigate;

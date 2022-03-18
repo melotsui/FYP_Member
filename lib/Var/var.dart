@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -21,7 +25,7 @@ String? userBirthday = account[0].accountBirthday;
 String? userGender = account[0].accountGender;
 String? userPw = account[0].accountPassword;
 double? accountBalance = account[0].accountBalance;
-int? order = 2;
+int? order = account[0].order;
 int? point = account[0].point;
 var displayBalance = 1;
 // int fav = 1;
@@ -35,6 +39,7 @@ var displayBalance = 1;
 enum Status{
   loading, success, error
 }
+Status status = Status.loading;
 
 class Account {
   String? accountID;
@@ -47,6 +52,7 @@ class Account {
   double? accountBalance;
   String? accountGender;
   int? point;
+  int? order;
   // List<Null>? invoice;
   String? accountRole;
 
@@ -61,6 +67,7 @@ class Account {
         this.accountBalance,
         this.accountGender,
         this.point,
+        this.order,
         // this.invoice,
         this.accountRole});
 
@@ -75,6 +82,7 @@ class Account {
     accountBalance = json['balance'];
     accountGender = json['gender'];
     point = json['point'];
+    order = json['order'];
     // if (json['invoice'] != null) {
     //   invoice = <Null>[];
     //   json['invoice'].forEach((v) {
@@ -99,7 +107,7 @@ List<Account> account = [
     accountPassword: "",
     accountGender: "",
     accountBalance: 0,
-    // order: 2,
+    order: 0,
     point: 0,
   ),
 ];
@@ -293,4 +301,28 @@ void loadingScreen(BuildContext context){
       ),
     ),
   );
+}
+
+
+Future<Account> updateAccountAPI(String id) async {
+  status = Status.loading;
+  final response = await http.post(
+    Uri.parse('$apiDomain/login'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode({"accountID": id}),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    status = Status.success;
+    return Account.fromJson(jsonDecode(response.body));
+  } else {
+    status = Status.error;
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to get');
+  }
 }
