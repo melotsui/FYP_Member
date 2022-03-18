@@ -269,8 +269,8 @@ class MyProfilePageState extends State<MyProfilePage> {
                         title: Text(
                           'Log out',
                           style: TextStyle(
-                            color: Color.fromRGBO(249, 162, 193, 100),
-                            fontWeight: FontWeight.bold,
+                            color: Colors.deepPurpleAccent,
+                            // fontWeight: FontWeight.bold,
                           ),
                         ),
                         onTap: () {

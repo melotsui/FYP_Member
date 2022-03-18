@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 String apiDomain = "http://api.chunon.me";
 String oID = "";
@@ -264,4 +265,32 @@ bool passwordValidation(String value) {
   String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{0,}$';
   RegExp regExp = new RegExp(pattern);
   return regExp.hasMatch(value);
+}
+
+void loadingScreen(BuildContext context){
+  showDialog<String>(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      backgroundColor: Colors.white.withOpacity(0.9),
+      content: Container(
+        // color: Colors.grey,
+        height:
+        MediaQuery.of(context).size.height * .2,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            CircularProgressIndicator(color: Colors.deepPurpleAccent,),
+            SizedBox(height: 25,),
+            Text(
+              "Loading",
+              style: TextStyle(
+                  color: Colors.deepPurpleAccent,
+                  fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }

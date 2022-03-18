@@ -214,31 +214,7 @@ class LoginPageState extends State<LoginPage> {
                             setState(() {});
                             account = [];
                             loginAPI(loginEmail, loginPassword).then((value) {
-                              showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                  backgroundColor: Colors.white.withOpacity(0.9),
-                                  content: Container(
-                                    // color: Colors.grey,
-                                    height:
-                                        MediaQuery.of(context).size.height * .2,
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          CircularProgressIndicator(color: Colors.deepPurpleAccent,),
-                                          SizedBox(height: 20,),
-                                          Text(
-                                            "Loading",
-                                            style: TextStyle(
-                                              color: Colors.deepPurpleAccent,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                    ),
-                                  ),
-                                ),
-                              );
+                              loadingScreen(context);
                               if (status == Status.success) {
                                 Account acc = value;
                                 account.add(acc);
