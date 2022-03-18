@@ -258,7 +258,10 @@ class LoginPageState extends State<LoginPage> {
                                           " " +
                                           userLastName! +
                                           ".");
-                                  navigateToMyProfilePage(context);
+                                  Future.delayed(Duration(milliseconds: 500),
+                                      () {
+                                    navigateToMyProfilePage(context);
+                                  });
                                 } else {
                                   if (!isEmailValid) {
                                     Fluttertoast.showToast(
@@ -271,12 +274,12 @@ class LoginPageState extends State<LoginPage> {
                           }
                         },
                         child: Text(
-                                'LOGIN',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                          'LOGIN',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ],

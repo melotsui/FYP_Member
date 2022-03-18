@@ -168,8 +168,11 @@ class PaypalPaymentState extends State<PaypalPayment> {
                 services
                     .executePayment(executeUrl, payerID, accessToken)
                     .then((id) {
-                  widget.onFinish(id);
-                  navigateToMyProfilePage(context);
+                      if(oID != id){
+                        oID = id.toString();
+                        navigateToMyProfilePage(context);
+                        widget.onFinish(id);
+                      }
                 });
               } else {
                 navigateToMyProfilePage(context);
