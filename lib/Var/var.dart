@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 String apiDomain = "http://api.chunon.me";
+String oExecuteUrl = "";
 String oID = "";
 DateTime now = new DateTime.now();
 enum SingingCharacter { male, female }
@@ -230,44 +231,54 @@ List<Product> product = [
 ];
 
 class Branch {
-  String branchID;
-  String branchName;
-  int qty;
-  String district;
-  String address;
+  String? branchID;
+  String? branchName;
+  String? district;
+  String? address;
+  String? branchBusinessTime;
 
   Branch({
-    required this.branchID,
-    required this.branchName,
-    required this.qty,
-    required this.district,
-    required this.address,
+    this.branchID,
+    this.branchName,
+    this.district,
+    this.address,
+    this.branchBusinessTime
   });
+
+  Branch.fromJson(Map<String, dynamic> json) {
+    branchID = json['branchID'];
+    branchName = json['branchName'];
+    address = json['branchAddress'];
+    branchBusinessTime = json['branchBusinessTime'];
+    district = json['branchDistrict'];
+  }
 }
 
-List<Branch> branch = [
-  Branch(
-    branchID: "1",
-    branchName: "Branch A",
-    qty: 52,
-    district: "NT",
-    address: "Shop No. 1, G/F, Kwai Chung Shopping Centre, Kwai Chung Estate, Kwai Chung, N.T.",
-  ),
-  Branch(
-    branchID: "2",
-    branchName: "Branch B",
-    qty: 68,
-    district: "KLN",
-    address: "G/F, Dr. Ng Tor Tai International House, 32 Renfrew Road, Kowloon Tong",
-  ),
-  Branch(
-    branchID: "3",
-    branchName: "Branch C",
-    qty: 99,
-    district: "HK",
-    address: "2 Catchick Street, Kennedy Town",
-  ),
-];
+Status branchstatus = Status.loading;
+Future<List<Branch>> branchAPI() async {
+  branchstatus = Status.loading;
+  final response = await http.post(
+    Uri.parse('http://api.chunon.me/getBranch'),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    branchstatus = Status.success;
+    // List b = jsonDecode(response.body);
+    // print(b);
+    List<Branch> myModels = (jsonDecode(response.body) as List)
+        .map((i) => Branch.fromJson(i))
+        .toList();
+    print(myModels);
+    return myModels;
+  } else {
+    branchstatus = Status.error;
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
 
 bool passwordValidation(String value) {
   String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{0,}$';

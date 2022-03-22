@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 import '../Var/natigate.dart';
@@ -18,7 +20,8 @@ class BranchListPageState extends State<BranchListPage> {
     "Kowloon",
     "Hong Kong Island"
   ];
-  List<Branch> filterBranch = branch;
+  late List<Branch> branch;
+  late List<Branch> filterBranch;
   @override
   void initState() {
     // TODO: implement initState
@@ -26,6 +29,12 @@ class BranchListPageState extends State<BranchListPage> {
     updateAccountAPI(account[0].accountID.toString()).then((value) {
       account = [];
       account.add(value);
+      setState(() {});
+    });
+    branchAPI().then((value) {
+      branch = [];
+      branch = value;
+      filterBranch = branch;
       setState(() {});
     });
   }
@@ -38,7 +47,7 @@ class BranchListPageState extends State<BranchListPage> {
         centerTitle: true,
       ),
       drawer: NavigationBarPageState().navBar(context),
-      body: status == Status.loading
+      body: status == Status.loading || branchstatus == Status.loading
           ? Center(
               child: CircularProgressIndicator(
                 color: Colors.deepPurpleAccent,
@@ -71,9 +80,6 @@ class BranchListPageState extends State<BranchListPage> {
                           dropdownValue = newValue!;
                           if (dropdownValue == "All District") {
                             filterBranch = branch;
-                            print(branch[0].district +
-                                branch[1].district +
-                                branch[2].district);
                           } else if (dropdownValue == "New Territories") {
                             filterBranch = [];
                             for (int i = 0; i < branch.length; i++) {
@@ -185,20 +191,23 @@ class BranchListPageState extends State<BranchListPage> {
                                             child: Text(
                                               "District: ",
                                               style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
+                                                  // fontWeight: FontWeight.bold,
                                                   fontSize: 15,
-                                                  color: Colors.black54),
+                                                  color: Colors.deepPurple),
                                             ),
                                           ),
-                                          Text(
-                                            district,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15),
+                                          Container(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              district,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15),
+                                            ),
                                           ),
                                         ],
                                       ),
-                                      Row(
+                                      Column(
                                         children: <Widget>[
                                           Container(
                                             padding: EdgeInsets.symmetric(
@@ -207,16 +216,19 @@ class BranchListPageState extends State<BranchListPage> {
                                             child: Text(
                                               "Name: ",
                                               style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
+                                                  // fontWeight: FontWeight.bold,
                                                   fontSize: 15,
-                                                  color: Colors.black54),
+                                                  color: Colors.deepPurple),
                                             ),
                                           ),
-                                          Text(
-                                            filterBranch[index].branchName,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15),
+                                          Container(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              filterBranch[index].branchName.toString(),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -229,15 +241,15 @@ class BranchListPageState extends State<BranchListPage> {
                                             child: Text(
                                               "Address:",
                                               style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
+                                                  // fontWeight: FontWeight.bold,
                                                   fontSize: 15,
-                                                  color: Colors.black54),
+                                                  color: Colors.deepPurple),
                                             ),
                                           ),
                                           Container(
                                             alignment: Alignment.centerLeft,
                                             child: Text(
-                                              filterBranch[index].address,
+                                              filterBranch[index].address.toString(),
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 15),

@@ -213,35 +213,36 @@ class TopUpPageState extends State<TopUpPage> {
                                       onFinish: (number) async {
                                         // payment done
                                         // if (oID != number) {
-                                          oID = number;
-                                          topupAPI(userID!, topupValue)
-                                              .then((value) {
-                                            loadingScreen(context);
-                                            if (status == Status.success) {
-                                              double x =
-                                                  accountBalance! + topupValue;
-                                              accountBalance = x;
-                                              print(
-                                                  'accountBalance: $accountBalance');
-                                              for (int i = 0;
-                                                  i < account.length;
-                                                  i++) {
-                                                if (account[i].accountID ==
-                                                    userID) {
-                                                  account[i].accountBalance =
-                                                      accountBalance;
-                                                }
+                                        oID = number;
+                                        topupAPI(userID!, topupValue)
+                                            .then((value) {
+                                          loadingScreen(context);
+                                          if (status == Status.success) {
+                                            double x =
+                                                accountBalance! + topupValue;
+                                            accountBalance = x;
+                                            print(
+                                                'accountBalance: $accountBalance');
+                                            for (int i = 0;
+                                                i < account.length;
+                                                i++) {
+                                              if (account[i].accountID ==
+                                                  userID) {
+                                                account[i].accountBalance =
+                                                    accountBalance;
                                               }
-                                              Fluttertoast.showToast(
-                                                  msg: "Top Up Successful");
-
-                                              Future.delayed(Duration(milliseconds: 1000),
-                                                      () {
-                                                    Navigator.pop(context);
-                                                  });
                                             }
-                                          });
-                                          print('order id: ' + number);
+                                            Fluttertoast.showToast(
+                                                msg: "Top Up Successful");
+
+                                            Future.delayed(
+                                                Duration(milliseconds: 1000),
+                                                () {
+                                              navigateToMyProfilePage(context);
+                                            });
+                                          }
+                                        });
+                                        print('order id: ' + number);
                                         // }
                                       },
                                     ),

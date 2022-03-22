@@ -165,13 +165,14 @@ class PaypalPaymentState extends State<PaypalPayment> {
               final uri = Uri.parse(request.url);
               final payerID = uri.queryParameters['PayerID'];
               if (payerID != null) {
+                print("AAAAAAAAAAAAAAAAAAAAAAAA: " + executeUrl);
                 services
                     .executePayment(executeUrl, payerID, accessToken)
                     .then((id) {
                       if(oID != id){
                         oID = id.toString();
-                        navigateToMyProfilePage(context);
                         widget.onFinish(id);
+                        navigateToMyProfilePage(context);
                       }
                 });
               } else {

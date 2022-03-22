@@ -17,6 +17,7 @@ class ProductDetailPage extends StatefulWidget {
 
 class ProductDetailPagePageState extends State<ProductDetailPage> {
   List<Product> suggestProduct = [];
+  late List<Branch> branch;
   @override
   void initState() {
     for (int i = 0; i < product.length; i++) {
@@ -26,6 +27,11 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
     }
     // TODO: implement initState
     super.initState();
+    branchAPI().then((value) {
+      branch = [];
+      branch = value;
+      setState(() {});
+    });
   }
 
   Widget build(BuildContext context) {
@@ -51,7 +57,13 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
           ),
         ),
         drawer: NavigationBarPageState().navBar(context),
-        body: SingleChildScrollView(
+        body: branchstatus == Status.loading
+            ? Center(
+          child: CircularProgressIndicator(
+            color: Colors.deepPurpleAccent,
+          ),
+        )
+            : SingleChildScrollView(
           child: Container(
             child: Column(
               children: <Widget>[
@@ -175,36 +187,41 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                         child: Column(
                           children: <Widget>[
                             // (widget.productDetail.fav%2) == 0 ?
-                            login > 0 ? GestureDetector(
-                              child:
-                                  widget.productDetail.fav % 2 == 0 && login > 0
-                                      ? Icon(Icons.favorite,
-                                          color: Colors.redAccent)
-                                      : Icon(Icons.favorite_border),
-                              onTap: () {
-                                if (login > 0) {
-                                  widget.productDetail.fav++;
-                                } else {
-                                  Fluttertoast.showToast(msg: "Please login.");
-                                }
-                                print('fav');
-                                for (int i = 0; i < product.length; i++) {
-                                  if (product[i].productName ==
-                                      widget.productDetail.productName) {
-                                    product[i].fav = widget.productDetail.fav;
-                                    print(product[i].productName +
-                                        " and " +
-                                        widget.productDetail.productName);
-                                    print(product[i].fav.toString() +
-                                        " and " +
-                                        widget.productDetail.fav.toString());
-                                  }
-                                }
-                                // storage.write(key: "product", value: product);
-                                // storage.read(key: product);
-                                setState(() {});
-                              },
-                            ) : Text(""),
+                            login > 0
+                                ? GestureDetector(
+                                    child: widget.productDetail.fav % 2 == 0 &&
+                                            login > 0
+                                        ? Icon(Icons.favorite,
+                                            color: Colors.redAccent)
+                                        : Icon(Icons.favorite_border),
+                                    onTap: () {
+                                      if (login > 0) {
+                                        widget.productDetail.fav++;
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            msg: "Please login.");
+                                      }
+                                      print('fav');
+                                      for (int i = 0; i < product.length; i++) {
+                                        if (product[i].productName ==
+                                            widget.productDetail.productName) {
+                                          product[i].fav =
+                                              widget.productDetail.fav;
+                                          print(product[i].productName +
+                                              " and " +
+                                              widget.productDetail.productName);
+                                          print(product[i].fav.toString() +
+                                              " and " +
+                                              widget.productDetail.fav
+                                                  .toString());
+                                        }
+                                      }
+                                      // storage.write(key: "product", value: product);
+                                      // storage.read(key: product);
+                                      setState(() {});
+                                    },
+                                  )
+                                : Text(""),
                           ],
                         ),
                       ),
@@ -307,8 +324,14 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                                 return null; // Use default value for other states and odd rows.
                               }),
                               cells: <DataCell>[
-                                DataCell(Text(branch[index].branchName)),
-                                DataCell(Text(branch[index].qty.toString())),
+                                DataCell(Text(branch[index].branchName.toString())),
+                                DataCell(
+                                  Container(
+                                    alignment: Alignment.center,
+                                    child: Text("00"),
+                                  ),
+                                ),
+                                // DataCell(Text(branch[index].qty.toString())),
                               ],
                             ),
                           ),
@@ -317,7 +340,9 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
               ],
             ),
           ),
