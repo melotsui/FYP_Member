@@ -311,7 +311,23 @@ class MyProfilePageState extends State<MyProfilePage> {
                                       TextButton(
                                           child: Text('Log Out'),
                                           onPressed: () {
-                                            account = [];
+                                            account = [
+                                              Account(
+                                                accountID: '',
+                                                accountFirstName: '',
+                                                accountLastName: '',
+                                                // accountIcon:
+                                                //     'https://image-resizer.cwg.tw/resize/uri/https%3A%2F%2Fcw1.tw%2FCC%2Fimages%2Farticle%2F201710%2Farticle-59d1f2b06a7a2.jpg/?w=810&h=543&fit=fill',
+                                                accountRole: '',
+                                                accountPhone: '',
+                                                accountEmail: '',
+                                                accountBirthday: "",
+                                                accountPassword: "",
+                                                accountGender: "",
+                                                accountBalance: 0,
+                                                order: 0,
+                                                point: 0,
+                                              ),];
                                             login = 0;
                                             Fluttertoast.showToast(
                                                 msg: "Log Out Successful");
