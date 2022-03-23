@@ -43,13 +43,13 @@ class NavigationBarPageState extends State<NavigationBarPage> {
                 ),
                 Divider(),
                 login > 0 ?
-                Text(userFirstName! + " " + userLastName!,style: TextStyle(fontWeight: FontWeight.bold),) :
+                Text(account[0].accountFirstName! + " " + account[0].accountLastName!,style: TextStyle(fontWeight: FontWeight.bold),) :
                 Text(unknownName,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                 Expanded(child: Text("")),
                 // SizedBox(height: 5,),
                 Row(
                   children: <Widget>[
-                    login > 0 ? Text('Balance: \$' + accountBalance!.toStringAsFixed(2),
+                    login > 0 ? Text('Balance: \$' + account[0].accountBalance!.toStringAsFixed(2),
                       style: TextStyle(color: Colors.black54),) : Text(""),
                     // login > 0 ? Text(
                     //   displayBalance%2 ==1 ? 'Balance: \$$accountBalance ' : 'Balance: ****** ',

@@ -317,8 +317,9 @@ void loadingScreen(BuildContext context){
 
 Future<Account> updateAccountAPI(String id) async {
   status = Status.loading;
+  print(id);
   final response = await http.post(
-    Uri.parse('$apiDomain/login'),
+    Uri.parse('$apiDomain/getMemberRecord'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

@@ -115,7 +115,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                                       left: MediaQuery.of(context).size.width *
                                           0.05),
                                   child: Text(
-                                    userFirstName! + " " + userLastName!,
+                                    account[0].accountFirstName! + " " + account[0].accountLastName!,
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                       fontSize: 20,
@@ -151,7 +151,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                           ),
                           Container(
                             child: Text(
-                              "$userPhone",
+                              account[0].accountPhone!,
                               textAlign: TextAlign.center,
                               style: TextStyle(color: Colors.black54),
                             ),
@@ -167,7 +167,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                           ),
                           Container(
                             child: Text(
-                              "$userEmail",
+                              account[0].accountEmail!,
                               textAlign: TextAlign.center,
                               style: TextStyle(color: Colors.black54),
                             ),
@@ -186,7 +186,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                             child: Column(
                               children: [
                                 Text(
-                                  "\$" + accountBalance!.toStringAsFixed(2),
+                                  "\$" + account[0].accountBalance!.toStringAsFixed(2),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 20,
@@ -207,7 +207,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                             child: Column(
                               children: [
                                 Text(
-                                  "$order",
+                                  account[0].order.toString(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 20,
@@ -227,7 +227,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                             child: Column(
                               children: [
                                 Text(
-                                  "$point",
+                                  account[0].point.toString(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 20,
