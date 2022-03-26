@@ -230,6 +230,67 @@ List<Product> product = [
   ),
 ];
 
+class Products {
+  String? productID;
+  String? productName;
+  double? cost;
+  double? retailPrice;
+  String? productImage;
+  int? productStatus;
+  int? favouriteID;
+
+  Products(
+      {this.productID,
+        this.productName,
+        this.cost,
+        this.retailPrice,
+        this.productImage,
+        this.productStatus,
+        this.favouriteID});
+
+  Products.fromJson(Map<String, dynamic> json) {
+    productID = json['productID'];
+    productName = json['productName'];
+    cost = json['cost'];
+    retailPrice = json['retailPrice'];
+    productImage = json['productImage'];
+    productStatus = json['productStatus'];
+    favouriteID = json['favouriteID'];
+  }
+
+}
+
+Status productsStatus = Status.loading;
+Future<List<Products>> productsAPI(String id) async {
+  productsStatus = Status.loading;
+  final response = await http.post(
+    Uri.parse('http://api.chunon.me/getProducts_moblie'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({"accountID": id})
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    productsStatus = Status.success;
+    // List b = jsonDecode(response.body);
+    // print(b);
+    List<Products> myModels = (jsonDecode(response.body) as List)
+        .map((i) => Products.fromJson(i))
+        .toList();
+    print(myModels);
+    return myModels;
+  } else {
+    productsStatus = Status.error;
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
+
+
 class Branch {
   String? branchID;
   String? branchName;

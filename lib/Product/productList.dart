@@ -18,16 +18,27 @@ class ProductListPageState extends State<ProductListPage> {
   FlutterSecureStorage storage = new FlutterSecureStorage();
   TextEditingController _searchTextController = new TextEditingController();
   DateTime? currentBackPressTime;
+  List<Products> products = [];
   List searchProduct = product;
+  List<Products> searchProducts = [];
   @override
   void initState() {
     // TODO: implement initState
 
     searchProduct = product;
+    searchProducts = products;
     super.initState();
+    print(account[0].accountID.toString());
     updateAccountAPI(account[0].accountID.toString()).then((value) {
       account = [];
       account.add(value);
+      setState(() {});
+    });
+    productsAPI(account[0].accountID.toString()).then((value) {
+      products = [];
+      products = value;
+      searchProducts = products;
+      print(products[0].productName.toString());
       setState(() {});
     });
   }
@@ -88,7 +99,7 @@ class ProductListPageState extends State<ProductListPage> {
             ),
           ],
         ),
-        body: status == Status.loading
+        body: status == Status.loading || productsStatus == Status.loading
             ? Center(
                 child: CircularProgressIndicator(
                   color: Colors.deepPurpleAccent,
@@ -108,9 +119,18 @@ class ProductListPageState extends State<ProductListPage> {
                       ),
                       onChanged: (text) {
                         searchProduct = [];
-                        print(searchProduct);
-                        print(product);
+                        searchProducts = [];
+                        print(products);
                         if (text != "") {
+                          for (int i = 0; i < products.length; i++){
+                            print(products[i].productName.toString().toLowerCase() + ", " + text.toLowerCase());
+                            print(products[i].productName.toString().toLowerCase().contains(text.toLowerCase()));
+                            if(products[i].productName.toString().toLowerCase().contains(text.toLowerCase())){
+                              print(products[i].productName.toString().toLowerCase());
+                              searchProducts.add(products[i]);
+                              print(searchProducts.length);
+                            }
+                          }
                           for (int i = 0; i < product.length; i++) {
                             if (product[i]
                                 .productName
@@ -120,6 +140,8 @@ class ProductListPageState extends State<ProductListPage> {
                             }
                           }
                         } else {
+                          searchProducts = products;
+                          print(searchProducts.length.toString());
                           searchProduct = product;
                         }
                         setState(() {});
@@ -135,7 +157,7 @@ class ProductListPageState extends State<ProductListPage> {
                           childAspectRatio: 3 / 5,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 20),
-                      itemCount: searchProduct.length,
+                      itemCount: searchProducts.length,
                       itemBuilder: (BuildContext ctx, index) {
                         return GestureDetector(
                           onTap: () async {
@@ -157,8 +179,8 @@ class ProductListPageState extends State<ProductListPage> {
                                         flex: 5,
                                         child: Image(
                                           image: NetworkImage(
-                                              searchProduct[index]
-                                                  .productImage),
+                                              apiDomain + searchProducts[index]
+                                                  .productImage.toString()),
                                           fit: BoxFit.contain,
                                         ),
                                       ),
@@ -230,8 +252,8 @@ class ProductListPageState extends State<ProductListPage> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                searchProduct[index]
-                                                    .productName,
+                                                searchProducts[index]
+                                                    .productName.toString(),
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 15,
@@ -247,8 +269,8 @@ class ProductListPageState extends State<ProductListPage> {
                                           children: <Widget>[
                                             Text(
                                               'HK\$' +
-                                                  searchProduct[index]
-                                                      .sellPrice
+                                                  searchProducts[index]
+                                                      .cost
                                                       .toString() +
                                                   ' ',
                                               style: TextStyle(
@@ -256,12 +278,12 @@ class ProductListPageState extends State<ProductListPage> {
                                                 fontSize: 14,
                                               ),
                                             ),
-                                            searchProduct[index].retailPrice !=
-                                                    searchProduct[index]
-                                                        .sellPrice
+                                            searchProducts[index].retailPrice !=
+                                                    searchProducts[index]
+                                                        .cost
                                                 ? Text(
                                                     'HK\$' +
-                                                        searchProduct[index]
+                                                        searchProducts[index]
                                                             .retailPrice
                                                             .toString(),
                                                     style: TextStyle(
@@ -280,16 +302,12 @@ class ProductListPageState extends State<ProductListPage> {
                                         Expanded(child: Text("")),
                                         Row(
                                           children: <Widget>[
-                                            searchProduct[index].retailPrice !=
-                                                    searchProduct[index]
-                                                        .sellPrice
+                                            searchProducts[index].retailPrice !=
+                                                    searchProducts[index]
+                                                        .cost
                                                 ? Text(
                                                     'Save \$' +
-                                                        (searchProduct[index]
-                                                                    .retailPrice -
-                                                                searchProduct[
-                                                                        index]
-                                                                    .sellPrice)
+                                                        (searchProducts[index].retailPrice! - searchProducts[index].cost!)
                                                             .toStringAsFixed(
                                                                 1) +
                                                         '!',
