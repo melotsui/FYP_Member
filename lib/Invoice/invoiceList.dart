@@ -38,6 +38,51 @@ Future<List<Invoices>> invoicesAPI(String id) async {
   }
 }
 
+class Invoices {
+  String? invoiceID;
+  String? accountID;
+  String? payMethod;
+  String? invoiceDateTime;
+  double? finalPrice;
+  double? oldPrice;
+  int? qty;
+  String? productImage;
+
+  Invoices(
+      {this.invoiceID,
+        this.accountID,
+        this.payMethod,
+        this.invoiceDateTime,
+        this.finalPrice,
+        this.oldPrice,
+        this.qty,
+        this.productImage});
+
+  Invoices.fromJson(Map<String, dynamic> json) {
+    invoiceID = json['invoiceID'];
+    accountID = json['accountID'];
+    payMethod = json['payMethod'];
+    invoiceDateTime = json['InvoiceDateTime'];
+    finalPrice = json['finalPrice'];
+    oldPrice = json['oldPrice'];
+    qty = json['qty'];
+    productImage = json['productImage'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['invoiceID'] = this.invoiceID;
+    data['accountID'] = this.accountID;
+    data['payMethod'] = this.payMethod;
+    data['InvoiceDateTime'] = this.invoiceDateTime;
+    data['finalPrice'] = this.finalPrice;
+    data['oldPrice'] = this.oldPrice;
+    data['qty'] = this.qty;
+    data['productImage'] = this.productImage;
+    return data;
+  }
+}
+
 class InvoiceListPage extends StatefulWidget {
   @override
   InvoiceListPageState createState() => InvoiceListPageState();
@@ -200,7 +245,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
                       ),
                     ),
                     onTap: () {
-                      navigateToInvoiceDetailPage(context, invoiceList[index]);
+                      navigateToInvoiceDetailPage(context, invoiceList[index], invoices[index].invoiceID.toString());
                     },
                   );
                 },
@@ -209,23 +254,5 @@ class InvoiceListPageState extends State<InvoiceListPage> {
         ],
       ),
     );
-  }
-}
-
-String dateFormatter(var dt) {
-  String str = toTens(dt.year.toString()) + "-" + toTens(dt.month.toString()) + "-" + toTens(dt.day.toString());
-  return str;
-}
-
-String timeFormatter(var dt) {
-  String str = toTens(dt.hour.toString()) + ":" + toTens(dt.minute.toString()) + ":" + toTens(dt.second.toString());
-  return str;
-}
-
-String toTens(String str){
-  if(str.length == 1) {
-    return "0" + str;
-  } else {
-    return str;
   }
 }

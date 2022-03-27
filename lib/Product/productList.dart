@@ -191,10 +191,9 @@ class ProductListPageState extends State<ProductListPage> {
                                               flex: 30,
                                               child: login > 0
                                                   ? GestureDetector(
-                                                      child: searchProduct[index]
-                                                                          .fav %
-                                                                      2 ==
-                                                                  0 &&
+                                                      child: searchProducts[index]
+                                                                          .favouriteID !=
+                                                                  null &&
                                                               login > 0
                                                           ? Icon(Icons.favorite,
                                                               color: Colors
@@ -202,9 +201,28 @@ class ProductListPageState extends State<ProductListPage> {
                                                           : Icon(Icons
                                                               .favorite_border),
                                                       onTap: () {
-                                                        if (login > 0) {
-                                                          searchProduct[index]
-                                                              .fav++;
+                                                        if (login > 0 && searchProducts[index]
+                                                            .favouriteID ==
+                                                            null) {
+                                                          addFavAPI(account[0].accountID.toString(), searchProducts[index].productID.toString()).then((value) {
+                                                            if(value.success == 1){
+                                                              Fluttertoast.showToast(
+                                                                  msg:
+                                                                  searchProducts[index].productName.toString() + " is added to favourite list.");
+                                                              navigateToProductListPage(context);
+                                                            }
+                                                          });
+                                                        } else if (login > 0 && searchProducts[index]
+                                                            .favouriteID !=
+                                                            null){
+                                                          deleteFavAPI(account[0].accountID.toString(), searchProducts[index].productID.toString()).then((value) {
+                                                            if(value.success == 1){
+                                                              Fluttertoast.showToast(
+                                                                  msg:
+                                                                  searchProducts[index].productName.toString() + " is deleted from favourite list.");
+                                                              navigateToProductListPage(context);
+                                                            }
+                                                          });
                                                         } else {
                                                           Fluttertoast.showToast(
                                                               msg:
@@ -270,7 +288,7 @@ class ProductListPageState extends State<ProductListPage> {
                                             Text(
                                               'HK\$' +
                                                   searchProducts[index]
-                                                      .cost
+                                                      .sellPrice
                                                       .toString() +
                                                   ' ',
                                               style: TextStyle(
@@ -280,7 +298,7 @@ class ProductListPageState extends State<ProductListPage> {
                                             ),
                                             searchProducts[index].retailPrice !=
                                                     searchProducts[index]
-                                                        .cost
+                                                        .sellPrice
                                                 ? Text(
                                                     'HK\$' +
                                                         searchProducts[index]
@@ -304,10 +322,10 @@ class ProductListPageState extends State<ProductListPage> {
                                           children: <Widget>[
                                             searchProducts[index].retailPrice !=
                                                     searchProducts[index]
-                                                        .cost
+                                                        .sellPrice
                                                 ? Text(
                                                     'Save \$' +
-                                                        (searchProducts[index].retailPrice! - searchProducts[index].cost!)
+                                                        (searchProducts[index].retailPrice! - searchProducts[index].sellPrice!)
                                                             .toStringAsFixed(
                                                                 1) +
                                                         '!',

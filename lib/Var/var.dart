@@ -158,50 +158,6 @@ List<InvoiceList> invoiceList = [
           "https://hk.ulifestyle.com.hk/cms/images/event/w600/202111/20211129180351_1_2.png"),
 ];
 
-class Invoices {
-  String? invoiceID;
-  String? accountID;
-  String? payMethod;
-  String? invoiceDateTime;
-  double? finalPrice;
-  double? oldPrice;
-  int? qty;
-  String? productImage;
-
-  Invoices(
-      {this.invoiceID,
-        this.accountID,
-        this.payMethod,
-        this.invoiceDateTime,
-        this.finalPrice,
-        this.oldPrice,
-        this.qty,
-        this.productImage});
-
-  Invoices.fromJson(Map<String, dynamic> json) {
-    invoiceID = json['invoiceID'];
-    accountID = json['accountID'];
-    payMethod = json['payMethod'];
-    invoiceDateTime = json['InvoiceDateTime'];
-    finalPrice = json['finalPrice'];
-    oldPrice = json['oldPrice'];
-    qty = json['qty'];
-    productImage = json['productImage'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['invoiceID'] = this.invoiceID;
-    data['accountID'] = this.accountID;
-    data['payMethod'] = this.payMethod;
-    data['InvoiceDateTime'] = this.invoiceDateTime;
-    data['finalPrice'] = this.finalPrice;
-    data['oldPrice'] = this.oldPrice;
-    data['qty'] = this.qty;
-    data['productImage'] = this.productImage;
-    return data;
-  }
-}
 
 class Product {
   String productID;
@@ -278,7 +234,7 @@ List<Product> product = [
 class Products {
   String? productID;
   String? productName;
-  double? cost;
+  double? sellPrice;
   double? retailPrice;
   String? productImage;
   int? productStatus;
@@ -287,7 +243,7 @@ class Products {
   Products(
       {this.productID,
         this.productName,
-        this.cost,
+        this.sellPrice,
         this.retailPrice,
         this.productImage,
         this.productStatus,
@@ -296,7 +252,7 @@ class Products {
   Products.fromJson(Map<String, dynamic> json) {
     productID = json['productID'];
     productName = json['productName'];
-    cost = json['cost'];
+    sellPrice = json['sellPrice'];
     retailPrice = json['retailPrice'];
     productImage = json['productImage'];
     productStatus = json['productStatus'];
@@ -420,7 +376,6 @@ void loadingScreen(BuildContext context){
   );
 }
 
-
 Future<Account> updateAccountAPI(String id) async {
   status = Status.loading;
   print(id);
@@ -439,6 +394,87 @@ Future<Account> updateAccountAPI(String id) async {
     return Account.fromJson(jsonDecode(response.body));
   } else {
     status = Status.error;
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to get');
+  }
+}
+
+String dateFormatter(var dt) {
+  String str = toTens(dt.year.toString()) + "-" + toTens(dt.month.toString()) + "-" + toTens(dt.day.toString());
+  return str;
+}
+
+String timeFormatter(var dt) {
+  String str = toTens(dt.hour.toString()) + ":" + toTens(dt.minute.toString()) + ":" + toTens(dt.second.toString());
+  return str;
+}
+
+String toTens(String str){
+  if(str.length == 1) {
+    return "0" + str;
+  } else {
+    return str;
+  }
+}
+
+class Fav {
+  int? success;
+
+  Fav({this.success});
+
+  Fav.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['success'] = this.success;
+    return data;
+  }
+}
+
+Status favStatus = Status.success;
+Future<Fav> addFavAPI(String accountID, String productID) async {
+  favStatus = Status.loading;
+  final response = await http.post(
+    Uri.parse('$apiDomain/insertFavourite'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode({"accountID": accountID, "productID": productID}),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    favStatus = Status.success;
+    return Fav.fromJson(jsonDecode(response.body));
+  } else {
+    favStatus = Status.error;
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to get');
+  }
+}
+
+Future<Fav> deleteFavAPI(String accountID, String productID) async {
+  favStatus = Status.loading;
+  final response = await http.post(
+    Uri.parse('$apiDomain/deleteFavourite'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode({"accountID": accountID, "productID": productID}),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    favStatus = Status.success;
+    return Fav.fromJson(jsonDecode(response.body));
+  } else {
+    favStatus = Status.error;
     // If the server did not return a 200 OK response,
     // then throw an exception.
     throw Exception('Failed to get');

@@ -8,7 +8,8 @@ import '../Var/var.dart';
 
 class InvoiceDetailPage extends StatefulWidget {
   InvoiceList invoiceDetail;
-  InvoiceDetailPage({Key? key, required this.invoiceDetail}) : super(key: key);
+  String invoiceID;
+  InvoiceDetailPage({Key? key, required this.invoiceDetail, required this.invoiceID}) : super(key: key);
   @override
   InvoiceDetailPageState createState() => InvoiceDetailPageState();
 }
@@ -18,6 +19,7 @@ class InvoiceDetailPageState extends State<InvoiceDetailPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
   }
 
   Widget build(BuildContext context) {
