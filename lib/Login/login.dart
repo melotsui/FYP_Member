@@ -232,25 +232,6 @@ class LoginPageState extends State<LoginPage> {
                                 }
                                 if (isEmailValid && isPwValid) {
                                   login = 1;
-                                  for (int i = 0; i < account.length; i++) {
-                                    if (account[i].accountEmail == loginEmail) {
-                                      userID = account[i].accountID;
-                                      // userIcon = account[i].accountIcon;
-                                      userFirstName =
-                                          account[i].accountFirstName;
-                                      userLastName = account[i].accountLastName;
-                                      role = account[i].accountRole;
-                                      userPhone = account[i].accountPhone;
-                                      userEmail = account[i].accountEmail;
-                                      userBirthday = account[i].accountBirthday;
-                                      userGender = account[i].accountGender;
-                                      userPw = account[i].accountPassword;
-                                      accountBalance =
-                                          account[i].accountBalance;
-                                      order = account[i].order;
-                                      point = account[i].point;
-                                    }
-                                  }
                                   setState(() {});
                                   Fluttertoast.showToast(
                                       msg: "Welcome, " +

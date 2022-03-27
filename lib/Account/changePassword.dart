@@ -10,14 +10,14 @@ import '../main.dart';
 import '../Navigation/navigationBar.dart';
 import '../Var/var.dart';
 
-Future<ChangePassword> changePasswordAPI(String id, double addValue) async {
+Future<ChangePassword> changePasswordAPI(String id, String oldPw, String newPw) async {
   status = Status.loading;
   final response = await http.post(
-    Uri.parse('$apiDomain/updateMemberBalance'),
+    Uri.parse('$apiDomain/updateMemberPassword'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
-    body: jsonEncode({"accountID": id, "addBalance": addValue}),
+    body: jsonEncode({"accountID": id, "oldPassword": oldPw, "password": newPw}),
   );
 
   if (response.statusCode == 200) {
@@ -29,7 +29,7 @@ Future<ChangePassword> changePasswordAPI(String id, double addValue) async {
     status = Status.error;
     // If the server did not return a 200 OK response,
     // then throw an exception.
-    throw Exception('Failed to topup');
+    throw Exception('Failed to change password');
   }
 }
 
@@ -252,17 +252,13 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
                             if (isValid[0] && isValid[1] && isValid[2]) {
                               // if (oldPW != "" && newPW != "" && confirmPW != "") {
                               if (newPW == confirmPW) {
-                                if (oldPW == userPw) {
-                                  userPw = confirmPW;
-                                  for (int i = 0; i < account.length; i++) {
-                                    if (userEmail == account[i].accountEmail) {
-                                      account[i].accountPassword = userPw;
-                                    }
-                                  }
-                                  print(userPw);
-                                  Fluttertoast.showToast(
-                                      msg: "Password Changed.");
-                                  navigateToMyProfilePage(context);
+                                if (oldPW == account[0].accountPassword.toString()) {
+                                  changePasswordAPI(account[0].accountID.toString(), oldPW, newPW).then((value) {
+                                    Fluttertoast.showToast(
+                                        msg: "Password Changed.");
+                                    navigateToMyProfilePage(context);
+                                    setState(() {});
+                                  });
                                 } else {
                                   Fluttertoast.showToast(
                                       msg: "Wrong Old Password.");
