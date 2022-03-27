@@ -158,6 +158,51 @@ List<InvoiceList> invoiceList = [
           "https://hk.ulifestyle.com.hk/cms/images/event/w600/202111/20211129180351_1_2.png"),
 ];
 
+class Invoices {
+  String? invoiceID;
+  String? accountID;
+  String? payMethod;
+  String? invoiceDateTime;
+  double? finalPrice;
+  double? oldPrice;
+  int? qty;
+  String? productImage;
+
+  Invoices(
+      {this.invoiceID,
+        this.accountID,
+        this.payMethod,
+        this.invoiceDateTime,
+        this.finalPrice,
+        this.oldPrice,
+        this.qty,
+        this.productImage});
+
+  Invoices.fromJson(Map<String, dynamic> json) {
+    invoiceID = json['invoiceID'];
+    accountID = json['accountID'];
+    payMethod = json['payMethod'];
+    invoiceDateTime = json['InvoiceDateTime'];
+    finalPrice = json['finalPrice'];
+    oldPrice = json['oldPrice'];
+    qty = json['qty'];
+    productImage = json['productImage'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['invoiceID'] = this.invoiceID;
+    data['accountID'] = this.accountID;
+    data['payMethod'] = this.payMethod;
+    data['InvoiceDateTime'] = this.invoiceDateTime;
+    data['finalPrice'] = this.finalPrice;
+    data['oldPrice'] = this.oldPrice;
+    data['qty'] = this.qty;
+    data['productImage'] = this.productImage;
+    return data;
+  }
+}
+
 class Product {
   String productID;
   String productName;

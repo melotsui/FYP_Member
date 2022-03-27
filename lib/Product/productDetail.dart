@@ -16,15 +16,9 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class ProductDetailPagePageState extends State<ProductDetailPage> {
-  List<Product> suggestProduct = [];
   late List<Branch> branch;
   @override
   void initState() {
-    for (int i = 0; i < product.length; i++) {
-      if (widget.productDetail.productID != product[i].productID) {
-        suggestProduct.add(product[i]);
-      }
-    }
     // TODO: implement initState
     super.initState();
     branchAPI().then((value) {

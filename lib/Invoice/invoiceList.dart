@@ -1,9 +1,42 @@
 import 'package:flutter/material.dart';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import '../Var/natigate.dart';
 import '../main.dart';
 import '../Navigation/navigationBar.dart';
 import '../Var/var.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
+
+Status invoicesStatus = Status.loading;
+Future<List<Invoices>> invoicesAPI(String id) async {
+  productsStatus = Status.loading;
+  final response = await http.post(
+      Uri.parse('http://api.chunon.me/getMemberInvoices'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({"accountID": id})
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    invoicesStatus = Status.success;
+    // List b = jsonDecode(response.body);
+    // print(b);
+    List<Invoices> myModels = (jsonDecode(response.body) as List)
+        .map((i) => Invoices.fromJson(i))
+        .toList();
+    print(myModels);
+    return myModels;
+  } else {
+    invoicesStatus = Status.error;
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
 
 class InvoiceListPage extends StatefulWidget {
   @override
@@ -12,12 +45,30 @@ class InvoiceListPage extends StatefulWidget {
 
 class InvoiceListPageState extends State<InvoiceListPage> {
   @override
+  late List<Invoices> invoices;
+  late List<String> dateList;
+  late List<String> timeList;
   void initState() {
     // TODO: implement initState
     super.initState();
     updateAccountAPI(account[0].accountID.toString()).then((value) {
       account = [];
       account.add(value);
+      setState(() {});
+    });
+    print("ID; " + account[0].accountID.toString());
+    invoicesAPI(account[0].accountID.toString()).then((value) {
+      invoices = [];
+      invoices = value;
+      dateList = [];
+      timeList = [];
+      for(int i=0; i<invoices.length; i++){
+        var dt = DateFormat("yyyy-MM-dd HH:mm:ss").parse(invoices[i].invoiceDateTime.toString());
+        print(dateFormatter(dt));
+        print(timeFormatter(dt));
+        dateList.add(dateFormatter(dt));
+        timeList.add(timeFormatter(dt));
+      }
       setState(() {});
     });
   }
@@ -44,7 +95,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
         // ],
       ),
       drawer: NavigationBarPageState().navBar(context),
-      body: status == Status.loading
+      body: status == Status.loading || invoicesStatus == Status.loading
           ? Center(
         child: CircularProgressIndicator(
           color: Colors.deepPurpleAccent,
@@ -52,40 +103,10 @@ class InvoiceListPageState extends State<InvoiceListPage> {
       )
           : Column(
         children: <Widget>[
-          // Container(
-          //   padding: EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 10),
-          //   child: TextField(
-          //     // obscureText: true,
-          //     decoration: InputDecoration(
-          //       prefixIcon: Icon(Icons.search),
-          //       border: OutlineInputBorder(),
-          //       // hintText: 'Input invoice ID',
-          //       labelText: 'Search Invoice',
-          //     ),
-          //     onChanged: (text) {
-          //       // searchProduct = [];
-          //       // print(searchProduct);
-          //       // print(product);
-          //       // if (text != "") {
-          //       //   for (int i = 0; i < product.length; i++) {
-          //       //     if (product[i]
-          //       //         .productName
-          //       //         .toLowerCase()
-          //       //         .contains(text.toLowerCase())) {
-          //       //       searchProduct.add(product[i]);
-          //       //     }
-          //       //   }
-          //       // } else {
-          //       //   searchProduct = product;
-          //       // }
-          //       // setState(() {});
-          //     },
-          //   ),
-          // ),
           Expanded(
             child: ListView.builder(
                 // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                itemCount: invoiceList.length,
+                itemCount: invoices.length,
                 itemBuilder: (BuildContext ctx, index) {
                   return GestureDetector(
                     child: Card(
@@ -106,7 +127,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
                                     padding: EdgeInsets.symmetric(vertical: 5),
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      "Invoice ID: " + invoiceList[index].invoiceID,
+                                      "Invoice ID: " + invoices[index].invoiceID.toString(),
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15),
@@ -116,7 +137,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
                                     padding: EdgeInsets.symmetric(vertical: 5),
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      "Date: " + invoiceList[index].date,
+                                      "Date: " + dateList[index],
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15),
@@ -126,7 +147,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
                                     padding: EdgeInsets.symmetric(vertical: 5),
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      "Time: " + invoiceList[index].time,
+                                      "Time: " + timeList[index],
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15),
@@ -136,7 +157,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
                                     padding: EdgeInsets.symmetric(vertical: 5),
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      "Payment: " + invoiceList[index].paymentMethod,
+                                      "Payment: " + invoices[index].payMethod.toString(),
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15),
@@ -156,7 +177,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
                                       radius: 35,
                                       backgroundImage: login > 0
                                           ? NetworkImage(
-                                          invoiceList[index].invoiceImage)
+                                          apiDomain + invoices[index].productImage.toString())
                                           : NetworkImage(unknownIcon),
                                     ),
                                   ),
@@ -164,7 +185,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
                                     height: 5,
                                   ),
                                   Text(
-                                    "\$" + invoiceList[index].totalPrice.toString(),
+                                    "\$" + invoices[index].finalPrice.toString(),
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15,
@@ -188,5 +209,23 @@ class InvoiceListPageState extends State<InvoiceListPage> {
         ],
       ),
     );
+  }
+}
+
+String dateFormatter(var dt) {
+  String str = toTens(dt.year.toString()) + "-" + toTens(dt.month.toString()) + "-" + toTens(dt.day.toString());
+  return str;
+}
+
+String timeFormatter(var dt) {
+  String str = toTens(dt.hour.toString()) + ":" + toTens(dt.minute.toString()) + ":" + toTens(dt.second.toString());
+  return str;
+}
+
+String toTens(String str){
+  if(str.length == 1) {
+    return "0" + str;
+  } else {
+    return str;
   }
 }
