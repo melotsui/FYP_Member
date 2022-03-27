@@ -54,8 +54,8 @@ void navigateToInvoiceListPage(BuildContext context) {
 }
 
 // FavouriteProductPage
-void navigateToFavouriteProductPage(BuildContext context) {
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => FavouriteProductPage()));
+void navigateToFavouriteProductPage(BuildContext context, String accountID) {
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => FavouriteProductPage(accountID: accountID)));
 }
 
 // ProductDetailPage

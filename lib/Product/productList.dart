@@ -16,7 +16,6 @@ class ProductListPage extends StatefulWidget {
 
 class ProductListPageState extends State<ProductListPage> {
   FlutterSecureStorage storage = new FlutterSecureStorage();
-  TextEditingController _searchTextController = new TextEditingController();
   DateTime? currentBackPressTime;
   List<Products> products = [];
   List searchProduct = product;
@@ -89,7 +88,7 @@ class ProductListPageState extends State<ProductListPage> {
                   );
                   // Fluttertoast.showToast(msg: "You have not login.");
                 } else {
-                  navigateToFavouriteProductPage(context);
+                  navigateToFavouriteProductPage(context, account[0].accountID.toString());
                 }
               },
               icon: Icon(
@@ -205,7 +204,7 @@ class ProductListPageState extends State<ProductListPage> {
                                                             .favouriteID ==
                                                             null) {
                                                           addFavAPI(account[0].accountID.toString(), searchProducts[index].productID.toString()).then((value) {
-                                                            if(value.success == 1){
+                                                            if(value.success == 1 && productsStatus == Status.success){
                                                               Fluttertoast.showToast(
                                                                   msg:
                                                                   searchProducts[index].productName.toString() + " is added to favourite list.");
@@ -216,7 +215,7 @@ class ProductListPageState extends State<ProductListPage> {
                                                             .favouriteID !=
                                                             null){
                                                           deleteFavAPI(account[0].accountID.toString(), searchProducts[index].productID.toString()).then((value) {
-                                                            if(value.success == 1){
+                                                            if(value.success == 1 && productsStatus == Status.success){
                                                               Fluttertoast.showToast(
                                                                   msg:
                                                                   searchProducts[index].productName.toString() + " is deleted from favourite list.");
