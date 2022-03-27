@@ -38,7 +38,7 @@ class IconPagePageState extends State<IconPage> {
             ),
           ),
           Image(
-            image: NetworkImage(userIcon!),
+            image: account[0].image.toString() != null ? NetworkImage(apiDomain + account[0].image.toString()) : NetworkImage(unknownIcon),
             fit: BoxFit.contain,
           ),
           Expanded(

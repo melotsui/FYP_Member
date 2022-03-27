@@ -27,6 +27,7 @@ class MyProfilePageState extends State<MyProfilePage> {
     updateAccountAPI(account[0].accountID.toString()).then((value){
       account = [];
       account.add(value);
+      print(value.image.toString());
       setState(() {
 
       });
@@ -98,9 +99,9 @@ class MyProfilePageState extends State<MyProfilePage> {
                               child: GestureDetector(
                                 child: CircleAvatar(
                                   radius: 35,
-                                  backgroundImage: login > 0
-                                      ? NetworkImage(userIcon!)
-                                      : NetworkImage(unknownIcon),
+                                  backgroundImage:
+                                  login > 0 ? account[0].image.toString() != null ? NetworkImage(apiDomain + account[0].image.toString()) : NetworkImage(unknownIcon) :
+                                  NetworkImage(unknownIcon),
                                 ),
                                 onTap: () {
                                   navigateToIconPage(context);

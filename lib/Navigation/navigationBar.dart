@@ -35,7 +35,9 @@ class NavigationBarPageState extends State<NavigationBarPage> {
                 GestureDetector(
                   child: CircleAvatar(
                     radius: 35,
-                    backgroundImage: login > 0 ? NetworkImage(userIcon!) : NetworkImage(unknownIcon),
+                    backgroundImage:
+                    login > 0 ? account[0].image.toString() != null ? NetworkImage(apiDomain + account[0].image.toString()) : NetworkImage(unknownIcon) :
+                    NetworkImage(unknownIcon),
                   ),
                   onTap: () {
                     login > 0 ? navigateToIconPage(context) : navigateToLoginPage(context);

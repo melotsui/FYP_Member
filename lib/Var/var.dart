@@ -54,6 +54,7 @@ class Account {
   String? accountGender;
   int? point;
   int? order;
+  String? image;
   // List<Null>? invoice;
   String? accountRole;
 
@@ -68,6 +69,7 @@ class Account {
         this.accountBalance,
         this.accountGender,
         this.point,
+        this.image,
         this.order,
         // this.invoice,
         this.accountRole});
@@ -84,6 +86,7 @@ class Account {
     accountGender = json['gender'];
     point = json['point'];
     order = json['order'];
+    image = json['passcode'];
     // if (json['invoice'] != null) {
     //   invoice = <Null>[];
     //   json['invoice'].forEach((v) {
@@ -107,6 +110,7 @@ List<Account> account = [
     accountBirthday: "",
     accountPassword: "",
     accountGender: "",
+    image: "",
     accountBalance: 0,
     order: 0,
     point: 0,
@@ -391,6 +395,7 @@ Future<Account> updateAccountAPI(String id) async {
     // If the server did return a 200 OK response,
     // then parse the JSON.
     status = Status.success;
+    print("Account.fromJson(jsonDecode(response.body)): " + Account.fromJson(jsonDecode(response.body)).image.toString());
     return Account.fromJson(jsonDecode(response.body));
   } else {
     status = Status.error;
