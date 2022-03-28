@@ -25,6 +25,7 @@ class EditProfilePageState extends State<EditProfilePage> {
       account.add(value);
       setState(() {});
     });
+
   }
 
   List<bool> isValid = [true, true, true, true];
@@ -35,7 +36,7 @@ class EditProfilePageState extends State<EditProfilePage> {
   String editEmail = "";
   String editPhone = "";
   String editBirthday = "";
-  String? editGender = userGender;
+  String? editGender = account[0].accountGender.toString();
 
   Widget build(BuildContext context) {
     if (editGender == "female") {

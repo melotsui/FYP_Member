@@ -292,7 +292,7 @@ class ProductListPageState extends State<ProductListPage> {
                                                   ' ',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 14,
+                                                fontSize: 15,
                                               ),
                                             ),
                                             searchProducts[index].retailPrice !=

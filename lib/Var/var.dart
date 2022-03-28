@@ -86,7 +86,7 @@ class Account {
     accountGender = json['gender'];
     point = json['point'];
     order = json['order'];
-    image = json['passcode'];
+    image = json['image'];
     // if (json['invoice'] != null) {
     //   invoice = <Null>[];
     //   json['invoice'].forEach((v) {
