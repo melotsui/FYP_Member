@@ -126,9 +126,7 @@ class FavouriteProductPageState extends State<FavouriteProductPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => ProductListPage()),
-            (Route<dynamic> route) => false);
+        navigateToProductListPage(context);
         return Future.value(false);
       },
       child: Scaffold(
