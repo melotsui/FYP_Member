@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 
 Status invoicesStatus = Status.loading;
 Future<List<Invoices>> invoicesAPI(String id) async {
-  productsStatus = Status.loading;
+  invoicesStatus = Status.loading;
   final response =
       await http.post(Uri.parse('http://api.chunon.me/getMemberInvoices'),
           headers: <String, String>{
@@ -111,6 +111,7 @@ class InvoiceListPageState extends State<InvoiceListPage> {
             .parse(invoices[i].invoiceDateTime.toString());
         print(dateFormatter(dt));
         print(timeFormatter(dt));
+        print("invoices.length:" + invoices.length.toString());
         dateList.add(dateFormatter(dt));
         timeList.add(timeFormatter(dt));
       }
