@@ -1,15 +1,126 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:member/Product/productList.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 import '../Var/natigate.dart';
 import '../main.dart';
 import '../Navigation/navigationBar.dart';
 import '../Var/var.dart';
 
+Status productDetailsStatus = Status.loading;
+Future<ProductDetails> productDetailsAPI(String id, String productID) async {
+  productDetailsStatus = Status.loading;
+  final response =
+  await http.post(Uri.parse('http://api.chunon.me/getProductApp'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({"accountID": id, "productID": productID}));
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    productDetailsStatus = Status.success;
+    // List b = jsonDecode(response.body);
+    // print(b);
+    return ProductDetails.fromJson(jsonDecode(response.body));
+  } else {
+    productDetailsStatus = Status.error;
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
+
+class ProductDetails {
+  List<BranchProduct>? branchProduct;
+  double? cost;
+  int? favouriteID;
+  String? productDescription;
+  String? productID;
+  String? productImage;
+  String? productName;
+  int? productStatus;
+  double? retailPrice;
+  double? sellPrice;
+
+  ProductDetails(
+      {this.branchProduct,
+        this.cost,
+        this.favouriteID,
+        this.productDescription,
+        this.productID,
+        this.productImage,
+        this.productName,
+        this.productStatus,
+        this.retailPrice,
+        this.sellPrice});
+
+  ProductDetails.fromJson(Map<String, dynamic> json) {
+    if (json['branchProduct'] != null) {
+      branchProduct = <BranchProduct>[];
+      json['branchProduct'].forEach((v) {
+        branchProduct!.add(new BranchProduct.fromJson(v));
+      });
+    }
+    cost = json['cost'];
+    favouriteID = json['favouriteID'];
+    productDescription = json['productDescription'];
+    productID = json['productID'];
+    productImage = json['productImage'];
+    productName = json['productName'];
+    productStatus = json['productStatus'];
+    retailPrice = json['retailPrice'];
+    sellPrice = json['sellPrice'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.branchProduct != null) {
+      data['branchProduct'] =
+          this.branchProduct!.map((v) => v.toJson()).toList();
+    }
+    data['cost'] = this.cost;
+    data['favouriteID'] = this.favouriteID;
+    data['productDescription'] = this.productDescription;
+    data['productID'] = this.productID;
+    data['productImage'] = this.productImage;
+    data['productName'] = this.productName;
+    data['productStatus'] = this.productStatus;
+    data['retailPrice'] = this.retailPrice;
+    data['sellPrice'] = this.sellPrice;
+    return data;
+  }
+}
+
+class BranchProduct {
+  String? branchName;
+  int? qty;
+
+  BranchProduct({this.branchName, this.qty});
+
+  BranchProduct.fromJson(Map<String, dynamic> json) {
+    branchName = json['branchName'];
+    qty = json['qty'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['branchName'] = this.branchName;
+    data['qty'] = this.qty;
+    return data;
+  }
+}
+
 class ProductDetailPage extends StatefulWidget {
   Product productDetail;
-  ProductDetailPage({Key? key, required this.productDetail}) : super(key: key);
+  String productID;
+  ProductDetailPage({Key? key, required this.productDetail, required this.productID}) : super(key: key);
 
   @override
   ProductDetailPagePageState createState() => ProductDetailPagePageState();
@@ -17,6 +128,8 @@ class ProductDetailPage extends StatefulWidget {
 
 class ProductDetailPagePageState extends State<ProductDetailPage> {
   late List<Branch> branch;
+  late ProductDetails productDetails;
+  late List<BranchProduct> branchProduct;
   @override
   void initState() {
     // TODO: implement initState
@@ -24,6 +137,11 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
     branchAPI().then((value) {
       branch = [];
       branch = value;
+      setState(() {});
+    });
+    productDetailsAPI(account[0].accountID.toString(), widget.productID).then((value) {
+      productDetails = value;
+      branchProduct = productDetails.branchProduct!;
       setState(() {});
     });
   }
@@ -51,7 +169,7 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
           ),
         ),
         drawer: NavigationBarPageState().navBar(context),
-        body: branchstatus == Status.loading
+        body: productDetailsStatus == Status.loading
             ? Center(
           child: CircularProgressIndicator(
             color: Colors.deepPurpleAccent,
@@ -80,7 +198,7 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                           color: Colors.white,
                           image: DecorationImage(
                               image: NetworkImage(
-                                  widget.productDetail.productImage),
+                                  apiDomain + productDetails.productImage.toString()),
                               fit: BoxFit.contain)),
                     ),
                     Expanded(child: Text("")),
@@ -102,7 +220,7 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                                       MediaQuery.of(context).size.width * 0.8,
                                   padding: EdgeInsets.only(top: 5),
                                   child: Text(
-                                    widget.productDetail.productName,
+                                    productDetails.productName.toString(),
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
@@ -118,7 +236,7 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                                   padding: EdgeInsets.only(top: 5),
                                   child: Text(
                                     'HK\$' +
-                                        widget.productDetail.sellPrice
+                                        productDetails.sellPrice
                                             .toString() +
                                         ' ',
                                     style: TextStyle(
@@ -127,13 +245,13 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                                     ),
                                   ),
                                 ),
-                                widget.productDetail.retailPrice !=
-                                        widget.productDetail.sellPrice
+                                productDetails.retailPrice !=
+                                    productDetails.sellPrice
                                     ? Container(
                                         padding: EdgeInsets.only(top: 5),
                                         child: Text(
                                           'HK\$' +
-                                              widget.productDetail.retailPrice
+                                              productDetails.retailPrice
                                                   .toString(),
                                           style: TextStyle(
                                             decoration:
@@ -150,16 +268,16 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                             ),
                             Row(
                               children: <Widget>[
-                                widget.productDetail.retailPrice !=
-                                        widget.productDetail.sellPrice
+                                productDetails.retailPrice !=
+                                    productDetails.sellPrice
                                     ? Container(
                                         padding: EdgeInsets.only(top: 5),
                                         child: Text(
                                           'Save \$' +
-                                              (widget.productDetail
-                                                          .retailPrice -
-                                                      widget.productDetail
-                                                          .sellPrice)
+                                              (productDetails
+                                                          .retailPrice! -
+                                                  productDetails
+                                                          .sellPrice!)
                                                   .toStringAsFixed(1) +
                                               '!',
                                           style: TextStyle(
@@ -183,17 +301,38 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                             // (widget.productDetail.fav%2) == 0 ?
                             login > 0
                                 ? GestureDetector(
-                                    child: widget.productDetail.fav % 2 == 0 &&
+                                    child: productDetails.favouriteID != null &&
                                             login > 0
                                         ? Icon(Icons.favorite,
                                             color: Colors.redAccent)
                                         : Icon(Icons.favorite_border),
                                     onTap: () {
-                                      if (login > 0) {
-                                        widget.productDetail.fav++;
+                                      if (login > 0 && productDetails.favouriteID ==
+                                          null) {
+                                        print(account[0].accountID.toString() + widget.productID);
+                                        addFavAPI(account[0].accountID.toString(), widget.productID).then((value) {
+                                          if(value.success == 1 && favStatus == Status.success){
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                productDetails.productName.toString() + " is added to favourite list.");
+                                            navigateToProductDetailPage(context, widget.productDetail, productDetails.productID.toString());
+                                          }
+                                        });
+                                      } else if (login > 0 && productDetails
+                                          .favouriteID !=
+                                          null){
+                                        deleteFavAPI(account[0].accountID.toString(), widget.productID).then((value) {
+                                          if(value.success == 1 && favStatus == Status.success){
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                productDetails.productName.toString() + " is deleted from favourite list.");
+                                            navigateToProductDetailPage(context, widget.productDetail, productDetails.productID.toString());
+                                          }
+                                        });
                                       } else {
                                         Fluttertoast.showToast(
-                                            msg: "Please login.");
+                                            msg:
+                                            "Please login.");
                                       }
                                       print('fav');
                                       for (int i = 0; i < product.length; i++) {
@@ -256,42 +395,6 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                       ),
                       SizedBox(
                         width: double.infinity,
-                        // child: DataTable(
-                        //   columns: <DataColumn>[
-                        //     DataColumn(
-                        //       label: Text(
-                        //         'Name',
-                        //         style: TextStyle(fontStyle: FontStyle.italic),
-                        //       ),
-                        //     ),
-                        //     DataColumn(
-                        //       label: Text(
-                        //         'Role',
-                        //         style: TextStyle(fontStyle: FontStyle.italic),
-                        //       ),
-                        //     ),
-                        //   ],
-                        //   rows: const <DataRow>[
-                        //     DataRow(
-                        //       cells: <DataCell>[
-                        //         DataCell(Text('Sarah')),
-                        //         DataCell(Text('19')),
-                        //       ],
-                        //     ),
-                        //     DataRow(
-                        //       cells: <DataCell>[
-                        //         DataCell(Text('Janine')),
-                        //         DataCell(Text('43')),
-                        //       ],
-                        //     ),
-                        //     DataRow(
-                        //       cells: <DataCell>[
-                        //         DataCell(Text('William')),
-                        //         DataCell(Text('27')),
-                        //       ],
-                        //     ),
-                        //   ],
-                        // ),
                         child: DataTable(
                           columns: <DataColumn>[
                             DataColumn(
@@ -302,7 +405,7 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                             ),
                           ],
                           rows: List<DataRow>.generate(
-                            branch.length,
+                            branchProduct.length,
                             (int index) => DataRow(
                               color: MaterialStateProperty.resolveWith<Color?>(
                                   (Set<MaterialState> states) {
@@ -318,11 +421,11 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                                 return null; // Use default value for other states and odd rows.
                               }),
                               cells: <DataCell>[
-                                DataCell(Text(branch[index].branchName.toString())),
+                                DataCell(Text(branchProduct[index].branchName.toString())),
                                 DataCell(
                                   Container(
                                     alignment: Alignment.center,
-                                    child: Text("00"),
+                                    child: Text(branchProduct[index].qty.toString()),
                                   ),
                                 ),
                                 // DataCell(Text(branch[index].qty.toString())),

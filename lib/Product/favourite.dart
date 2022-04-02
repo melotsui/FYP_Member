@@ -199,7 +199,7 @@ class FavouriteProductPageState extends State<FavouriteProductPage> {
                               onTap: () {
                                 print(searchProducts[index]);
                                 navigateToProductDetailPage(
-                                    context, searchProduct[index]);
+                                    context, searchProduct[index], searchProducts[index].productID.toString());
                               },
                               child: Container(
                                 alignment: Alignment.centerLeft,

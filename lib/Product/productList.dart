@@ -162,7 +162,7 @@ class ProductListPageState extends State<ProductListPage> {
                           onTap: () async {
                             print(searchProduct[index]);
                             navigateToProductDetailPage(
-                                context, searchProduct[index]);
+                                context, searchProduct[index], searchProducts[index].productID.toString());
                           },
                           child: Container(
                             alignment: Alignment.centerLeft,
@@ -204,7 +204,7 @@ class ProductListPageState extends State<ProductListPage> {
                                                             .favouriteID ==
                                                             null) {
                                                           addFavAPI(account[0].accountID.toString(), searchProducts[index].productID.toString()).then((value) {
-                                                            if(value.success == 1 && productsStatus == Status.success){
+                                                            if(value.success == 1 && favStatus == Status.success){
                                                               Fluttertoast.showToast(
                                                                   msg:
                                                                   searchProducts[index].productName.toString() + " is added to favourite list.");
@@ -215,7 +215,7 @@ class ProductListPageState extends State<ProductListPage> {
                                                             .favouriteID !=
                                                             null){
                                                           deleteFavAPI(account[0].accountID.toString(), searchProducts[index].productID.toString()).then((value) {
-                                                            if(value.success == 1 && productsStatus == Status.success){
+                                                            if(value.success == 1 && favStatus == Status.success){
                                                               Fluttertoast.showToast(
                                                                   msg:
                                                                   searchProducts[index].productName.toString() + " is deleted from favourite list.");
