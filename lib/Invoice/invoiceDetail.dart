@@ -223,10 +223,9 @@ class Refund {
 }
 
 class InvoiceDetailPage extends StatefulWidget {
-  InvoiceList invoiceDetail;
   String invoiceID;
   InvoiceDetailPage(
-      {Key? key, required this.invoiceDetail, required this.invoiceID})
+      {Key? key, required this.invoiceID})
       : super(key: key);
   @override
   InvoiceDetailPageState createState() => InvoiceDetailPageState();
@@ -645,8 +644,6 @@ class InvoiceDetailPageState extends State<InvoiceDetailPage> {
                                                               Status.loading) {
                                                         navigateToInvoiceDetailPage(
                                                             context,
-                                                            widget
-                                                                .invoiceDetail,
                                                             widget.invoiceID);
                                                       }
                                                     });
@@ -664,8 +661,6 @@ class InvoiceDetailPageState extends State<InvoiceDetailPage> {
                                                               Status.loading) {
                                                         navigateToInvoiceDetailPage(
                                                             context,
-                                                            widget
-                                                                .invoiceDetail,
                                                             widget.invoiceID);
                                                       }
                                                     });

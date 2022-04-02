@@ -256,7 +256,6 @@ class InvoiceListPageState extends State<InvoiceListPage> {
                           onTap: () {
                             navigateToInvoiceDetailPage(
                                 context,
-                                invoiceList[index],
                                 invoices[index].invoiceID.toString());
                           },
                         );

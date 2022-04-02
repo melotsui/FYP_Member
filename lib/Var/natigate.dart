@@ -64,8 +64,8 @@ void navigateToProductDetailPage(BuildContext context, String productID) {
 }
 
 // InvoiceDetailPage
-void navigateToInvoiceDetailPage(BuildContext context, InvoiceList invoiceDetail, String invoiceID) {
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => InvoiceDetailPage(invoiceDetail: invoiceDetail, invoiceID: invoiceID)));
+void navigateToInvoiceDetailPage(BuildContext context, String invoiceID) {
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => InvoiceDetailPage(invoiceID: invoiceID)));
 }
 
 // EditProfilePage
