@@ -18,13 +18,11 @@ class ProductListPageState extends State<ProductListPage> {
   FlutterSecureStorage storage = new FlutterSecureStorage();
   DateTime? currentBackPressTime;
   List<Products> products = [];
-  List searchProduct = product;
   List<Products> searchProducts = [];
   @override
   void initState() {
     // TODO: implement initState
 
-    searchProduct = product;
     searchProducts = products;
     super.initState();
     print(account[0].accountID.toString());
@@ -117,7 +115,6 @@ class ProductListPageState extends State<ProductListPage> {
                         labelText: 'Search Product',
                       ),
                       onChanged: (text) {
-                        searchProduct = [];
                         searchProducts = [];
                         print(products);
                         if (text != "") {
@@ -130,18 +127,9 @@ class ProductListPageState extends State<ProductListPage> {
                               print(searchProducts.length);
                             }
                           }
-                          for (int i = 0; i < product.length; i++) {
-                            if (product[i]
-                                .productName
-                                .toLowerCase()
-                                .contains(text.toLowerCase())) {
-                              searchProduct.add(product[i]);
-                            }
-                          }
                         } else {
                           searchProducts = products;
                           print(searchProducts.length.toString());
-                          searchProduct = product;
                         }
                         setState(() {});
                       },
@@ -160,9 +148,8 @@ class ProductListPageState extends State<ProductListPage> {
                       itemBuilder: (BuildContext ctx, index) {
                         return GestureDetector(
                           onTap: () async {
-                            print(searchProduct[index]);
                             navigateToProductDetailPage(
-                                context, searchProduct[index], searchProducts[index].productID.toString());
+                                context, searchProducts[index].productID.toString());
                           },
                           child: Container(
                             alignment: Alignment.centerLeft,
@@ -226,21 +213,6 @@ class ProductListPageState extends State<ProductListPage> {
                                                           Fluttertoast.showToast(
                                                               msg:
                                                                   "Please login.");
-                                                        }
-                                                        print('fav');
-                                                        for (int i = 0;
-                                                            i < product.length;
-                                                            i++) {
-                                                          if (product[i]
-                                                                  .productName ==
-                                                              searchProduct[
-                                                                      index]
-                                                                  .productName) {
-                                                            product[i].fav =
-                                                                searchProduct[
-                                                                        index]
-                                                                    .fav;
-                                                          }
                                                         }
                                                         // storage.write(key: "product", value: product);
                                                         // storage.read(key: product);

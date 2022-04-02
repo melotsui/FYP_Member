@@ -95,7 +95,6 @@ class FavouriteProductPage extends StatefulWidget {
   FavouriteProductPageState createState() => FavouriteProductPageState();
 }
 
-List searchProduct = product;
 List favProduct = [];
 List<FavProducts> favProducts = [];
 List<FavProducts> searchProducts = [];
@@ -106,12 +105,6 @@ class FavouriteProductPageState extends State<FavouriteProductPage> {
   @override
   void initState() {
     // TODO: implement initState
-    for (int i = 0; i < product.length; i++) {
-      if (product[i].fav % 2 == 0) {
-        favProduct.add(product[i]);
-      }
-    }
-    searchProduct = favProduct;
     super.initState();
     favProductsAPI(account[0].accountID.toString()).then((value) {
       favProducts = [];
@@ -164,7 +157,6 @@ class FavouriteProductPageState extends State<FavouriteProductPage> {
                           ),
                           onChanged: (text) {
                             searchProducts = [];
-                            print(searchProduct);
                             print(favProduct);
                             if (text != "") {
                               for (int i = 0; i < favProducts.length; i++) {
@@ -199,7 +191,7 @@ class FavouriteProductPageState extends State<FavouriteProductPage> {
                               onTap: () {
                                 print(searchProducts[index]);
                                 navigateToProductDetailPage(
-                                    context, searchProduct[index], searchProducts[index].productID.toString());
+                                    context, searchProducts[index].productID.toString());
                               },
                               child: Container(
                                 alignment: Alignment.centerLeft,

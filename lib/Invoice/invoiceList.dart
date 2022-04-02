@@ -130,20 +130,6 @@ class InvoiceListPageState extends State<InvoiceListPage> {
           backgroundColor: Colors.deepPurpleAccent,
           title: Text("Invoice List"),
           centerTitle: true,
-          // actions: [
-          //   IconButton(
-          //     onPressed: () {},
-          //     icon: Icon(Icons.add_alert_sharp),
-          //   ),
-          //   IconButton(
-          //     onPressed: () {},
-          //     icon: Icon(Icons.share),
-          //   ),
-          //   IconButton(
-          //     onPressed: () {},
-          //     icon: Icon(Icons.search),
-          //   ),
-          // ],
         ),
         drawer: NavigationBarPageState().navBar(context),
         body: status == Status.loading || invoicesStatus == Status.loading

@@ -118,27 +118,20 @@ class BranchProduct {
 }
 
 class ProductDetailPage extends StatefulWidget {
-  Product productDetail;
   String productID;
-  ProductDetailPage({Key? key, required this.productDetail, required this.productID}) : super(key: key);
+  ProductDetailPage({Key? key, required this.productID}) : super(key: key);
 
   @override
   ProductDetailPagePageState createState() => ProductDetailPagePageState();
 }
 
 class ProductDetailPagePageState extends State<ProductDetailPage> {
-  late List<Branch> branch;
   late ProductDetails productDetails;
   late List<BranchProduct> branchProduct;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    branchAPI().then((value) {
-      branch = [];
-      branch = value;
-      setState(() {});
-    });
     productDetailsAPI(account[0].accountID.toString(), widget.productID).then((value) {
       productDetails = value;
       branchProduct = productDetails.branchProduct!;
@@ -298,7 +291,6 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                         width: MediaQuery.of(context).size.width * 0.05,
                         child: Column(
                           children: <Widget>[
-                            // (widget.productDetail.fav%2) == 0 ?
                             login > 0
                                 ? GestureDetector(
                                     child: productDetails.favouriteID != null &&
@@ -315,7 +307,7 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                                             Fluttertoast.showToast(
                                                 msg:
                                                 productDetails.productName.toString() + " is added to favourite list.");
-                                            navigateToProductDetailPage(context, widget.productDetail, productDetails.productID.toString());
+                                            navigateToProductDetailPage(context, productDetails.productID.toString());
                                           }
                                         });
                                       } else if (login > 0 && productDetails
@@ -326,28 +318,13 @@ class ProductDetailPagePageState extends State<ProductDetailPage> {
                                             Fluttertoast.showToast(
                                                 msg:
                                                 productDetails.productName.toString() + " is deleted from favourite list.");
-                                            navigateToProductDetailPage(context, widget.productDetail, productDetails.productID.toString());
+                                            navigateToProductDetailPage(context, productDetails.productID.toString());
                                           }
                                         });
                                       } else {
                                         Fluttertoast.showToast(
                                             msg:
                                             "Please login.");
-                                      }
-                                      print('fav');
-                                      for (int i = 0; i < product.length; i++) {
-                                        if (product[i].productName ==
-                                            widget.productDetail.productName) {
-                                          product[i].fav =
-                                              widget.productDetail.fav;
-                                          print(product[i].productName +
-                                              " and " +
-                                              widget.productDetail.productName);
-                                          print(product[i].fav.toString() +
-                                              " and " +
-                                              widget.productDetail.fav
-                                                  .toString());
-                                        }
                                       }
                                       // storage.write(key: "product", value: product);
                                       // storage.read(key: product);
