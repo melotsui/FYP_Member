@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:member/Var/var.dart';
@@ -19,6 +18,7 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage> {
     // TODO: implement initState
     super.initState();
   }
+
   bool isValid = false;
   String forgetEmail = "";
   Widget build(BuildContext context) {
@@ -38,9 +38,14 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage> {
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: <Widget>[
-            Expanded(child: Text("")),
+            Expanded(child: Container()),
+            Image(
+              image: NetworkImage(
+                  "https://www.telstra.com.au/content/dam/tcom/support/email/navbox/navbox-setupemail-484x364.png"),
+              fit: BoxFit.contain,
+            ),
             Container(
-              padding: EdgeInsets.only(top: 20),
+              // padding: EdgeInsets.only(top: 20),
               child: TextFormField(
                 autofocus: true,
                 style: TextStyle(fontSize: 20),
@@ -81,7 +86,7 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage> {
                       onPrimary: Colors.white, // foreground
                     ),
                     onPressed: () {
-                      if(isValid){
+                      if (isValid) {
                         bool hasEmail = false;
                         for (int i = 0; i < account.length; i++) {
                           if (account[i].accountEmail == forgetEmail) {
@@ -91,12 +96,12 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage> {
                         if (hasEmail == true) {
                           Fluttertoast.showToast(
                             msg:
-                            "One time password will send to you email address.",
+                                "One time password will send to you email address.",
                           );
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => LoginPage()),
-                                  (Route<dynamic> route) => false);
+                              (Route<dynamic> route) => false);
                         } else {
                           Fluttertoast.showToast(msg: "Wrong Email.");
                         }

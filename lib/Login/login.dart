@@ -213,8 +213,8 @@ class LoginPageState extends State<LoginPage> {
                           if (isValid[0] && isValid[1]) {
                             setState(() {});
                             account = [];
+                            loadingScreen(context);
                             loginAPI(loginEmail, loginPassword).then((value) {
-                              loadingScreen(context);
                               if (status == Status.success) {
                                 Account acc = value;
                                 account.add(acc);

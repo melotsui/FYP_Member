@@ -391,9 +391,9 @@ class EditProfilePageState extends State<EditProfilePage> {
                                     isValid[1] &&
                                     isValid[2] &&
                                     isValid[3]) {
+                                  loadingScreen(context);
                                   // editProfileAPI
                                   editProfileAPI(account[0].accountID.toString(), editFirstName, editLastName, editPhone, editGender!, editPasscode).then((value) {
-                                    loadingScreen(context);
                                     if (status == Status.success) {
                                         status = Status.loading;
                                         Future.delayed(Duration(milliseconds: 500),
