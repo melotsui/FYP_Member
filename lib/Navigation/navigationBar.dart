@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:member/Var/natigate.dart';
 
 import '../main.dart';
@@ -40,6 +41,10 @@ class NavigationBarPageState extends State<NavigationBarPage> {
                     NetworkImage(unknownIcon),
                   ),
                   onTap: () {
+                    Fluttertoast.showToast(
+                      msg:
+                      "Please login",
+                    );
                     login > 0 ? navigateToIconPage(context) : navigateToLoginPage(context);
                   },
                 ),
@@ -99,6 +104,10 @@ class NavigationBarPageState extends State<NavigationBarPage> {
               // Update the state of the app
               // ...
               // Then close the drawer
+              Fluttertoast.showToast(
+                msg:
+                "Please login",
+              );
               login > 0 ? navigateToInvoiceListPage(context) : navigateToLoginPage(context);
             },
           ),
@@ -116,6 +125,10 @@ class NavigationBarPageState extends State<NavigationBarPage> {
               // Update the state of the app
               // ...
               // Then close the drawer
+              Fluttertoast.showToast(
+                msg:
+                "Please login",
+              );
               login < 1 ? navigateToLoginPage(context) : navigateToMyProfilePage(context);
             },
           ),

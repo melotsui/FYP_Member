@@ -40,8 +40,7 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage> {
           children: <Widget>[
             Expanded(child: Container()),
             Image(
-              image: NetworkImage(
-                  "https://www.telstra.com.au/content/dam/tcom/support/email/navbox/navbox-setupemail-484x364.png"),
+              image: AssetImage('assets/ForgetPasswordImage.png'),
               fit: BoxFit.contain,
             ),
             Container(
@@ -87,24 +86,14 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage> {
                     ),
                     onPressed: () {
                       if (isValid) {
-                        bool hasEmail = false;
-                        for (int i = 0; i < account.length; i++) {
-                          if (account[i].accountEmail == forgetEmail) {
-                            hasEmail = true;
-                          }
-                        }
-                        if (hasEmail == true) {
-                          Fluttertoast.showToast(
-                            msg:
-                                "One time password will send to you email address.",
-                          );
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()),
-                              (Route<dynamic> route) => false);
-                        } else {
-                          Fluttertoast.showToast(msg: "Wrong Email.");
-                        }
+                        Fluttertoast.showToast(
+                          msg:
+                              "One time password will send to you email address.",
+                        );
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()),
+                            (Route<dynamic> route) => false);
                       } else {
                         Fluttertoast.showToast(msg: "Invalid Email.");
                       }

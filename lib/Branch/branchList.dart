@@ -272,9 +272,10 @@ class BranchListPageState extends State<BranchListPage> {
                                   ),
                                   Container(
                                     child: CircleAvatar(
-                                        radius: 40,
-                                        backgroundImage: NetworkImage(
-                                            "https://media.istockphoto.com/vectors/convenience-store-vector-id1009031800?k=20&m=1009031800&s=170667a&w=0&h=r6UE66Xv6zgkHuyWbOzy_nrRnfNBwSS1nV7gfqNPGZY=")),
+                                      radius: 40,
+                                      backgroundImage: AssetImage('assets/BranchImage.jpg'),
+                                      // ../Asset/BranchImage.jpg
+                                    ),
                                   ),
                                 ],
                               ),
