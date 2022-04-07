@@ -20,7 +20,7 @@ Future<TopupStatus> topupAPI(String id, double addValue) async {
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
-    body: jsonEncode({"accountID": id, "addBalance": addValue}),
+    body: jsonEncode({"accountID": id, "addBalance": addValue, "isAdd": 1, "payMethod": "Paypal"}),
   );
 
   if (response.statusCode == 200) {
@@ -133,7 +133,7 @@ class TopUpPageState extends State<TopUpPage> {
                         Container(
                           padding: EdgeInsets.only(top: 5, left: 0),
                           child: Text(
-                            "HKD " + accountBalance!.toStringAsFixed(2),
+                            "HKD " + account[0].accountBalance!.toStringAsFixed(2),
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontSize: 20,
@@ -214,7 +214,8 @@ class TopUpPageState extends State<TopUpPage> {
                                         // payment done
                                         // if (oID != number) {
                                         oID = number;
-                                        topupAPI(userID!, topupValue)
+                                        print("account[0].accountID" + account[0].accountID!);
+                                        topupAPI(account[0].accountID!, topupValue)
                                             .then((value) {
                                           loadingScreen(context);
                                           if (status == Status.success) {

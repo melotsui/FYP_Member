@@ -9,6 +9,49 @@ import 'package:string_validator/string_validator.dart';
 import '../Var/var.dart';
 import '../main.dart';
 import '../Navigation/navigationBar.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+Future<EditProfileStatus> editProfileAPI(String id, String fname, String lname, String phone, String gender, String passcode) async {
+  status = Status.loading;
+  final response = await http.post(
+    Uri.parse('$apiDomain/updateMember'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode({
+      "accountID": id,
+      "firstName": fname,
+      "lastName": lname,
+      "phoneNumber": phone,
+      "gender": gender,
+      "passcode": passcode
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    status = Status.success;
+    return EditProfileStatus.fromJson(jsonDecode(response.body));
+  } else {
+    status = Status.error;
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to Edit');
+  }
+}
+
+class EditProfileStatus {
+  String? success;
+
+  EditProfileStatus({this.success});
+
+  EditProfileStatus.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+  }
+}
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -16,27 +59,33 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class EditProfilePageState extends State<EditProfilePage> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    updateAccountAPI(account[0].accountID.toString()).then((value) {
-      account = [];
-      account.add(value);
-      setState(() {});
-    });
-
-  }
-
   List<bool> isValid = [true, true, true, true];
   SingingCharacter? _gender = SingingCharacter.male;
-  TextEditingController dateCtl = TextEditingController(text: userBirthday);
+  TextEditingController dateCtl = TextEditingController(text: account[0].accountBirthday);
   String editFirstName = "";
   String editLastName = "";
   String editEmail = "";
   String editPhone = "";
   String editBirthday = "";
   String? editGender = account[0].accountGender.toString();
+  String editPasscode = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    updateAccountAPI(account[0].accountID.toString()).then((value) {
+      dateCtl = TextEditingController(text: value.accountBirthday.toString());
+      editFirstName = value.accountFirstName.toString();
+      editLastName = value.accountLastName.toString();
+      editEmail = value.accountEmail.toString();
+      editPhone = value.accountPhone.toString();
+      editBirthday = value.accountBirthday.toString();
+      editGender = value.accountGender.toString();
+      editPasscode = value.passcode.toString();
+      setState(() {});
+    });
+  }
 
   Widget build(BuildContext context) {
     if (editGender == "female") {
@@ -79,7 +128,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                       Container(
                         padding: EdgeInsets.only(top: 30),
                         child: TextFormField(
-                          initialValue: userFirstName,
+                          initialValue: editFirstName,
                           style: TextStyle(fontSize: 20),
                           scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                           decoration: InputDecoration(
@@ -117,7 +166,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                       Container(
                         padding: EdgeInsets.only(top: 20),
                         child: TextFormField(
-                          initialValue: userLastName,
+                          initialValue: editLastName,
                           style: TextStyle(fontSize: 20),
                           scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                           decoration: InputDecoration(
@@ -154,44 +203,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                       Container(
                         padding: EdgeInsets.only(top: 20),
                         child: TextFormField(
-                          initialValue: userEmail,
-                          style: TextStyle(fontSize: 20),
-                          scrollPadding: EdgeInsets.symmetric(horizontal: 20),
-                          decoration: InputDecoration(
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 20),
-                            // helperText: 'Assistive text',
-                            // icon: Icon(Icons.person),
-                            hintText: '',
-                            labelText: 'Email',
-                            border: OutlineInputBorder(),
-                          ),
-                          onChanged: (String? value) {
-                            if (value != null) {
-                              editEmail = value;
-                              print(editEmail);
-                            }
-                          },
-                          onSaved: (String? value) {
-                            // This optional block of code can be used to run
-                            // code when the user saves the form.
-                          },
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (String? value) {
-                            if (isEmail(value!)) {
-                              isValid[2] = true;
-                              return null;
-                            } else {
-                              isValid[2] = false;
-                              return "Invalid Email Address";
-                            }
-                          },
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 20),
-                        child: TextFormField(
-                          initialValue: userPhone,
+                          initialValue: editPhone,
                           style: TextStyle(fontSize: 20),
                           scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                           decoration: InputDecoration(
@@ -218,14 +230,14 @@ class EditProfilePageState extends State<EditProfilePage> {
                           validator: (String? value) {
                             if (isNumeric(value!)) {
                               if (value.length == 8) {
-                                isValid[3] = true;
+                                isValid[2] = true;
                                 return null;
                               } else {
-                                isValid[3] = false;
+                                isValid[2] = false;
                                 return "Phone must be 8 digits";
                               }
                             } else {
-                              isValid[3] = false;
+                              isValid[2] = false;
                               return "Invalid Phone Number";
                             }
                           },
@@ -262,6 +274,44 @@ class EditProfilePageState extends State<EditProfilePage> {
                             dateCtl.text =
                                 day + "/" + month + "/" + date.year.toString();
                             editBirthday = dateCtl.text;
+                          },
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top: 20),
+                        child: TextFormField(
+                          initialValue: editPasscode,
+                          style: TextStyle(fontSize: 20),
+                          scrollPadding: EdgeInsets.symmetric(horizontal: 20),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                            // helperText: 'Assistive text',
+                            // icon: Icon(Icons.person),
+                            hintText: '',
+                            labelText: 'Passcode',
+                            border: OutlineInputBorder(),
+                          ),
+                          keyboardType: TextInputType.number,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (String? value) {
+                            if (isNumeric(value!)) {
+                              if (value.length == 6) {
+                                isValid[3] = true;
+                                return null;
+                              } else {
+                                isValid[3] = false;
+                                return "Phone must be 6 digits";
+                              }
+                            } else {
+                              isValid[3] = false;
+                              return "Invalid Passcode";
+                            }
+                          },
+                          onChanged: (String? value) {
+                            if (value != null) {
+                              editPasscode = value;
+                              print(editPasscode);
+                            }
                           },
                         ),
                       ),
@@ -341,39 +391,19 @@ class EditProfilePageState extends State<EditProfilePage> {
                                     isValid[1] &&
                                     isValid[2] &&
                                     isValid[3]) {
-                                  for (int i = 0; i < account.length; i++) {
-                                    print(account[i].accountID);
-                                    print(userID);
-                                    if (account[i].accountID == userID) {
-                                      if (editFirstName != "") {
-                                        account[i].accountFirstName =
-                                            editFirstName;
-                                        userFirstName = editFirstName;
-                                      }
-                                      if (editLastName != "") {
-                                        account[i].accountLastName =
-                                            editLastName;
-                                        userLastName = editLastName;
-                                      }
-                                      if (editEmail != "") {
-                                        account[i].accountEmail = editEmail;
-                                        userEmail = editEmail;
-                                      }
-                                      if (editPhone != "") {
-                                        account[i].accountPhone = editPhone;
-                                        userPhone = editPhone;
-                                      }
-                                      if (editBirthday != "") {
-                                        account[i].accountBirthday =
-                                            editBirthday;
-                                        userBirthday = editBirthday;
-                                      }
-                                      userGender = editGender;
+                                  // editProfileAPI
+                                  editProfileAPI(account[0].accountID.toString(), editFirstName, editLastName, editPhone, editGender!, editPasscode).then((value) {
+                                    loadingScreen(context);
+                                    if (status == Status.success) {
+                                        status = Status.loading;
+                                        Future.delayed(Duration(milliseconds: 500),
+                                                () {
+                                                  Fluttertoast.showToast(
+                                                      msg: "Profile Edit Successful.");
+                                                  navigateToMyProfilePage(context);
+                                            });
                                     }
-                                  }
-                                  Fluttertoast.showToast(
-                                      msg: "Profile Edit Successful.");
-                                  navigateToMyProfilePage(context);
+                                  });
                                 } else {
                                   String errMsg =
                                       "The following field(s) is invalid";
@@ -384,10 +414,10 @@ class EditProfilePageState extends State<EditProfilePage> {
                                     errMsg += "\n- Last Name";
                                   }
                                   if (!isValid[2]) {
-                                    errMsg += "\n- Email";
+                                    errMsg += "\n- Phone";
                                   }
                                   if (!isValid[3]) {
-                                    errMsg += "\n- Phone";
+                                    errMsg += "\n- Passcode";
                                   }
                                   Fluttertoast.showToast(msg: errMsg);
                                 }

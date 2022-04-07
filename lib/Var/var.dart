@@ -54,7 +54,9 @@ class Account {
   String? accountGender;
   int? point;
   int? order;
+  String? passcode;
   String? image;
+  String? error;
   // List<Null>? invoice;
   String? accountRole;
 
@@ -70,7 +72,9 @@ class Account {
         this.accountGender,
         this.point,
         this.image,
+        this.passcode,
         this.order,
+        this.error,
         // this.invoice,
         this.accountRole});
 
@@ -86,7 +90,9 @@ class Account {
     accountGender = json['gender'];
     point = json['point'];
     order = json['order'];
+    passcode = json['passcode'];
     image = json['image'];
+    error = json['error'];
     // if (json['invoice'] != null) {
     //   invoice = <Null>[];
     //   json['invoice'].forEach((v) {
@@ -111,6 +117,7 @@ List<Account> account = [
     accountPassword: "",
     accountGender: "",
     image: "",
+    passcode: "",
     accountBalance: 0,
     order: 0,
     point: 0,

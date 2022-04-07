@@ -8,6 +8,41 @@ import '../Var/var.dart';
 import '../main.dart';
 import '../Navigation/navigationBar.dart';
 import 'package:string_validator/string_validator.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
+
+Future<Account> RegisterAPI(Account acc) async {
+  status = Status.loading;
+  final response = await http.post(
+    Uri.parse('$apiDomain/insertMember'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode({
+      "firstName": acc.accountFirstName,
+      "lastName": acc.accountLastName,
+      "email": acc.accountEmail,
+      "password": acc.accountPassword,
+      "phoneNumber": acc.accountPhone,
+      "birthday": acc.accountBirthday,
+      "gender": acc.accountGender,
+      "passcode": acc.passcode
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    status = Status.success;
+    return Account.fromJson(jsonDecode(response.body));
+  } else {
+    status = Status.error;
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to get');
+  }
+}
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -15,7 +50,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 // List<Account> newAccount = [];
-var formatter = new DateFormat('yyyyMMdd');
+var formatter = new DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
 
 class RegisterPageState extends State<RegisterPage> {
@@ -27,17 +62,18 @@ class RegisterPageState extends State<RegisterPage> {
 
   SingingCharacter? _gender = SingingCharacter.male;
   TextEditingController dateCtl = TextEditingController(text: "");
-  List<bool> isValid = [false, false, false, false, false, false];
+  List<bool> isValid = [false, false, false, false, false, false, false];
   String newID = "";
   String newFirstName = "";
   String newLastName = "";
   String newEmail = "";
   String newPhone = "";
   String newBirthday = "";
-  String newGender = "";
+  String newGender = "male";
   String image = "";
   String newPw = "";
   String newConfirmPw = "";
+  String passcode = "";
 
   Widget build(BuildContext context) {
     final _picker = ImagePicker();
@@ -50,19 +86,8 @@ class RegisterPageState extends State<RegisterPage> {
       print(pickedImage!.path);
       image = pickedImage.path;
     }
-
     print(newFirstName);
     print(formattedDate);
-    for (int i = 1; i <= account.length + 1; i++) {
-      if (i.toString().length == 1) {
-        newID = formattedDate + "00" + i.toString();
-      } else if (i.toString().length == 2) {
-        newID = formattedDate + "0" + i.toString();
-      } else if (i.toString().length == 3) {
-        newID = formattedDate + "" + (account.length + 1).toString();
-      }
-      print(newID);
-    }
 
     return Scaffold(
       appBar: new AppBar(
@@ -218,6 +243,39 @@ class RegisterPageState extends State<RegisterPage> {
               Container(
                 padding: EdgeInsets.only(top: 20),
                 child: TextFormField(
+                  controller: dateCtl,
+                  style: TextStyle(fontSize: 20),
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                    labelText: "Your Birthday",
+                    hintText: "",
+                    border: OutlineInputBorder(),
+                  ),
+                  onTap: () async {
+                    DateTime date = DateTime(1900);
+                    FocusScope.of(context).requestFocus(new FocusNode());
+
+                    date = (await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime.now()))!;
+
+                    String day = date.day.toString().length == 1
+                        ? "0" + date.day.toString()
+                        : date.day.toString();
+                    String month = date.month.toString().length == 1
+                        ? "0" + date.month.toString()
+                        : date.month.toString();
+                    dateCtl.text =
+                        date.year.toString() + "-" + month + "-" + day;
+                    newBirthday = dateCtl.text;
+                  },
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 20),
+                child: TextFormField(
                   obscureText: true,
                   style: TextStyle(fontSize: 20),
                   scrollPadding: EdgeInsets.symmetric(horizontal: 20),
@@ -304,33 +362,38 @@ class RegisterPageState extends State<RegisterPage> {
               Container(
                 padding: EdgeInsets.only(top: 20),
                 child: TextFormField(
-                  controller: dateCtl,
+                  // initialValue: userPhone,
                   style: TextStyle(fontSize: 20),
+                  scrollPadding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                    labelText: "Your Birthday",
-                    hintText: "",
+                    // helperText: 'Assistive text',
+                    // icon: Icon(Icons.person),
+                    hintText: '',
+                    labelText: 'Passcode',
                     border: OutlineInputBorder(),
                   ),
-                  onTap: () async {
-                    DateTime date = DateTime(1900);
-                    FocusScope.of(context).requestFocus(new FocusNode());
-
-                    date = (await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime.now()))!;
-
-                    String day = date.day.toString().length == 1
-                        ? "0" + date.day.toString()
-                        : date.day.toString();
-                    String month = date.month.toString().length == 1
-                        ? "0" + date.month.toString()
-                        : date.month.toString();
-                    dateCtl.text =
-                        day + "/" + month + "/" + date.year.toString();
-                    newBirthday = dateCtl.text;
+                  keyboardType: TextInputType.number,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (String? value) {
+                    if (isNumeric(value!)) {
+                      if (value.length == 6) {
+                        isValid[6] = true;
+                        return null;
+                      } else {
+                        isValid[6] = false;
+                        return "Phone must be 6 digits";
+                      }
+                    } else {
+                      isValid[6] = false;
+                      return "Invalid Passcode";
+                    }
+                  },
+                  onChanged: (String? value) {
+                    if (value != null) {
+                      passcode = value;
+                      print(passcode);
+                    }
                   },
                 ),
               ),
@@ -424,19 +487,13 @@ class RegisterPageState extends State<RegisterPage> {
                         onPrimary: Colors.white, // foreground
                       ),
                       onPressed: () {
-                        // if (newFirstName != "" &&
-                        //     newLastName != "" &&
-                        //     newPhone != "" &&
-                        //     newEmail != "" &&
-                        //     newPw != "" &&
-                        //     newConfirmPw != "" &&
-                        //     newBirthday != "") {
                         if (isValid[0] &&
                             isValid[1] &&
                             isValid[2] &&
                             isValid[3] &&
                             isValid[4] &&
-                            isValid[5]) {
+                            isValid[5] &&
+                            isValid[6]) {
                           if (newConfirmPw != newPw) {
                             Fluttertoast.showToast(
                                 msg:
@@ -449,7 +506,8 @@ class RegisterPageState extends State<RegisterPage> {
                               if (image == "") {
                                 image = unknownIcon;
                               }
-                              List<Account> newAccount = [
+                              print(newBirthday);
+                              Account newAccount =
                                 Account(
                                   accountID: newID,
                                   accountFirstName: newFirstName,
@@ -461,15 +519,29 @@ class RegisterPageState extends State<RegisterPage> {
                                   accountPassword: newPw,
                                   accountBirthday: newBirthday,
                                   accountGender: newGender,
+                                  passcode: passcode,
                                   accountBalance: 0,
                                   // order: 0,
-                                  point: 0,
-                                ),
-                              ];
-                              account.add(newAccount[0]);
-                              Fluttertoast.showToast(
-                                  msg: "Account Created.");
-                              navigateToLoginPage(context);
+                                  point: 0);
+                              account = [];
+                              RegisterAPI(newAccount).then((value) {
+                                loadingScreen(context);
+                                if (status == Status.success) {
+                                  if(value.error == null){
+                                    print("value.accountID.toString()" + value.accountID.toString());
+                                    status = Status.loading;
+                                    account.add(value);
+                                    Future.delayed(Duration(milliseconds: 500),
+                                            () {
+                                          Fluttertoast.showToast(msg: "Account Created.");
+                                          navigateToMyProfilePage(context);
+                                        });
+                                  } else {
+                                    Fluttertoast.showToast(msg: value.error.toString());
+                                    Navigator.pop(context);
+                                  }
+                                }
+                              });
                             }
                           }
                         } else {
@@ -502,6 +574,10 @@ class RegisterPageState extends State<RegisterPage> {
                           if (!isValid[5]) {
                             // Fluttertoast.showToast(msg: "Confirm Password can not be null.");
                             errMsg.add("\n- Confirm Password");
+                          }
+                          if (!isValid[6]) {
+                            // Fluttertoast.showToast(msg: "Confirm Password can not be null.");
+                            errMsg.add("\n- Passcode");
                           }
                           String toString = "";
                           for (int i = 0; i < errMsg.length; i++) {

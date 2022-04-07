@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+// import 'package:flutter_screen_lock/flutter_screen_lock.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:member/Login/login.dart';
 import 'package:member/Var/natigate.dart';
@@ -11,7 +12,6 @@ import 'dart:convert';
 import '../main.dart';
 import '../Navigation/navigationBar.dart';
 import '../Var/var.dart';
-
 
 class MyProfilePage extends StatefulWidget {
   @override
@@ -24,13 +24,15 @@ class MyProfilePageState extends State<MyProfilePage> {
     // TODO: implement initState
     super.initState();
     print(account[0].accountID.toString());
-    updateAccountAPI(account[0].accountID.toString()).then((value){
+    updateAccountAPI(account[0].accountID.toString()).then((value) {
       account = [];
       account.add(value);
       print(value.image.toString());
-      setState(() {
-
-      });
+      print("PASSCODE " + account[0].passcode.toString());
+      // if (account[0].passcode.toString() == "") {
+      //   screenLock(context: context, canCancel: true, correctString: "");
+      // }
+      setState(() {});
     });
   }
 
@@ -80,10 +82,10 @@ class MyProfilePageState extends State<MyProfilePage> {
         drawer: NavigationBarPageState().navBar(context),
         body: status == Status.loading
             ? Center(
-          child: CircularProgressIndicator(
-            color: Colors.deepPurpleAccent,
-          ),
-        )
+                child: CircularProgressIndicator(
+                  color: Colors.deepPurpleAccent,
+                ),
+              )
             : SingleChildScrollView(
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -99,9 +101,12 @@ class MyProfilePageState extends State<MyProfilePage> {
                               child: GestureDetector(
                                 child: CircleAvatar(
                                   radius: 35,
-                                  backgroundImage:
-                                  login > 0 ? account[0].image.toString() != null ? NetworkImage(apiDomain + account[0].image.toString()) : NetworkImage(unknownIcon) :
-                                  NetworkImage(unknownIcon),
+                                  backgroundImage: login > 0
+                                      ? account[0].image.toString() != null
+                                          ? NetworkImage(apiDomain +
+                                              account[0].image.toString())
+                                          : NetworkImage(unknownIcon)
+                                      : NetworkImage(unknownIcon),
                                 ),
                                 onTap: () {
                                   navigateToIconPage(context);
@@ -116,7 +121,9 @@ class MyProfilePageState extends State<MyProfilePage> {
                                       left: MediaQuery.of(context).size.width *
                                           0.05),
                                   child: Text(
-                                    account[0].accountFirstName! + " " + account[0].accountLastName!,
+                                    account[0].accountFirstName! +
+                                        " " +
+                                        account[0].accountLastName!,
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                       fontSize: 20,
@@ -187,7 +194,10 @@ class MyProfilePageState extends State<MyProfilePage> {
                             child: Column(
                               children: [
                                 Text(
-                                  "\$" + account[0].accountBalance!.toStringAsFixed(2),
+                                  "\$" +
+                                      account[0]
+                                          .accountBalance!
+                                          .toStringAsFixed(2),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 20,
@@ -328,7 +338,8 @@ class MyProfilePageState extends State<MyProfilePage> {
                                                 accountBalance: 0,
                                                 order: 0,
                                                 point: 0,
-                                              ),];
+                                              ),
+                                            ];
                                             login = 0;
                                             Fluttertoast.showToast(
                                                 msg: "Log Out Successful");

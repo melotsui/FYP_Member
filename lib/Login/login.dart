@@ -270,7 +270,7 @@ class LoginPageState extends State<LoginPage> {
                   children: <Widget>[
                     Expanded(
                       child: Text(""),
-                      flex: 5,
+                      flex: 4,
                     ),
                     Expanded(
                       flex: 100,
@@ -294,7 +294,7 @@ class LoginPageState extends State<LoginPage> {
                     ),
                     Expanded(
                       child: Text(""),
-                      flex: 5,
+                      flex: 3,
                     ),
                     Expanded(
                         flex: 100,
@@ -321,7 +321,7 @@ class LoginPageState extends State<LoginPage> {
                         )),
                     Expanded(
                       child: Text(""),
-                      flex: 5,
+                      flex: 4,
                     ),
                   ],
                 ),
