@@ -206,49 +206,54 @@ class TopUpPageState extends State<TopUpPage> {
                             ),
                             onPressed: () {
                               if (isValid) {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        PaypalPayment(
-                                      onFinish: (number) async {
-                                        // payment done
-                                        // if (oID != number) {
-                                        oID = number;
-                                        print("account[0].accountID" + account[0].accountID!);
-                                        topupAPI(account[0].accountID!, topupValue)
-                                            .then((value) {
-                                          loadingScreen(context);
-                                          if (status == Status.success) {
-                                            double x =
-                                                accountBalance! + topupValue;
-                                            accountBalance = x;
-                                            print(
-                                                'accountBalance: $accountBalance');
-                                            for (int i = 0;
-                                                i < account.length;
-                                                i++) {
-                                              if (account[i].accountID ==
-                                                  userID) {
-                                                account[i].accountBalance =
-                                                    accountBalance;
-                                              }
-                                            }
-                                            Fluttertoast.showToast(
-                                                msg: "Top Up Successful");
+                                if(topupValue > 0){
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          PaypalPayment(
+                                            onFinish: (number) async {
+                                              // payment done
+                                              // if (oID != number) {
+                                              oID = number;
+                                              print("account[0].accountID" + account[0].accountID!);
+                                              topupAPI(account[0].accountID!, topupValue)
+                                                  .then((value) {
+                                                loadingScreen(context);
+                                                if (status == Status.success) {
+                                                  double x =
+                                                      accountBalance! + topupValue;
+                                                  accountBalance = x;
+                                                  print(
+                                                      'accountBalance: $accountBalance');
+                                                  for (int i = 0;
+                                                  i < account.length;
+                                                  i++) {
+                                                    if (account[i].accountID ==
+                                                        userID) {
+                                                      account[i].accountBalance =
+                                                          accountBalance;
+                                                    }
+                                                  }
+                                                  Fluttertoast.showToast(
+                                                      msg: "Top Up Successful");
 
-                                            Future.delayed(
-                                                Duration(milliseconds: 1000),
-                                                () {
-                                              navigateToMyProfilePage(context);
-                                            });
-                                          }
-                                        });
-                                        print('order id: ' + number);
-                                        // }
-                                      },
+                                                  Future.delayed(
+                                                      Duration(milliseconds: 1000),
+                                                          () {
+                                                        navigateToMyProfilePage(context);
+                                                      });
+                                                }
+                                              });
+                                              print('order id: ' + number);
+                                              // }
+                                            },
+                                          ),
                                     ),
-                                  ),
-                                );
+                                  );
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg: "Top Up Value cannot be Zero!");
+                                }
                               } else {
                                 Fluttertoast.showToast(
                                     msg: "Invalid Top Up Value");
