@@ -233,14 +233,14 @@ class LoginPageState extends State<LoginPage> {
                                 if (isEmailValid && isPwValid) {
                                   login = 1;
                                   setState(() {});
-                                  Fluttertoast.showToast(
-                                      msg: "Welcome, " +
-                                          userFirstName! +
-                                          " " +
-                                          userLastName! +
-                                          ".");
                                   Future.delayed(Duration(milliseconds: 500),
                                       () {
+                                    Fluttertoast.showToast(
+                                        msg: "Welcome, " +
+                                            userFirstName! +
+                                            " " +
+                                            userLastName! +
+                                            ".");
                                     navigateToMyProfilePage(context);
                                   });
                                 } else {
