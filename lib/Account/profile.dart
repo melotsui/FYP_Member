@@ -280,16 +280,6 @@ class MyProfilePageState extends State<MyProfilePage> {
                                 navigateToChangePasswordPage(context);
                               },
                             ),
-                            ListTile(
-                              leading: Icon(Icons.face),
-                              title: Text('Title'),
-                              onTap: () {},
-                            ),
-                            ListTile(
-                              leading: Icon(Icons.face),
-                              title: Text('Title'),
-                              onTap: () {},
-                            ),
                             Divider(color: Colors.black),
                             ListTile(
                               leading: Icon(
