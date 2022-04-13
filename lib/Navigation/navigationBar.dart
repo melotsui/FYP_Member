@@ -136,6 +136,13 @@ class NavigationBarPageState extends State<NavigationBarPage> {
             },
           ),
           ListTile(
+            leading: Icon(Icons.wysiwyg),
+            title: Text('Notice'),
+            onTap: () {
+              navigateToNoticeBoardPage(context);
+            },
+          ),
+          ListTile(
             leading: Icon(
               Icons.account_circle,
             ),

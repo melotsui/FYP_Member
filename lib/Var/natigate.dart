@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:member/Account/qrCode.dart';
 import 'package:member/Branch/branchList.dart';
+import 'package:member/NoticeBoard/noticeBoard.dart';
 import 'package:member/Paypal/topup.dart';
 import 'package:member/Var/var.dart';
 
@@ -91,4 +92,9 @@ void navigateToTopUpPage(BuildContext context){
 // BranchListPage
 void navigateToBranchListPage(BuildContext context){
   Navigator.of(context).push(MaterialPageRoute(builder: (context) => BranchListPage()));
+}
+
+// NoticeBoardPage
+void navigateToNoticeBoardPage(BuildContext context){
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => NoticeBoardPage()));
 }

@@ -49,6 +49,10 @@ class ChangePasswordPage extends StatefulWidget {
 }
 
 class ChangePasswordPageState extends State<ChangePasswordPage> {
+  List<bool> isValid = [false, false, false];
+  String oldPW = "";
+  String newPW = "";
+  String confirmPW = "";
   @override
   void initState() {
     // TODO: implement initState
@@ -60,10 +64,6 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
     });
   }
 
-  List<bool> isValid = [false, false, false];
-  String oldPW = "";
-  String newPW = "";
-  String confirmPW = "";
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(

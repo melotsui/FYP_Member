@@ -26,11 +26,13 @@ class BranchListPageState extends State<BranchListPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    updateAccountAPI(account[0].accountID.toString()).then((value) {
-      account = [];
-      account.add(value);
-      setState(() {});
-    });
+    if(login > 0){
+      updateAccountAPI(account[0].accountID.toString()).then((value) {
+        account = [];
+        account.add(value);
+        setState(() {});
+      });
+    }
     branchAPI().then((value) {
       branch = [];
       branch = value;
