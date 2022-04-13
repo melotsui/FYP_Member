@@ -13,12 +13,66 @@ import '../main.dart';
 import '../Navigation/navigationBar.dart';
 import '../Var/var.dart';
 
+Status balanceRecordsStatus = Status.loading;
+Future<List<BalanceRecords>> balanceRecordsAPI(String id) async {
+  balanceRecordsStatus = Status.loading;
+  final response = await http.post(
+    Uri.parse('http://api.chunon.me/getAccountBalanceRecord'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode({"accountID": id}),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    balanceRecordsStatus = Status.success;
+    List<BalanceRecords> myModels = (jsonDecode(response.body) as List)
+        .map((i) => BalanceRecords.fromJson(i))
+        .toList();
+    return myModels;
+  } else {
+    balanceRecordsStatus = Status.error;
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to get NoticeBoard');
+  }
+}
+
+class BalanceRecords {
+  int? isAdd;
+  double? balance;
+  String? payMethod;
+  String? balanceRecordDateTime;
+
+  BalanceRecords(
+      {this.isAdd, this.balance, this.payMethod, this.balanceRecordDateTime});
+
+  BalanceRecords.fromJson(Map<String, dynamic> json) {
+    isAdd = json['isAdd'];
+    balance = json['balance'];
+    payMethod = json['payMethod'];
+    balanceRecordDateTime = json['balanceRecordDateTime'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['isAdd'] = this.isAdd;
+    data['balance'] = this.balance;
+    data['payMethod'] = this.payMethod;
+    data['balanceRecordDateTime'] = this.balanceRecordDateTime;
+    return data;
+  }
+}
+
 class MyProfilePage extends StatefulWidget {
   @override
   MyProfilePageState createState() => MyProfilePageState();
 }
 
 class MyProfilePageState extends State<MyProfilePage> {
+  List<BalanceRecords> balanceRecords = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -191,26 +245,237 @@ class MyProfilePageState extends State<MyProfilePage> {
                           Container(
                             padding: EdgeInsets.symmetric(vertical: 5),
                             width: MediaQuery.of(context).size.width * 0.35,
-                            child: Column(
-                              children: [
-                                Text(
-                                  "\$" +
-                                      account[0]
-                                          .accountBalance!
-                                          .toStringAsFixed(2),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 20,
+                            child: GestureDetector(
+                              onTap: () {
+                                balanceRecordsAPI(
+                                        account[0].accountID.toString())
+                                    .then(
+                                  (value) {
+                                    balanceRecords = value;
+                                    setState(() {});
+                                    showModalBottomSheet(
+                                      useRootNavigator: true,
+                                      context: context,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(20),
+                                            topLeft: Radius.circular(20)),
+                                      ),
+                                      backgroundColor: Colors.white,
+                                      builder: (BuildContext context) =>
+                                          Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Container(
+                                              padding: EdgeInsets.only(top: 5),
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.3,
+                                              child: Divider(
+                                                thickness: 3,
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: ListView.builder(
+                                                itemCount:
+                                                    balanceRecords.length,
+                                                itemBuilder:
+                                                    (BuildContext ctx, index) {
+                                                  return GestureDetector(
+                                                    child: Container(
+                                                      child: Card(
+                                                        child: Row(
+                                                          children: <Widget>[
+                                                            // Expanded(
+                                                            //   flex: 7,
+                                                            //   child: Column(
+                                                            //     children: <
+                                                            //         Widget>[
+                                                            //       Row(children: <Widget>[
+                                                            //         Container(
+                                                            //           alignment:
+                                                            //           Alignment
+                                                            //               .centerLeft,
+                                                            //           child: Text("Date Time: "),
+                                                            //         ),
+                                                            //         Container(
+                                                            //           alignment:
+                                                            //           Alignment
+                                                            //               .centerLeft,
+                                                            //           child: Text(
+                                                            //               balanceRecords[
+                                                            //               index]
+                                                            //                   .balanceRecordDateTime
+                                                            //                   .toString()),
+                                                            //         ),
+                                                            //       ],),
+                                                            //       Column(
+                                                            //         children: <Widget>[
+                                                            //           Container(
+                                                            //             alignment:
+                                                            //             Alignment
+                                                            //                 .centerLeft,
+                                                            //             child: Text("Payment Method: "),
+                                                            //           ),
+                                                            //           Container(
+                                                            //             alignment:
+                                                            //             Alignment
+                                                            //                 .centerLeft,
+                                                            //             child: Text(
+                                                            //                 balanceRecords[
+                                                            //                 index]
+                                                            //                     .payMethod
+                                                            //                     .toString()),
+                                                            //           ),
+                                                            //         ],
+                                                            //       ),
+                                                            //     ],
+                                                            //   ),
+                                                            // ),
+                                                            // Expanded(
+                                                            //   flex: 3,
+                                                            //   child: Container(
+                                                            //     alignment: Alignment
+                                                            //         .centerRight,
+                                                            //     child: balanceRecords[
+                                                            //     index]
+                                                            //         .isAdd ==
+                                                            //         1
+                                                            //         ? Text("+ \$" +
+                                                            //         balanceRecords[
+                                                            //         index]
+                                                            //             .balance
+                                                            //             .toString(), style: TextStyle(color: Colors.green),)
+                                                            //         : Text("- \$" +
+                                                            //         balanceRecords[
+                                                            //         index]
+                                                            //             .balance
+                                                            //             .toString(), style: TextStyle(color: Colors.red)),
+                                                            //   ),
+                                                            // ),
+                                                            Expanded(
+                                                              flex: 7,
+                                                              child: Container(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        top: 10,
+                                                                        bottom:
+                                                                            10,
+                                                                        left:
+                                                                            15),
+                                                                child: Column(
+                                                                  children: <
+                                                                      Widget>[
+                                                                    Container(
+                                                                      padding: EdgeInsets.symmetric(
+                                                                          vertical:
+                                                                              5),
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .centerLeft,
+                                                                      child:
+                                                                          Text(
+                                                                        balanceRecords[index]
+                                                                            .balanceRecordDateTime
+                                                                            .toString(),
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.bold),
+                                                                      ),
+                                                                    ),
+                                                                    Container(
+                                                                      padding: EdgeInsets.symmetric(
+                                                                          vertical:
+                                                                              5),
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .centerLeft,
+                                                                      child:
+                                                                          Text(
+                                                                        balanceRecords[index]
+                                                                            .payMethod
+                                                                            .toString(),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Expanded(
+                                                              flex: 3,
+                                                              child: Container(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        right:
+                                                                            15),
+                                                                alignment: Alignment
+                                                                    .centerRight,
+                                                                child: balanceRecords[index]
+                                                                            .isAdd ==
+                                                                        1
+                                                                    ? Text(
+                                                                        "+ \$" +
+                                                                            balanceRecords[index].balance.toString(),
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            color: Colors.green),
+                                                                      )
+                                                                    : Text(
+                                                                        "- \$" +
+                                                                            balanceRecords[index].balance.toString(),
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            color: Colors.red),
+                                                                      ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "\$" +
+                                        account[0]
+                                            .accountBalance!
+                                            .toStringAsFixed(2),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  "Wallet",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.black54,
+                                  Text(
+                                    "Wallet",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.black54,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           Container(
@@ -366,3 +631,34 @@ class MyProfilePageState extends State<MyProfilePage> {
     );
   }
 }
+
+// Row(
+// children: <Widget>[
+// Expanded(
+// flex: 7,
+// child: Column(
+// children: <Widget>[
+// Container(
+// alignment: Alignment.centerLeft,
+// child: Text(
+// "Date Time: "
+// ),
+// ),
+// Container(
+// alignment: Alignment.centerLeft,
+// child: Text(
+// "Payment Method: "
+// ),
+// ),
+// ],
+// ),
+// ),
+// Expanded(flex: 3,child:
+// Container(
+// alignment: Alignment.centerRight,
+// child: Text(
+// "+ \$80"
+// ),
+// ),),
+// ],
+// ),

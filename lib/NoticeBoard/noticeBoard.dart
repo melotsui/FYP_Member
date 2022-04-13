@@ -169,7 +169,7 @@ class NoticeBoardPageState extends State<NoticeBoardPage> {
                                     child: Text(
                                       notices[index].noticeBoardDescription.toString()
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                             ),

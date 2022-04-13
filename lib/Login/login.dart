@@ -51,7 +51,7 @@ class LoginPageState extends State<LoginPage> {
     // TODO: implement initState
     isValid = [false, false];
     loginPassword = "Aa123456";
-    loginEmail = "melotsui@gmail.com";
+    loginEmail = "qonkgonk@gmail.com";
 
     if (isEmail(loginEmail)) {
       isValid[0] = true;
