@@ -167,7 +167,7 @@ class NoticeBoardPageState extends State<NoticeBoardPage> {
                                     ),
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      notices[index].noticeBoardDescription.toString()
+                                      notices[index].noticeBoardDescription.toString(), style: TextStyle(color: Colors.black54),
                                     ),
                                   ),
                                 ],
