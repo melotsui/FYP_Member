@@ -108,8 +108,8 @@ class TopUpPageState extends State<TopUpPage> {
                           child: GestureDetector(
                             child: CircleAvatar(
                               radius: 35,
-                              backgroundImage: login > 0
-                                  ? NetworkImage(userIcon!)
+                              backgroundImage: account[0].image != null
+                                  ? NetworkImage(apiDomain + account[0].image.toString())
                                   : NetworkImage(unknownIcon),
                             ),
                             onTap: () {

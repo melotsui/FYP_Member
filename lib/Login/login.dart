@@ -51,7 +51,7 @@ class LoginPageState extends State<LoginPage> {
     // TODO: implement initState
     isValid = [false, false];
     loginPassword = "Aa123456";
-    loginEmail = "qonkgonk@gmail.com";
+    loginEmail = "k@k.k";
 
     if (isEmail(loginEmail)) {
       isValid[0] = true;
@@ -237,9 +237,9 @@ class LoginPageState extends State<LoginPage> {
                                       () {
                                     Fluttertoast.showToast(
                                         msg: "Welcome, " +
-                                            userFirstName! +
+                                            value.accountFirstName.toString() +
                                             " " +
-                                            userLastName! +
+                                            value.accountLastName.toString() +
                                             ".");
                                     navigateToMyProfilePage(context);
                                   });

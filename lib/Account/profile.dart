@@ -155,12 +155,10 @@ class MyProfilePageState extends State<MyProfilePage> {
                               child: GestureDetector(
                                 child: CircleAvatar(
                                   radius: 35,
-                                  backgroundImage: login > 0
-                                      ? account[0].image.toString() != null
+                                  backgroundImage: account[0].image != null
                                           ? NetworkImage(apiDomain +
                                               account[0].image.toString())
                                           : NetworkImage(unknownIcon)
-                                      : NetworkImage(unknownIcon),
                                 ),
                                 onTap: () {
                                   navigateToIconPage(context);
@@ -468,7 +466,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                                     ),
                                   ),
                                   Text(
-                                    "Wallet",
+                                    "Balance",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Colors.black54,
@@ -631,34 +629,3 @@ class MyProfilePageState extends State<MyProfilePage> {
     );
   }
 }
-
-// Row(
-// children: <Widget>[
-// Expanded(
-// flex: 7,
-// child: Column(
-// children: <Widget>[
-// Container(
-// alignment: Alignment.centerLeft,
-// child: Text(
-// "Date Time: "
-// ),
-// ),
-// Container(
-// alignment: Alignment.centerLeft,
-// child: Text(
-// "Payment Method: "
-// ),
-// ),
-// ],
-// ),
-// ),
-// Expanded(flex: 3,child:
-// Container(
-// alignment: Alignment.centerRight,
-// child: Text(
-// "+ \$80"
-// ),
-// ),),
-// ],
-// ),

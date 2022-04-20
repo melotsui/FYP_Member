@@ -138,132 +138,149 @@ class InvoiceListPageState extends State<InvoiceListPage> {
                   color: Colors.deepPurpleAccent,
                 ),
               )
-            : Column(
-                children: <Widget>[
-                  Expanded(
-                    child: ListView.builder(
-                      // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                      itemCount: invoices.length,
-                      itemBuilder: (BuildContext ctx, index) {
-                        return GestureDetector(
-                          child: Card(
-                            child: Container(
-                              width: double.infinity,
-                              padding: EdgeInsets.only(
-                                  left:
-                                      MediaQuery.of(context).size.width * 0.07,
-                                  top: 20,
-                                  bottom: 10,
-                                  right: 10),
-                              child: Row(
-                                children: <Widget>[
-                                  Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.65,
-                                    child: Column(
-                                      children: <Widget>[
-                                        Container(
-                                          padding:
-                                              EdgeInsets.symmetric(vertical: 5),
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            "Invoice ID: " +
-                                                invoices[index]
-                                                    .invoiceID
-                                                    .toString(),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15),
-                                          ),
-                                        ),
-                                        Container(
-                                          padding:
-                                              EdgeInsets.symmetric(vertical: 5),
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            "Date: " + dateList[index],
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15),
-                                          ),
-                                        ),
-                                        Container(
-                                          padding:
-                                              EdgeInsets.symmetric(vertical: 5),
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            "Time: " + timeList[index],
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15),
-                                          ),
-                                        ),
-                                        Container(
-                                          padding:
-                                              EdgeInsets.symmetric(vertical: 5),
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            "Payment: " +
-                                                invoices[index]
-                                                    .payMethod
-                                                    .toString(),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(vertical: 5),
-                                    alignment: Alignment.bottomRight,
-                                    decoration: BoxDecoration(),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Container(
-                                          child: CircleAvatar(
-                                            radius: 35,
-                                            backgroundImage: login > 0
-                                                ? NetworkImage(apiDomain +
+            : invoices.length > 0
+                ? Column(
+                    children: <Widget>[
+                      Expanded(
+                        child: ListView.builder(
+                          // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                          itemCount: invoices.length,
+                          itemBuilder: (BuildContext ctx, index) {
+                            return GestureDetector(
+                              child: Card(
+                                child: Container(
+                                  width: double.infinity,
+                                  padding: EdgeInsets.only(
+                                      left: MediaQuery.of(context).size.width *
+                                          0.07,
+                                      top: 20,
+                                      bottom: 10,
+                                      right: 10),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.65,
+                                        child: Column(
+                                          children: <Widget>[
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 5),
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                "Invoice ID: " +
                                                     invoices[index]
-                                                        .productImage
-                                                        .toString())
-                                                : NetworkImage(unknownIcon),
-                                          ),
+                                                        .invoiceID
+                                                        .toString(),
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15),
+                                              ),
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 5),
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                "Date: " + dateList[index],
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15),
+                                              ),
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 5),
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                "Time: " + timeList[index],
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15),
+                                              ),
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 5),
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                "Payment: " +
+                                                    invoices[index]
+                                                        .payMethod
+                                                        .toString(),
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        SizedBox(
-                                          height: 5,
+                                      ),
+                                      Container(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 5),
+                                        alignment: Alignment.bottomRight,
+                                        decoration: BoxDecoration(),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Container(
+                                              child: CircleAvatar(
+                                                radius: 35,
+                                                backgroundImage: login > 0
+                                                    ? NetworkImage(apiDomain +
+                                                        invoices[index]
+                                                            .productImage
+                                                            .toString())
+                                                    : NetworkImage(unknownIcon),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              "\$" +
+                                                  invoices[index]
+                                                      .finalPrice
+                                                      .toString(),
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                                color: Colors.green,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        Text(
-                                          "\$" +
-                                              invoices[index]
-                                                  .finalPrice
-                                                  .toString(),
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15,
-                                            color: Colors.green,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
-                          onTap: () {
-                            navigateToInvoiceDetailPage(
-                                context,
-                                invoices[index].invoiceID.toString());
+                              onTap: () {
+                                navigateToInvoiceDetailPage(context,
+                                    invoices[index].invoiceID.toString());
+                              },
+                            );
                           },
-                        );
-                      },
+                        ),
+                      ),
+                    ],
+                  )
+                : Container(
+                    // decoration: BoxDecoration(
+                    //     image: DecorationImage(
+                    //         image: NetworkImage(
+                    //             "https://www.pngrepo.com/download/348144/favourite.png"),
+                    //         fit: BoxFit.contain)),
+                    alignment: Alignment.center,
+                    child: Text(
+                      "You don't have any invoice record right now",
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black38),
                     ),
                   ),
-                ],
-              ),
       ),
     );
   }

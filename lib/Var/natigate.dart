@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:member/Account/qrCode.dart';
 import 'package:member/Branch/branchList.dart';
+import 'package:member/ForgetPassword/resetPassword.dart';
 import 'package:member/NoticeBoard/noticeBoard.dart';
 import 'package:member/Paypal/topup.dart';
 import 'package:member/Var/var.dart';
 
 import '../Account/changePassword.dart';
 import '../Account/editProfile.dart';
-import '../Account/forgetPassword.dart';
+import '../ForgetPassword/forgetPassword.dart';
 import '../Account/icon.dart';
 import '../Account/profile.dart';
 import '../Invoice/invoiceDetail.dart';
@@ -97,4 +98,9 @@ void navigateToBranchListPage(BuildContext context){
 // NoticeBoardPage
 void navigateToNoticeBoardPage(BuildContext context){
   Navigator.of(context).push(MaterialPageRoute(builder: (context) => NoticeBoardPage()));
+}
+
+// ResetPasswordPage
+void navigateToResetPasswordPage(BuildContext context, String id){
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ResetPasswordPage(id: id)));
 }

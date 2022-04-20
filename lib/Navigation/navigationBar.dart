@@ -34,7 +34,7 @@ class NavigationBarPageState extends State<NavigationBarPage> {
                   child: CircleAvatar(
                     radius: 35,
                     backgroundImage: login > 0
-                        ? account[0].image.toString() != null
+                        ? account[0].image != null
                             ? NetworkImage(
                                 apiDomain + account[0].image.toString())
                             : NetworkImage(unknownIcon)

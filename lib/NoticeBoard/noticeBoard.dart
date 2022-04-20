@@ -134,19 +134,30 @@ class NoticeBoardPageState extends State<NoticeBoardPage> {
                               ),
                               child: Column(
                                 children: <Widget>[
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    child: Text(
+                                      notices[index].noticeTitle.toString(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                      bottom: 5,
+                                    ),
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      notices[index]
+                                          .noticeBoardDescription
+                                          .toString(),
+                                      style: TextStyle(color: Colors.black54),
+                                    ),
+                                  ),
                                   Row(
                                     children: <Widget>[
-                                      Container(
-                                        alignment: Alignment.centerLeft,
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 5),
-                                        child: Text(
-                                          notices[index].noticeTitle.toString(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15),
-                                        ),
-                                      ),
                                       Expanded(child: Container()),
                                       Container(
                                         alignment: Alignment.centerLeft,
@@ -160,15 +171,6 @@ class NoticeBoardPageState extends State<NoticeBoardPage> {
                                         ),
                                       ),
                                     ],
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(
-                                      bottom: 5,
-                                    ),
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      notices[index].noticeBoardDescription.toString(), style: TextStyle(color: Colors.black54),
-                                    ),
                                   ),
                                 ],
                               ),

@@ -74,6 +74,7 @@ class RegisterPageState extends State<RegisterPage> {
   String newPw = "";
   String newConfirmPw = "";
   String passcode = "";
+  File? uploadImage;
 
   Widget build(BuildContext context) {
     final _picker = ImagePicker();
@@ -83,8 +84,9 @@ class RegisterPageState extends State<RegisterPage> {
         setState(() {
           // image = pickedImage;
         });
-      print(pickedImage!.path);
-      image = pickedImage.path;
+      uploadImage = File(pickedImage!.path);
+      print(uploadImage!.readAsBytes().asStream());
+
     }
     print(newFirstName);
     print(formattedDate);
@@ -466,8 +468,7 @@ class RegisterPageState extends State<RegisterPage> {
                     decoration: BoxDecoration(
                       color: Colors.black26,
                       image: DecorationImage(
-                          image: NetworkImage(
-                              "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Upload_alt_font_awesome.svg/100px-Upload_alt_font_awesome.svg.png"),
+                          image: AssetImage('assets/Upload.png'),
                           fit: BoxFit.contain),
                       borderRadius: BorderRadius.circular(30),
                     ),
