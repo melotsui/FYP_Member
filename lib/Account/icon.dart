@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../main.dart';
 import '../Navigation/navigationBar.dart';
@@ -16,7 +19,25 @@ class IconPagePageState extends State<IconPage> {
     super.initState();
   }
 
+  File? uploadImage;
+
   Widget build(BuildContext context) {
+    final _picker = ImagePicker();
+    Future<void> _imgFromGallery() async {
+      final pickedImage = await _picker.pickImage(source: ImageSource.gallery);
+      if (pickedImage != null)
+        setState(() {
+          // image = pickedImage;
+        });
+      uploadImage = File(pickedImage!.path);
+      print(uploadImage!.readAsBytes().asStream());
+      print(account[0].accountID.toString());
+      uploadImageAPI(account[0].accountID.toString(), uploadImage!)
+          .then((value) {
+        print(value.error.toString());
+      });
+    }
+
     return Scaffold(
       appBar: new AppBar(
         backgroundColor: Colors.deepPurpleAccent,
@@ -28,6 +49,17 @@ class IconPagePageState extends State<IconPage> {
           },
           icon: Icon(Icons.arrow_back_ios),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _imgFromGallery();
+            },
+            icon: Icon(
+              Icons.edit,
+              // color: Colors.redAccent,
+            ),
+          ),
+        ],
       ),
       drawer: NavigationBarPageState().navBar(context),
       body: Column(
@@ -38,7 +70,9 @@ class IconPagePageState extends State<IconPage> {
             ),
           ),
           Image(
-            image: account[0].image.toString() != null ? NetworkImage(apiDomain + account[0].image.toString()) : NetworkImage(unknownIcon),
+            image: account[0].image != null
+                ? NetworkImage(apiDomain + account[0].image.toString())
+                : NetworkImage(unknownIcon),
             fit: BoxFit.contain,
           ),
           Expanded(

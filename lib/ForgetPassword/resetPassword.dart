@@ -8,6 +8,7 @@ import 'package:flutter_screen_lock/flutter_screen_lock.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../Login/login.dart';
 import '../main.dart';
@@ -57,6 +58,7 @@ class ResetPasswordPage extends StatefulWidget {
 }
 
 class ResetPasswordPageState extends State<ResetPasswordPage> {
+  SecureStorage storage = SecureStorage();
   @override
   void initState() {
     // TODO: implement initState
@@ -100,7 +102,7 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
               Container(
                 // padding: EdgeInsets.only(top: 20),
                 child: TextFormField(
-                  initialValue: "Aa111111",
+                  initialValue: "",
                   autofocus: true,
                   obscureText: true,
                   style: TextStyle(fontSize: 20),
@@ -115,6 +117,7 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
                   ),
                   onChanged: (String? value) {
                     resetPassword = value!;
+                    print(resetPassword);
                   },
                   onSaved: (String? value) {
                     // This optional block of code can be used to run
@@ -159,6 +162,8 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
                           loadingScreen(context);
                           updateAccountAPI(widget.id).then((value){
                             String pw = value.accountPassword.toString();
+                            account = [];
+                            account.add(value);
                             resetPasswordAPI(widget.id, pw, resetPassword).then((value){
                               if(value.error == null){
                                 Future.delayed(
@@ -169,7 +174,39 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
                                     print(value.success.toString());
                                     print(value.error.toString());
                                     print(resetPassword.toString());
-                                    navigateToLoginPage(context);
+                                    Fluttertoast.showToast(
+                                        msg: "Welcome, " +
+                                            account[0].accountFirstName
+                                                .toString() +
+                                            " " +
+                                            account[0].accountLastName
+                                                .toString() +
+                                            ".");
+                                    navigateToMyProfilePage(context);
+                                    showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) => AlertDialog(
+                                        content: Text(
+                                          "Do you want to save the password?",
+                                          style: TextStyle(fontWeight: FontWeight.bold),
+                                        ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(context, 'No'),
+                                            child: Text('No'),
+                                          ),
+                                          TextButton(
+                                              child: Text('Yes'),
+                                              onPressed: () {
+                                                storage.writeSecureData(
+                                                    "password", resetPassword.trim());
+                                                Navigator.pop(context);
+                                                Fluttertoast.showToast(
+                                                    msg: "Password Saved");
+                                              }),
+                                        ],
+                                      ),
+                                    );
                                   },
                                 );
                               } else {

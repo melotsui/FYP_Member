@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'dart:async';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -372,5 +375,61 @@ Future<Fav> deleteFavAPI(String accountID, String productID) async {
     // If the server did not return a 200 OK response,
     // then throw an exception.
     throw Exception('Failed to get');
+  }
+}
+
+
+Future<UploadImageStatus> uploadImageAPI(String id, File image) async {
+  status = Status.loading;
+  Uint8List bytes = image.readAsBytesSync();
+  print(ByteData.view(bytes.buffer));
+  print(image);
+  print(bytes);
+  // image = image.readAsBytes().asStream();
+  final response = await http.post(
+    Uri.parse('$apiDomain/updateAccountImage'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode({"accountID": id, "image": image}),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    status = Status.success;
+    return UploadImageStatus.fromJson(jsonDecode(response.body));
+  } else {
+    status = Status.error;
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to scan');
+  }
+}
+
+class UploadImageStatus {
+  int? success;
+  String? error;
+
+  UploadImageStatus({this.success, this.error});
+
+  UploadImageStatus.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    error = json['error'];
+  }
+}
+
+class SecureStorage{
+
+  final _storage = FlutterSecureStorage();
+
+  Future writeSecureData(String key, String value)  async {
+    await _storage.write(key: key, value: value);
+  }
+  Future readSecureData(String key) async {
+    return _storage.read(key: key);
+  }
+  Future deleteSecureData(String key) async{
+    _storage.delete(key: key);
   }
 }

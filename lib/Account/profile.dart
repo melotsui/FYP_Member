@@ -240,9 +240,8 @@ class MyProfilePageState extends State<MyProfilePage> {
                       Divider(color: Colors.black54),
                       Row(
                         children: <Widget>[
+                          Expanded(child: Container()),
                           Container(
-                            padding: EdgeInsets.symmetric(vertical: 5),
-                            width: MediaQuery.of(context).size.width * 0.35,
                             child: GestureDetector(
                               onTap: () {
                                 balanceRecordsAPI(
@@ -476,45 +475,26 @@ class MyProfilePageState extends State<MyProfilePage> {
                               ),
                             ),
                           ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.25,
-                            child: Column(
-                              children: [
-                                Text(
-                                  account[0].order.toString(),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                Text(
-                                  "Orders",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(color: Colors.black54),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.25,
-                            // child: Text(price[idx], textAlign: TextAlign.center),
-                            child: Column(
-                              children: [
-                                Text(
-                                  account[0].point.toString(),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                Text(
-                                  "Point",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(color: Colors.black54),
-                                ),
-                              ],
-                            ),
-                          ),
+                          Expanded(child: Container()),
+                          // Container(
+                          //   child: Column(
+                          //     children: [
+                          //       Text(
+                          //         account[0].order.toString(),
+                          //         textAlign: TextAlign.center,
+                          //         style: TextStyle(
+                          //           fontSize: 20,
+                          //         ),
+                          //       ),
+                          //       Text(
+                          //         "Orders",
+                          //         textAlign: TextAlign.center,
+                          //         style: TextStyle(color: Colors.black54),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
+                          // Expanded(child: Container()),
                         ],
                       ),
                       Divider(color: Colors.black),
