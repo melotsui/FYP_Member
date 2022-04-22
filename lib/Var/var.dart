@@ -382,7 +382,9 @@ Future<Fav> deleteFavAPI(String accountID, String productID) async {
 Future<UploadImageStatus> uploadImageAPI(String id, File image) async {
   status = Status.loading;
   Uint8List bytes = image.readAsBytesSync();
-  print(ByteData.view(bytes.buffer));
+  List<int> imageBytes = image.readAsBytesSync();
+  print(image.readAsBytesSync().buffer.asByteData());
+  print(imageBytes);
   print(image);
   print(bytes);
   // image = image.readAsBytes().asStream();
@@ -391,19 +393,21 @@ Future<UploadImageStatus> uploadImageAPI(String id, File image) async {
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
-    body: jsonEncode({"accountID": id, "image": image}),
+    body: jsonEncode({"accountID": id, "image": base64.encode(image.readAsBytesSync())}),
   );
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
     status = Status.success;
+    imageCache!.clear();
+    imageCache!.clearLiveImages();
     return UploadImageStatus.fromJson(jsonDecode(response.body));
   } else {
     status = Status.error;
     // If the server did not return a 200 OK response,
     // then throw an exception.
-    throw Exception('Failed to scan');
+    throw Exception('Failed to upload');
   }
 }
 
@@ -433,3 +437,4 @@ class SecureStorage{
     _storage.delete(key: key);
   }
 }
+

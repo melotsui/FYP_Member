@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:member/Var/natigate.dart';
 
 import '../main.dart';
 import '../Navigation/navigationBar.dart';
@@ -17,6 +19,16 @@ class IconPagePageState extends State<IconPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    // updateAccountAPI(account[0].accountID.toString()).then((value) {
+    //   account = [];
+    //   account.add(value);
+    //   print(value.image.toString());
+    //   print("PASSCODE " + account[0].passcode.toString());
+    //   // if (account[0].passcode.toString() == "") {
+    //   //   screenLock(context: context, canCancel: true, correctString: "");
+    //   // }
+    //   setState(() {});
+    // });
   }
 
   File? uploadImage;
@@ -35,6 +47,14 @@ class IconPagePageState extends State<IconPage> {
       uploadImageAPI(account[0].accountID.toString(), uploadImage!)
           .then((value) {
         print(value.error.toString());
+        print(value.success.toString());
+        if (value.error == null) {
+          setState(() {});
+          Fluttertoast.showToast(msg: "Change Icon Successful");
+          navigateToMyProfilePage(context);
+        } else {
+          Fluttertoast.showToast(msg: value.error.toString());
+        }
       });
     }
 
@@ -62,26 +82,36 @@ class IconPagePageState extends State<IconPage> {
         ],
       ),
       drawer: NavigationBarPageState().navBar(context),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              color: Colors.black,
+      body: status == Status.loading
+          ? Center(
+              child: CircularProgressIndicator(
+                color: Colors.deepPurpleAccent,
+              ),
+            )
+          : Column(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    color: Colors.black,
+                  ),
+                ),
+                Container(
+                  // height: MediaQuery.of(context).size.width,
+                  // width: MediaQuery.of(context).size.width,
+                  child: Image(
+                    image: account[0].image != null
+                        ? NetworkImage(apiDomain + account[0].image.toString())
+                        : NetworkImage(unknownIcon),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    color: Colors.black,
+                  ),
+                ),
+              ],
             ),
-          ),
-          Image(
-            image: account[0].image != null
-                ? NetworkImage(apiDomain + account[0].image.toString())
-                : NetworkImage(unknownIcon),
-            fit: BoxFit.contain,
-          ),
-          Expanded(
-            child: Container(
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

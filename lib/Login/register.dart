@@ -461,24 +461,24 @@ class RegisterPageState extends State<RegisterPage> {
                   ),
                 ],
               ),
-              GestureDetector(
-                  child: Container(
-                    width: double.infinity,
-                    height: 150,
-                    decoration: BoxDecoration(
-                      color: Colors.black26,
-                      image: DecorationImage(
-                          image: AssetImage('assets/Upload.png'),
-                          fit: BoxFit.contain),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  onTap: () {
-                    _imgFromGallery();
-                  }),
-              SizedBox(
-                height: 10,
-              ),
+              // GestureDetector(
+              //     child: Container(
+              //       width: double.infinity,
+              //       height: 150,
+              //       decoration: BoxDecoration(
+              //         color: Colors.black26,
+              //         image: DecorationImage(
+              //             image: AssetImage('assets/Upload.png'),
+              //             fit: BoxFit.contain),
+              //         borderRadius: BorderRadius.circular(30),
+              //       ),
+              //     ),
+              //     onTap: () {
+              //       _imgFromGallery();
+              //     }),
+              // SizedBox(
+              //   height: 10,
+              // ),
               Row(
                 children: <Widget>[
                   Expanded(
